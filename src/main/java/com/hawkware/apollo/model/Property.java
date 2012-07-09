@@ -7,7 +7,7 @@ public class Property {
     private static final long ONE_DAY_IN_SECS = 24 * 60 * 60;
     private String name;
 
-    private Map<String, Object> valuesByContext;
+    private Map<String, String> valuesByContext;
 
     private long timeToLive = ONE_DAY_IN_SECS;
 
@@ -16,7 +16,7 @@ public class Property {
 
     public Property(String name) {
 	this.name = name;
-	this.valuesByContext = new HashMap<String, Object>();
+	this.valuesByContext = new HashMap<String, String>();
     }
 
     public String getName() {
@@ -27,11 +27,11 @@ public class Property {
 	this.name = name;
     }
 
-    public Map<String, Object> getValuesByContext() {
+    public Map<String, String> getValuesByContext() {
 	return valuesByContext;
     }
 
-    public Object getValue(String context) {
+    public String getValue(String context) {
 	if (valuesByContext != null) {
 	    return valuesByContext.get(context);
 	}
@@ -46,8 +46,12 @@ public class Property {
 	return false;
     }
 
-    public void setValuesByContext(Map<String, Object> valuesByContext) {
-	this.valuesByContext = valuesByContext;
+    public void setValuesByContext(Map<String, String> valuesByContext) {
+	if (this.valuesByContext != null && valuesByContext != null) {
+	    this.valuesByContext.putAll(valuesByContext);
+	} else {
+	    this.valuesByContext = valuesByContext;
+	}
     }
 
     public long getTimeToLive() {

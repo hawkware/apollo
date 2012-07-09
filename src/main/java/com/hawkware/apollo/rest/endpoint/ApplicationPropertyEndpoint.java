@@ -24,9 +24,9 @@ import com.hawkware.apollo.rest.resources.PropertyResource;
 import com.hawkware.apollo.service.ApplicationService;
 
 @Path("/application")
-public class ApplicationEndpoint {
+public class ApplicationPropertyEndpoint {
 
-    private static final Logger logger = LoggerFactory.getLogger(ApplicationEndpoint.class);
+    private static final Logger logger = LoggerFactory.getLogger(ApplicationPropertyEndpoint.class);
 
     private PropertyResourceConverter propertyResourceConverter;
 
@@ -45,13 +45,12 @@ public class ApplicationEndpoint {
 	Map<String, Property> properties = appl.getProperties();
 	logger.debug("properties=" + properties);
 
-	ApplicationResource resourceWrapper = new ApplicationResource(application, context);
+	List<PropertyResource> resources = null;
 	if (properties != null) {
-
-	    List<PropertyResource> resources = propertyResourceConverter.from(properties.values(), context);
+	    resources = propertyResourceConverter.from(properties.values());
 	    logger.debug("propertyResources=" + resources);
-	    resourceWrapper.setPropertyResources(resources);
 	}
+	ApplicationResource resourceWrapper = new ApplicationResource(application, resources);
 
 	return Response.ok(resourceWrapper).build();
     }

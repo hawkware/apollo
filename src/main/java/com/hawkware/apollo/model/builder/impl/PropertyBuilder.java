@@ -9,7 +9,7 @@ import com.hawkware.apollo.model.builder.Builder;
 public class PropertyBuilder implements Builder<Property> {
     String name;
     long timeToLive;
-    Map<String, Object> valuesByContext = new HashMap<String, Object>();
+    Map<String, String> valuesByContext = new HashMap<String, String>();
 
     @Override
     public Property build() {
@@ -30,7 +30,7 @@ public class PropertyBuilder implements Builder<Property> {
 	return this;
     }
 
-    public PropertyBuilder value(String context, Object value) {
+    public PropertyBuilder value(String context, String value) {
 	this.valuesByContext.put(context, value);
 	return this;
     }

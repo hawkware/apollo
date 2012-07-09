@@ -9,11 +9,21 @@ import javax.xml.bind.annotation.XmlType;
 public class PropertyResource {
     private String name;
 
-    private Object value;
+    private String value;
 
     private String context;
 
-    private long timeToLive;
+    private Long timeToLive;
+
+    public PropertyResource() {
+    }
+
+    public PropertyResource(String name, String context, String value, long timeToLive) {
+	this.name = name;
+	this.context = context;
+	this.value = value;
+	this.timeToLive = timeToLive;
+    }
 
     @XmlElement(name = "name")
     public String getName() {
@@ -26,10 +36,10 @@ public class PropertyResource {
 
     @XmlElement(name = "value")
     public String getValue() {
-	return value != null ? value.toString() : null;
+	return value;
     }
 
-    public void setValue(Object value) {
+    public void setValue(String value) {
 	this.value = value;
     }
 
@@ -43,12 +53,18 @@ public class PropertyResource {
     }
 
     @XmlElement(name = "timeToLive")
-    public long getTimeToLive() {
+    public Long getTimeToLive() {
 	return timeToLive;
     }
 
-    public void setTimeToLive(long timeToLive) {
+    public void setTimeToLive(Long timeToLive) {
 	this.timeToLive = timeToLive;
+    }
+
+    @Override
+    public String toString() {
+	return "PropertyResource [name=" + name + ", value=" + value + ", context=" + context + ", timeToLive="
+		+ timeToLive + "]";
     }
 
 }

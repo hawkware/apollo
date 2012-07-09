@@ -12,16 +12,14 @@ public class ApplicationResource {
 
     private String name;
 
-    private String context;
-
     private List<PropertyResource> propertyResources;
 
     public ApplicationResource() {
     }
 
-    public ApplicationResource(String name, String context) {
+    public ApplicationResource(String name, List<PropertyResource> propertyResources) {
 	this.name = name;
-	this.context = context;
+	this.propertyResources = propertyResources;
     }
 
     @XmlElements(value = { @XmlElement(name = "property", type = PropertyResource.class) })
@@ -40,15 +38,6 @@ public class ApplicationResource {
 
     public void setName(String name) {
 	this.name = name;
-    }
-
-    public String getContext() {
-	return context;
-    }
-
-    @XmlAttribute(name = "context")
-    public void setContext(String context) {
-	this.context = context;
     }
 
 }

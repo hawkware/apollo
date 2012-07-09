@@ -1,5 +1,6 @@
 package com.hawkware.apollo.model;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -9,14 +10,13 @@ public class Application {
 
     private String name;
 
-    private Map<String, Property> properties;
+    private Map<String, Property> properties = new HashMap<String, Property>();;
 
     public Application() {
     }
 
     public Application(String name) {
 	this.name = name;
-	this.properties = new HashMap<String, Property>();
     }
 
     public String getName() {
@@ -27,11 +27,29 @@ public class Application {
 	this.name = name;
     }
 
-    public Property getProperty(String name) {
-	if (properties != null) {
-	    return properties.get(name);
+    public void addProperties(Collection<Property> props) {
+	for (Property prop : props) {
+	    addProperty(prop);
 	}
-	return null;
+    }
+
+    public void addProperty(Property property) {
+
+	Property propToUpdate = properties.get(property.getName());
+	if (propToUpdate != null) {
+	    if (propToUpdate.getValuesByContext() != null) {
+		propToUpdate.getValuesByContext().putAll(property.getValuesByContext());
+	    } else {
+		propToUpdate.setValuesByContext(property.getValuesByContext());
+	    }
+	} else {
+	    properties.put(property.getName(), property);
+	}
+
+    }
+
+    public Property getProperty(String name) {
+	return properties.get(name);
     }
 
     public Map<String, Property> getProperties() {

@@ -1,5 +1,6 @@
 package com.hawkware.apollo.model.builder.impl;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -28,6 +29,15 @@ public class ApplicationBuilder implements Builder<Application> {
     public ApplicationBuilder property(Property property) {
 	if (property != null) {
 	    this.properties.put(property.getName(), property);
+	}
+	return this;
+    }
+
+    public ApplicationBuilder properties(Collection<Property> properties) {
+	if (properties != null) {
+	    for (Property property : properties) {
+		property(property);
+	    }
 	}
 	return this;
     }

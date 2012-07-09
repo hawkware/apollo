@@ -27,13 +27,13 @@ import com.hawkware.apollo.rest.resources.ApplicationContextResource;
 import com.hawkware.apollo.rest.resources.ServerResource;
 import com.hawkware.apollo.service.ContextService;
 
-@Path("/context")
-public class ApplicationContextEndpoint {
+@Path("/admin/context")
+public class ApplicationContextAdminEndpoint {
 
     @Context
     UriInfo uriInfo;
 
-    private static final Logger logger = LoggerFactory.getLogger(ApplicationContextEndpoint.class);
+    private static final Logger logger = LoggerFactory.getLogger(ApplicationContextAdminEndpoint.class);
 
     private ServerResourceConverter serverResourceConverter;
 
