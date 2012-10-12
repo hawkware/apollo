@@ -37,7 +37,7 @@ public class ApplicationContextDAOImpl extends GenericDAO<ApplicationContext> {
     }
 
     @Override
-    public Long save(ApplicationContext applicationContext) {
+    public Object save(ApplicationContext applicationContext) {
 	if (applicationContext.getId() == null) {
 	    applicationContext.setId(appContextIdGenerator.getAndIncrement());
 	}
@@ -52,7 +52,7 @@ public class ApplicationContextDAOImpl extends GenericDAO<ApplicationContext> {
     }
 
     @Override
-    public ApplicationContext get(Long id) {
+    public ApplicationContext get(Object id) {
 	return applicationContextsById.get(id);
     }
 

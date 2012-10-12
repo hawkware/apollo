@@ -28,7 +28,7 @@ public class ApplicationServiceImpl implements ApplicationService {
     }
 
     @Override
-    public long saveApplication(Application application) {
+    public Object saveApplication(Application application) {
 	return applicationDAO.save(application);
     }
 

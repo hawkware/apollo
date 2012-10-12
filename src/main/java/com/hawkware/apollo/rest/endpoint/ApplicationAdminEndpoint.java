@@ -3,6 +3,7 @@ package com.hawkware.apollo.rest.endpoint;
 import java.util.Collection;
 import java.util.Map;
 
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -23,9 +24,9 @@ import com.hawkware.apollo.rest.resources.PropertyResource;
 import com.hawkware.apollo.service.ApplicationService;
 
 @Path("/admin/application")
-public class ApplicationPropertyAdminEndpoint {
+public class ApplicationAdminEndpoint {
 
-    private static final Logger logger = LoggerFactory.getLogger(ApplicationPropertyAdminEndpoint.class);
+    private static final Logger logger = LoggerFactory.getLogger(ApplicationAdminEndpoint.class);
 
     private PropertyResourceConverter propertyResourceConverter;
 
@@ -38,8 +39,6 @@ public class ApplicationPropertyAdminEndpoint {
 
 	Collection<Application> appl = applicationService.getApplications(null);
 	logger.debug("applications=" + appl);
-
-	// ApplicationsResource resource = null;
 
 	return Response.ok().build();
     }
@@ -61,7 +60,7 @@ public class ApplicationPropertyAdminEndpoint {
 	Map<String, Property> properties = appl.getProperties();
 	logger.debug("properties=" + properties);
 
-	Collection<PropertyResource> propertyResources = resource.getPropertyResources();
+	Collection<PropertyResource> propertyResources = resource.getProperties();
 	logger.debug("propertyResources to add for " + application + " = " + propertyResources);
 
 	if (propertyResources != null) {
@@ -76,7 +75,7 @@ public class ApplicationPropertyAdminEndpoint {
     }
 
     @POST
-    @Path("/{application}/context/{context}/property/{property}")
+    @Path("/{application}/{context}/{property}")
     @Produces(MediaType.APPLICATION_XML)
     public Response getProperty(@PathParam("application") String application, @PathParam("context") String context,
 	    @PathParam("property") String property, PropertyResource resource) {
@@ -99,6 +98,14 @@ public class ApplicationPropertyAdminEndpoint {
 	applicationService.saveApplication(appl);
 	return Response.ok().build();
 
+    }
+
+    @DELETE
+    @Path("/{application}/{context}/{property}")
+    public Response deleteProperty(@PathParam("application") String application, @PathParam("context") String context,
+	    @PathParam("property") String property) {
+
+	return Response.noContent().build();
     }
 
     public void setPropertyResourceConverter(PropertyResourceConverter propertyResourceConverter) {

@@ -35,7 +35,7 @@ public class ApplicationDAOImpl extends GenericDAO<Application> {
     }
 
     @Override
-    public Long save(Application application) {
+    public Object save(Application application) {
 	if (application.getId() == null) {
 	    application.setId(appIdGenerator.getAndIncrement());
 	}
@@ -50,7 +50,7 @@ public class ApplicationDAOImpl extends GenericDAO<Application> {
     }
 
     @Override
-    public Application get(Long id) {
+    public Application get(Object id) {
 	return applicationsById.get(id);
     }
 

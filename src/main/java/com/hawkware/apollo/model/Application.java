@@ -10,7 +10,9 @@ public class Application {
 
     private String name;
 
-    private Map<String, Property> properties = new HashMap<String, Property>();;
+    private Map<String, Property> properties = new HashMap<String, Property>();
+
+    private Map<String, ApplicationContext> contexts = new HashMap<String, ApplicationContext>();
 
     public Application() {
     }
@@ -68,9 +70,18 @@ public class Application {
 	this.id = id;
     }
 
+    public Map<String, ApplicationContext> getContexts() {
+	return contexts;
+    }
+
+    public void setContexts(Map<String, ApplicationContext> contexts) {
+	this.contexts = contexts;
+    }
+
     @Override
     public String toString() {
-	return "Application [id=" + id + ", name=" + name + ", properties=" + properties + "]";
+	return "Application [id=" + id + ", name=" + name + ", properties=" + properties + ", contexts=" + contexts
+		+ "]";
     }
 
 }

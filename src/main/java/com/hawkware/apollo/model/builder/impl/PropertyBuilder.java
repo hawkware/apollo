@@ -15,7 +15,9 @@ public class PropertyBuilder implements Builder<Property> {
     public Property build() {
 	Property prop = new Property();
 	prop.setName(this.name);
-	prop.setTimeToLive(this.timeToLive);
+	if (this.timeToLive > 0) {
+	    prop.setTimeToLive(this.timeToLive);
+	}
 	prop.setValuesByContext(this.valuesByContext);
 	return prop;
     }

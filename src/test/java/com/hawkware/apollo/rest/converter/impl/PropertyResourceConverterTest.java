@@ -12,6 +12,7 @@ import org.junit.Test;
 import com.hawkware.apollo.model.Property;
 import com.hawkware.apollo.model.builder.impl.PropertyBuilder;
 import com.hawkware.apollo.rest.resources.PropertyResource;
+import com.hawkware.apollo.rest.resources.PropertyValueResource;
 
 public class PropertyResourceConverterTest {
 
@@ -31,27 +32,26 @@ public class PropertyResourceConverterTest {
 
 	assertEquals("test-prop", qaResource.getName());
 	assertEquals(Long.valueOf(100), qaResource.getTimeToLive());
-	assertEquals("qa", qaResource.getContext());
-	assertEquals("qa.value", qaResource.getValue());
+	assertEquals("qa", qaResource.getValue("qa").getContext());
+	assertEquals("qa.value", qaResource.getValue("qa").getValue());
 
 	PropertyResource devResource = converter.from(prop, "dev");
 	assertEquals("test-prop", devResource.getName());
 	assertEquals(Long.valueOf(100), qaResource.getTimeToLive());
-	assertEquals("dev", devResource.getContext());
-	assertEquals("dev.value", devResource.getValue());
+	assertEquals("dev", devResource.getValue("dev").getContext());
+	assertEquals("dev.value", devResource.getValue("dev").getValue());
 
     }
 
     @Test
     public void testToPropertyResource() {
 	PropertyResource resource = new PropertyResource();
-	resource.setName("test.prop.live");
-	resource.setContext("live");
+	resource.setName("test.prop");
+	resource.addValue(new PropertyValueResource("live", "test.value.live"));
 	resource.setTimeToLive(120L);
-	resource.setValue("test.value.live");
 
 	Property property = converter.to(resource);
-	assertEquals("test.prop.live", property.getName());
+	assertEquals("test.prop", property.getName());
 	assertEquals("test.value.live", property.getValue("live"));
 	assertEquals(120, property.getTimeToLive());
 
@@ -71,18 +71,26 @@ public class PropertyResourceConverterTest {
 	properties.add(prop2);
 
 	List<PropertyResource> resources = converter.from(properties);
-	assertEquals(4, resources.size());
+	assertEquals(2, resources.size());
     }
 
     @Test
     public void testToCollectionOfPropertyResource() {
 	List<PropertyResource> resources = new ArrayList<PropertyResource>();
 
-	PropertyResource res1 = new PropertyResource("prop.1", "live", "live.value", 1200);
+	PropertyResource res1 = new PropertyResource("prop.1", 1200);
+	PropertyValueResource pvr1 = new PropertyValueResource("live", "live.value");
+	res1.addValue(pvr1);
 	resources.add(res1);
-	PropertyResource res2 = new PropertyResource("prop.1", "qa", "qa.value", 1300);
+
+	PropertyResource res2 = new PropertyResource("prop.1", 1300);
+	PropertyValueResource pvr2 = new PropertyValueResource("qa", "qa.value");
+	res2.addValue(pvr2);
 	resources.add(res2);
-	PropertyResource res3 = new PropertyResource("prop.2", "live", "live.value", 1400);
+
+	PropertyResource res3 = new PropertyResource("prop.2", 1400);
+	PropertyValueResource pvr3 = new PropertyValueResource("live", "live.value");
+	res2.addValue(pvr3);
 	resources.add(res3);
 
 	Collection<Property> properties = converter.to(resources);

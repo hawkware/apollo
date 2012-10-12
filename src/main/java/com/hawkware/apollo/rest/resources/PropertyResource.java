@@ -1,27 +1,30 @@
 package com.hawkware.apollo.rest.resources;
 
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.XmlType;
 
 @XmlRootElement(name = "property")
-@XmlType(propOrder = { "name", "context", "value", "timeToLive" })
+@XmlType(propOrder = { "name", "values", "timeToLive" })
 public class PropertyResource {
     private String name;
 
-    private String value;
-
-    private String context;
+    private Map<String, PropertyValueResource> values;
 
     private Long timeToLive;
 
     public PropertyResource() {
+	this.values = new HashMap<String, PropertyValueResource>();
     }
 
-    public PropertyResource(String name, String context, String value, long timeToLive) {
+    public PropertyResource(String name, long timeToLive) {
+	this();
 	this.name = name;
-	this.context = context;
-	this.value = value;
 	this.timeToLive = timeToLive;
     }
 
@@ -35,21 +38,25 @@ public class PropertyResource {
     }
 
     @XmlElement(name = "value")
-    public String getValue() {
-	return value;
+    public Collection<PropertyValueResource> getValues() {
+	return values.values();
     }
 
-    public void setValue(String value) {
-	this.value = value;
+    @XmlTransient
+    public Map<String, PropertyValueResource> getValuesMap() {
+	return values;
     }
 
-    @XmlElement(name = "context")
-    public String getContext() {
-	return context;
+    public PropertyValueResource getValue(String context) {
+	return values.get(context);
     }
 
-    public void setContext(String context) {
-	this.context = context;
+    public void setValuesMap(Map<String, PropertyValueResource> values) {
+	this.values = values;
+    }
+
+    public void addValue(PropertyValueResource value) {
+	values.put(value.getContext(), value);
     }
 
     @XmlElement(name = "timeToLive")
@@ -63,8 +70,7 @@ public class PropertyResource {
 
     @Override
     public String toString() {
-	return "PropertyResource [name=" + name + ", value=" + value + ", context=" + context + ", timeToLive="
-		+ timeToLive + "]";
+	return "PropertyResource [name=" + name + ", values=" + values + ", timeToLive=" + timeToLive + "]";
     }
 
 }

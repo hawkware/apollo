@@ -10,7 +10,7 @@ import com.hawkware.apollo.model.Application;
 public class ApplicationDAOMongoImpl extends GenericDAO<Application> {
 
     @Override
-    public Long save(Application object) {
+    public Object save(Application object) {
 	// TODO Auto-generated method stub
 	return null;
     }
@@ -22,7 +22,7 @@ public class ApplicationDAOMongoImpl extends GenericDAO<Application> {
     }
 
     @Override
-    public Application get(Long id) {
+    public Application get(Object id) {
 	// TODO Auto-generated method stub
 	return null;
     }

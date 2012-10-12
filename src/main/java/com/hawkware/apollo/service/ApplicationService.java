@@ -13,6 +13,6 @@ public interface ApplicationService {
 
     public boolean deleteApplication(Application application);
 
-    public long saveApplication(Application application);
+    public Object saveApplication(Application application);
 
 }

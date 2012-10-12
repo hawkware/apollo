@@ -17,20 +17,14 @@
 	
 	<bean id="serverResourceConverter" class="com.hawkware.apollo.rest.converter.impl.ServerResourceConverter" />
 	
-	<bean id="applicationEndpoint" class="com.hawkware.apollo.rest.endpoint.ApplicationPropertyEndpoint" >
+	<bean id="applicationEndpoint" class="com.hawkware.apollo.rest.endpoint.ApplicationEndpoint" >
 		<property name="propertyResourceConverter" ref="propertyResourceConverter" />
 	</bean>
 	
-	<bean id="applicationContextEndpoint" class="com.hawkware.apollo.rest.endpoint.ApplicationContextEndpoint" >
-		<property name="serverResourceConverter" ref="serverResourceConverter" />
-	</bean>
-	
-	<bean id="applicationAdminEndpoint" class="com.hawkware.apollo.rest.endpoint.ApplicationPropertyAdminEndpoint" >
+	<bean id="applicationAdminEndpoint" class="com.hawkware.apollo.rest.endpoint.ApplicationAdminEndpoint" >
 		<property name="propertyResourceConverter" ref="propertyResourceConverter" />
 	</bean>
 	
-	<bean id="applicationContextAdminEndpoint" class="com.hawkware.apollo.rest.endpoint.ApplicationContextAdminEndpoint" >
-		<property name="serverResourceConverter" ref="serverResourceConverter" />
-	</bean>
+	<bean id="urlInvoker" class="com.hawkware.apollo.http.impl.UrlInvokerImpl" />
 	
 </beans>

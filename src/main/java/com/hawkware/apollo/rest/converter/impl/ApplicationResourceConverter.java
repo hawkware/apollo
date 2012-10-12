@@ -21,7 +21,7 @@ public class ApplicationResourceConverter extends ResourceConverter<Application,
 	ApplicationResource resource = new ApplicationResource();
 	resource.setName(application.getName());
 	List<PropertyResource> propertiReosurces = propertyResourceConverter.from(application.getProperties().values());
-	resource.setPropertyResources(propertiReosurces);
+	resource.setProperties(propertiReosurces);
 	return resource;
     }
 
@@ -29,8 +29,8 @@ public class ApplicationResourceConverter extends ResourceConverter<Application,
     public Application to(ApplicationResource resource) {
 	ApplicationBuilder ab = new ApplicationBuilder();
 	ab.name(resource.getName());
-	if (resource.getPropertyResources() != null) {
-	    Collection<Property> properties = propertyResourceConverter.to(resource.getPropertyResources());
+	if (resource.getProperties() != null) {
+	    Collection<Property> properties = propertyResourceConverter.to(resource.getProperties());
 	    ab.properties(properties);
 	}
 	return ab.build();

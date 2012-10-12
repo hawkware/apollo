@@ -24,7 +24,7 @@ public abstract class GenericDAO<T> {
      * @param object
      * @return
      */
-    public abstract Long save(T object);
+    public abstract Object save(T object);
 
     /**
      * 
@@ -40,7 +40,7 @@ public abstract class GenericDAO<T> {
      * @param id
      * @return
      */
-    public abstract T get(Long id);
+    public abstract T get(Object id);
 
     /**
      * 

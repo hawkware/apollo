@@ -44,7 +44,7 @@ public class ApplicationContextServiceImpl implements ContextService {
     }
 
     @Override
-    public long saveContext(ApplicationContext applicationContext) {
+    public Object saveContext(ApplicationContext applicationContext) {
 	return applicationContextDAO.save(applicationContext);
     }
 

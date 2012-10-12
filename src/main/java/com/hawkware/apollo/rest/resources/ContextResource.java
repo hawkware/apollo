@@ -8,15 +8,15 @@ import javax.xml.bind.annotation.XmlElements;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement(name = "context")
-public class ApplicationContextResource {
+public class ContextResource {
     private String name;
 
     private List<ServerResource> serverResources;
 
-    public ApplicationContextResource() {
+    public ContextResource() {
     }
 
-    public ApplicationContextResource(String name, List<ServerResource> serverResources) {
+    public ContextResource(String name, List<ServerResource> serverResources) {
 	this.name = name;
 	this.serverResources = serverResources;
     }
@@ -41,7 +41,7 @@ public class ApplicationContextResource {
 
     @Override
     public String toString() {
-	return "ApplicationContextResource [name=" + name + ", serverResources=" + serverResources + "]";
+	return "ContextResource [name=" + name + ", serverResources=" + serverResources + "]";
     }
 
 }

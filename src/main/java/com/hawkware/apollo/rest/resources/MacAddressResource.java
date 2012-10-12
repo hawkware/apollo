@@ -3,7 +3,7 @@ package com.hawkware.apollo.rest.resources;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlValue;
 
-@XmlRootElement(name = "ipAddress")
+@XmlRootElement(name = "macAddress")
 public class MacAddressResource {
     private String value;
 

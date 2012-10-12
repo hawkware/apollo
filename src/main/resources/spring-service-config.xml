@@ -16,4 +16,6 @@
 			<property name="applicationContextDAO" ref="applicationContextDAO" />
 	</bean>
 	
+	<bean id="contextValidator" class="com.hawkware.apollo.validator.impl.ContextValidatorImpl" />
+	
 </beans>
