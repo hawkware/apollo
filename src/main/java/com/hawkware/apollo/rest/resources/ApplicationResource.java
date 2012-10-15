@@ -50,4 +50,9 @@ public class ApplicationResource {
 	this.contexts = contexts;
     }
 
+    @Override
+    public String toString() {
+	return "ApplicationResource [name=" + name + ", properties=" + properties + ", contexts=" + contexts + "]";
+    }
+
 }
