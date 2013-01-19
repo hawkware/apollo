@@ -23,7 +23,12 @@ public class PropertyResourceConverter {
 	    return null;
 	}
 	PropertyResource resource = new PropertyResource();
-	resource.setName(property.getName());
+
+	String propName = property.getName();
+	if (propName != null && propName.contains("^")) {
+	    propName = propName.replaceAll("\\^", "\\.");
+	}
+	resource.setName(propName);
 
 	if (context != null) {
 	    PropertyValueResource pvr = new PropertyValueResource(context, property.getValue(context));
@@ -44,11 +49,22 @@ public class PropertyResourceConverter {
 	if (resource == null) {
 	    return null;
 	}
-	PropertyBuilder builder = new PropertyBuilder();
-	builder.name(resource.getName()).timeToLive(resource.getTimeToLive());
+	String propName = resource.getName();
+	if (propName != null && propName.contains(".")) {
+	    propName = propName.replaceAll("\\.", "\\^");
+	}
 
-	for (PropertyValueResource pvr : resource.getValues()) {
-	    builder.value(pvr.getContext(), pvr.getValue());
+	PropertyBuilder builder = new PropertyBuilder();
+	builder.name(propName);
+	if (resource.getTimeToLive() != null) {
+	    builder.timeToLive(resource.getTimeToLive());
+	}
+
+	Collection<PropertyValueResource> valuesList = resource.getValues();
+	if (valuesList != null && valuesList.size() > 0) {
+	    for (PropertyValueResource pvr : resource.getValues()) {
+		builder.value(pvr.getContext(), pvr.getValue());
+	    }
 	}
 	return builder.build();
     }

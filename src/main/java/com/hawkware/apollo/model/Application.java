@@ -6,7 +6,7 @@ import java.util.Map;
 
 public class Application {
 
-    private Long id;
+    private String id;
 
     private String name;
 
@@ -50,38 +50,107 @@ public class Application {
 
     }
 
+    public void addContext(ApplicationContext context) {
+	ApplicationContext ctxToUpdate = contexts.get(context.getName());
+	if (ctxToUpdate != null) {
+	    if (ctxToUpdate.getServers() != null) {
+		ctxToUpdate.getServers().addAll(context.getServers());
+	    } else {
+		ctxToUpdate.setServers(context.getServers());
+	    }
+	} else {
+	    contexts.put(context.getName(), context);
+	}
+    }
+
     public Property getProperty(String name) {
 	return properties.get(name);
     }
 
-    public Map<String, Property> getProperties() {
-	return properties;
+    public ApplicationContext getContext(String name) {
+	return contexts.get(name);
     }
 
-    public void setProperties(Map<String, Property> properties) {
-	this.properties = properties;
+    public Collection<Property> getProperties() {
+	return properties.values();
     }
 
-    public Long getId() {
+    public void setProperties(Collection<Property> properties) {
+	if (properties != null) {
+	    for (Property property : properties) {
+		addProperty(property);
+	    }
+	}
+    }
+
+    public Collection<ApplicationContext> getContexts() {
+	return contexts.values();
+    }
+
+    public void setContexts(Collection<ApplicationContext> contexts) {
+	if (contexts != null) {
+	    for (ApplicationContext context : contexts) {
+		addContext(context);
+	    }
+	}
+
+    }
+
+    public String getId() {
 	return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
 	this.id = id;
-    }
-
-    public Map<String, ApplicationContext> getContexts() {
-	return contexts;
-    }
-
-    public void setContexts(Map<String, ApplicationContext> contexts) {
-	this.contexts = contexts;
     }
 
     @Override
     public String toString() {
 	return "Application [id=" + id + ", name=" + name + ", properties=" + properties + ", contexts=" + contexts
 		+ "]";
+    }
+
+    @Override
+    public int hashCode() {
+	final int prime = 31;
+	int result = 1;
+	result = prime * result + ((contexts == null) ? 0 : contexts.hashCode());
+	result = prime * result + ((id == null) ? 0 : id.hashCode());
+	result = prime * result + ((name == null) ? 0 : name.hashCode());
+	result = prime * result + ((properties == null) ? 0 : properties.hashCode());
+	return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+	if (this == obj)
+	    return true;
+	if (obj == null)
+	    return false;
+	if (getClass() != obj.getClass())
+	    return false;
+	Application other = (Application) obj;
+	if (contexts == null) {
+	    if (other.contexts != null)
+		return false;
+	} else if (contexts.size() != other.contexts.size())
+	    return false;
+	if (id == null) {
+	    if (other.id != null)
+		return false;
+	} else if (!id.equals(other.id))
+	    return false;
+	if (name == null) {
+	    if (other.name != null)
+		return false;
+	} else if (!name.equals(other.name))
+	    return false;
+	if (properties == null) {
+	    if (other.properties != null)
+		return false;
+	} else if (properties.size() != other.properties.size())
+	    return false;
+	return true;
     }
 
 }

@@ -4,6 +4,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
@@ -28,7 +29,7 @@ public class PropertyResource {
 	this.timeToLive = timeToLive;
     }
 
-    @XmlElement(name = "name")
+    @XmlAttribute(name = "name")
     public String getName() {
 	return name;
     }
@@ -59,7 +60,7 @@ public class PropertyResource {
 	values.put(value.getContext(), value);
     }
 
-    @XmlElement(name = "timeToLive")
+    @XmlAttribute(name = "timeToLive")
     public Long getTimeToLive() {
 	return timeToLive;
     }

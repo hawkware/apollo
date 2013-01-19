@@ -25,6 +25,4 @@
 		<property name="propertyResourceConverter" ref="propertyResourceConverter" />
 	</bean>
 	
-	<bean id="urlInvoker" class="com.hawkware.apollo.http.impl.UrlInvokerImpl" />
-	
 </beans>

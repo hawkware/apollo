@@ -4,7 +4,6 @@ import java.util.Collection;
 import java.util.Map;
 
 import com.hawkware.apollo.dao.GenericDAO;
-import com.hawkware.apollo.dao.query.Criterion;
 import com.hawkware.apollo.model.Application;
 import com.hawkware.apollo.service.ApplicationService;
 
@@ -18,7 +17,7 @@ public class ApplicationServiceImpl implements ApplicationService {
     }
 
     @Override
-    public Collection<Application> getApplications(Map<String, Criterion> criteria) {
+    public Collection<Application> getApplications(Map<String, Object> criteria) {
 	return applicationDAO.get(criteria);
     }
 

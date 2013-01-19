@@ -26,17 +26,17 @@ public class PropertyResourceConverterTest {
     @Test
     public void testFromPropertyString() {
 	PropertyBuilder pb = new PropertyBuilder();
-	Property prop = pb.name("test-prop").timeToLive(100).value("qa", "qa.value").value("dev", "dev.value").build();
+	Property prop = pb.name("test.prop").timeToLive(100).value("qa", "qa.value").value("dev", "dev.value").build();
 
 	PropertyResource qaResource = converter.from(prop, "qa");
 
-	assertEquals("test-prop", qaResource.getName());
+	assertEquals("test.prop", qaResource.getName());
 	assertEquals(Long.valueOf(100), qaResource.getTimeToLive());
 	assertEquals("qa", qaResource.getValue("qa").getContext());
 	assertEquals("qa.value", qaResource.getValue("qa").getValue());
 
 	PropertyResource devResource = converter.from(prop, "dev");
-	assertEquals("test-prop", devResource.getName());
+	assertEquals("test.prop", devResource.getName());
 	assertEquals(Long.valueOf(100), qaResource.getTimeToLive());
 	assertEquals("dev", devResource.getValue("dev").getContext());
 	assertEquals("dev.value", devResource.getValue("dev").getValue());
@@ -51,7 +51,7 @@ public class PropertyResourceConverterTest {
 	resource.setTimeToLive(120L);
 
 	Property property = converter.to(resource);
-	assertEquals("test.prop", property.getName());
+	assertEquals("test^prop", property.getName());
 	assertEquals("test.value.live", property.getValue("live"));
 	assertEquals(120, property.getTimeToLive());
 
@@ -62,12 +62,12 @@ public class PropertyResourceConverterTest {
 	List<Property> properties = new ArrayList<Property>();
 
 	PropertyBuilder pb1 = new PropertyBuilder();
-	Property prop1 = pb1.name("prop.1").timeToLive(1234).value("dev", "dev.value").value("qa", "qa.value")
+	Property prop1 = pb1.name("prop.1t").timeToLive(1234).value("dev", "dev.value").value("qa", "qa.value")
 		.value("live", "live.value").build();
 	properties.add(prop1);
 
 	PropertyBuilder pb2 = new PropertyBuilder();
-	Property prop2 = pb2.name("prop.2").timeToLive(1234).value("live", "live.value").build();
+	Property prop2 = pb2.name("prop.2e").timeToLive(1234).value("live", "live.value").build();
 	properties.add(prop2);
 
 	List<PropertyResource> resources = converter.from(properties);

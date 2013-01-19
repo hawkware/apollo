@@ -1,69 +1,79 @@
 package com.hawkware.apollo.dao.impl;
 
+import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
-import java.util.concurrent.atomic.AtomicLong;
+import java.util.Map.Entry;
+
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
 
 import com.hawkware.apollo.dao.GenericDAO;
-import com.hawkware.apollo.dao.query.Criterion;
 import com.hawkware.apollo.model.Application;
-import com.hawkware.apollo.model.builder.impl.ApplicationBuilder;
-import com.hawkware.apollo.model.builder.impl.PropertyBuilder;
 
 public class ApplicationDAOImpl extends GenericDAO<Application> {
 
-    private AtomicLong appIdGenerator = new AtomicLong(10001);
-    private Map<String, Application> applicationsByName = new HashMap<String, Application>();
-    private Map<Long, Application> applicationsById = new HashMap<Long, Application>();
+    private MongoTemplate mongoTemplate;
 
     public ApplicationDAOImpl() {
-	Application corona = new ApplicationBuilder()
-		.name("corona")
-		.property(
-			new PropertyBuilder().name("callstatus.url")
-				.value("local", "http://localhost:8280/services/voxeo/callstatus")
-				.value("dev", "http://api.dev.privilink.com/services/voxeo/callstatus")
-				.value("qa", "http://api.qa.privilink.com/services/voxeo/callstatus")
-				.value("live", "http://api.privilink.com/services/voxeo/callstatus").build())
-		.property(
-			new PropertyBuilder().name("scheduler.url").value("local", "http://localhost:8280/scheduler")
-				.value("dev", "http://scheduler.dev.byteborne.com/scheduler")
-				.value("qa", "http://scheduler.qa.byteborne.com/scheduler")
-				.value("live", "http://scheduler.byteborne.com/scheduler").build()).build();
-	save(corona);
     }
 
     @Override
     public Object save(Application application) {
-	if (application.getId() == null) {
-	    application.setId(appIdGenerator.getAndIncrement());
-	}
-	applicationsByName.put(application.getName(), application);
-	applicationsById.put(application.getId(), application);
+	mongoTemplate.save(application, Application.class.getName());
 	return application.getId();
     }
 
     @Override
-    public Application get(String keyName, Object keyValue) {
-	return applicationsByName.get(keyValue);
+    public Application get(String key, Object value) {
+	Application application = mongoTemplate.findOne(new Query(Criteria.where(key).is(value)), Application.class,
+		Application.class.getName());
+
+	return application;
     }
 
     @Override
     public Application get(Object id) {
-	return applicationsById.get(id);
+	Application application = mongoTemplate.findOne(new Query(Criteria.where("id").is(id)), Application.class,
+		Application.class.getName());
+
+	return application;
     }
 
     @Override
-    public Collection<Application> get(Map<String, Criterion> criteriaMap) {
-	return applicationsByName.values();
+    public Collection<Application> get(Map<String, Object> criteriaMap) {
+	List<Application> aplications = new ArrayList<Application>();
+	if (criteriaMap != null && !criteriaMap.isEmpty()) {
+	    Criteria criteria = new Criteria();
+	    boolean first = true;
+	    for (Entry<String, Object> entry : criteriaMap.entrySet()) {
+		if (first) {
+		    criteria = Criteria.where(entry.getKey()).is(entry.getValue());
+		    first = false;
+		    continue;
+		}
+		criteria.and(entry.getKey()).is(entry.getValue());
+	    }
+	    aplications = mongoTemplate.find(new Query(criteria), Application.class, Application.class.getName());
+	}
+
+	return aplications;
     }
 
     @Override
     public boolean delete(Application application) {
-	Application byName = applicationsByName.remove(application.getName());
-	Application byId = applicationsById.remove(application.getId());
-	return byId == byName;
+	try {
+	    mongoTemplate.remove(new Query(Criteria.where("name").is(application.getName())),
+		    Application.class.getName());
+	    return true;
+	} catch (Exception e) {
+	    return false;
+	}
     }
 
+    public void setMongoTemplate(MongoTemplate mongoTemplate) {
+	this.mongoTemplate = mongoTemplate;
+    }
 }

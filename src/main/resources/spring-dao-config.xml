@@ -8,8 +8,12 @@
 			http://cxf.apache.org/jaxws http://cxf.apache.org/schemas/jaxws.xsd
 			http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-2.0.xsd">
 	
-	<bean id="applicationDAO" class="com.hawkware.apollo.dao.impl.ApplicationDAOImpl" />
+	<bean id="applicationDAO" class="com.hawkware.apollo.dao.impl.ApplicationDAOImpl" >
+		<property name="mongoTemplate" ref="mongoTemplate" />
+	</bean>
 	
-	<bean id="applicationContextDAO" class="com.hawkware.apollo.dao.impl.ApplicationContextDAOImpl" />
+	<bean id="applicationContextDAO" class="com.hawkware.apollo.dao.impl.ApplicationContextDAOImpl" >
+		<property name="mongoTemplate" ref="mongoTemplate" />
+	</bean>
 	
 </beans>

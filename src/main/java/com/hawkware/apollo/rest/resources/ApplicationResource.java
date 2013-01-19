@@ -1,5 +1,6 @@
 package com.hawkware.apollo.rest.resources;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.xml.bind.annotation.XmlAttribute;
@@ -12,9 +13,9 @@ public class ApplicationResource {
 
     private String name;
 
-    private List<PropertyResource> properties;
+    private List<PropertyResource> properties = new ArrayList<PropertyResource>();
 
-    private List<ContextResource> contexts;
+    private List<ContextResource> contexts = new ArrayList<ContextResource>();
 
     public ApplicationResource() {
     }
@@ -42,6 +43,7 @@ public class ApplicationResource {
 	this.name = name;
     }
 
+    @XmlElements(value = { @XmlElement(name = "context", type = ContextResource.class) })
     public List<ContextResource> getContexts() {
 	return contexts;
     }

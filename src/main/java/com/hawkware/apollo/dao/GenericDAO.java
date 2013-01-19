@@ -6,8 +6,6 @@ package com.hawkware.apollo.dao;
 import java.util.Collection;
 import java.util.Map;
 
-import com.hawkware.apollo.dao.query.Criterion;
-
 /**
  * 
  * Generic DAO implementation
@@ -47,7 +45,7 @@ public abstract class GenericDAO<T> {
      * @param criteriaMap
      * @return
      */
-    public abstract Collection<T> get(Map<String, Criterion> criteriaMap);
+    public abstract Collection<T> get(Map<String, Object> criteriaMap);
 
     /**
      * 

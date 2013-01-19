@@ -9,6 +9,7 @@
 
 	<properties>
 		<org.springframework.version>3.1.1.RELEASE</org.springframework.version>
+		<org.springdata.mongo.version>1.1.1.RELEASE</org.springdata.mongo.version>
 		<cxf.version>2.2.3</cxf.version>
 		<slf4j.version>1.6.4</slf4j.version>
 	</properties>
@@ -123,7 +124,7 @@
 
 	<distributionManagement>
 		<snapshotRepository>
-			<id>releases</id>
+			<id>snapshots</id>
 			<url>scpexe://ci@codebox.byteborne.com:/home/ci/repository/snapshots</url>
 		</snapshotRepository>
 		<repository>
@@ -134,7 +135,7 @@
 
 	<repositories>
 		<repository>
-			<id>byteborne-central</id>
+			<id>releases</id>
 			<url>http://codebox.byteborne.com:8081/nexus/content/repositories/releases</url>
 			<name>releases</name>
 			<snapshots>
@@ -144,11 +145,22 @@
 				<enabled>true</enabled>
 			</releases>
 		</repository>
+		<repository>
+			<id>snapshots</id>
+			<url>http://codebox.byteborne.com:8081/nexus/content/repositories/snapshots</url>
+			<name>releases</name>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+			<releases>
+				<enabled>false</enabled>
+			</releases>
+		</repository>
 	</repositories>
 
 	<pluginRepositories>
 		<pluginRepository>
-			<id>byteborne.releases</id>
+			<id>releases</id>
 			<url>http://codebox.byteborne.com:8081/nexus/content/repositories/releases</url>
 			<snapshots>
 				<enabled>false</enabled>
@@ -157,12 +169,22 @@
 				<enabled>true</enabled>
 			</releases>
 		</pluginRepository>
+		<pluginRepository>
+			<id>snapshots</id>
+			<url>http://codebox.byteborne.com:8081/nexus/content/repositories/snapshots</url>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+			<releases>
+				<enabled>false</enabled>
+			</releases>
+		</pluginRepository>
 	</pluginRepositories>
 
-	<description>Open Source Application Configuration Management System</description>
+	<description>Application Configuration Management System</description>
 
 	<organization>
-		<name>Hawkware, Inc</name>
+		<name>Hawkware</name>
 		<url>www.hawkware.co</url>
 	</organization>
 
@@ -182,27 +204,6 @@
 	</issueManagement>
 
 	<dependencies>
-	
-		<dependency>
-			<groupId>com.basho.riak</groupId>
-			<artifactId>riak-client</artifactId>
-			<version>1.0.5</version>
-			<type>pom</type>
-		</dependency>
-
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<version>4.10</version>
-			<scope>test</scope>
-		</dependency>
-
-		<dependency>
-			<groupId>org.mockito</groupId>
-			<artifactId>mockito-all</artifactId>
-			<version>1.8.4</version>
-			<scope>test</scope>
-		</dependency>
 
 		<dependency>
 			<groupId>org.slf4j</groupId>
@@ -421,6 +422,12 @@
 		</dependency>
 
 		<dependency>
+			<groupId>org.springframework.data</groupId>
+			<artifactId>spring-data-mongodb</artifactId>
+			<version>${org.springdata.mongo.version}</version>
+		</dependency>
+
+		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-test</artifactId>
 			<version>${org.springframework.version}</version>
@@ -441,12 +448,6 @@
 		</dependency>
 
 		<dependency>
-			<groupId>org.springframework.data</groupId>
-			<artifactId>spring-data-mongodb</artifactId>
-			<version>1.0.1.RELEASE</version>
-		</dependency>
-
-		<dependency>
 			<groupId>org.apache.httpcomponents</groupId>
 			<artifactId>httpclient</artifactId>
 			<version>4.1.1</version>
@@ -456,6 +457,34 @@
 			<groupId>org.apache.httpcomponents</groupId>
 			<artifactId>httpcore</artifactId>
 			<version>4.1</version>
+		</dependency>
+
+		<dependency>
+			<groupId>hawkware</groupId>
+			<artifactId>common-core</artifactId>
+			<version>0.1.0-SNAPSHOT</version>
+		</dependency>
+
+		<!-- test dependencies -->
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.10</version>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.mockito</groupId>
+			<artifactId>mockito-all</artifactId>
+			<version>1.8.4</version>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>de.flapdoodle.embedmongo</groupId>
+			<artifactId>de.flapdoodle.embedmongo</artifactId>
+			<version>1.11</version>
+			<scope>test</scope>
 		</dependency>
 
 	</dependencies>

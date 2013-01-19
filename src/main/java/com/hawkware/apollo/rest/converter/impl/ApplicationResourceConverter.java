@@ -20,7 +20,7 @@ public class ApplicationResourceConverter extends ResourceConverter<Application,
     public ApplicationResource from(Application application) {
 	ApplicationResource resource = new ApplicationResource();
 	resource.setName(application.getName());
-	List<PropertyResource> propertiReosurces = propertyResourceConverter.from(application.getProperties().values());
+	List<PropertyResource> propertiReosurces = propertyResourceConverter.from(application.getProperties());
 	resource.setProperties(propertiReosurces);
 	return resource;
     }

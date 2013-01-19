@@ -1,6 +1,7 @@
 package com.hawkware.apollo.model.builder.impl;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import com.hawkware.apollo.model.ApplicationContext;
@@ -28,6 +29,15 @@ public class ApplicationContextBuilder implements Builder<ApplicationContext> {
     public ApplicationContextBuilder server(Server server) {
 	if (server != null) {
 	    this.servers.add(server);
+	}
+	return this;
+    }
+
+    public ApplicationContextBuilder servers(Collection<Server> servers) {
+	if (servers != null) {
+	    for (Server server : servers) {
+		server(server);
+	    }
 	}
 	return this;
     }

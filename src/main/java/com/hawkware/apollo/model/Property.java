@@ -7,7 +7,7 @@ public class Property {
     private static final long ONE_DAY_IN_SECS = 24 * 60 * 60;
     private String name;
 
-    private Map<String, String> valuesByContext;
+    private Map<String, String> valuesByContext = new HashMap<String, String>();
 
     private long timeToLive = ONE_DAY_IN_SECS;
 

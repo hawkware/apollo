@@ -47,15 +47,25 @@ public class ApplicationEndpointTest {
 	applicationEndpoint.setPropertyResourceConverter(propertyResourceConverter);
     }
 
-    @Test(expected = WebApplicationException.class)
+    @Test()
     public void testGetApplicationWithInvalidContext() throws ContextValidationException {
 	String application = "app";
 	String context = "dodgy";
+	String expectedMessage = "invalid context [dodgy]";
 
 	when(contextValidator.validateContext(context, requestContext)).thenThrow(
 		new ContextValidationException("invalid context [" + context + "]"));
+	try {
+	    applicationEndpoint.getApplication(application, context, requestContext, null);
+	} catch (Exception e) {
+	    assertEquals(WebApplicationException.class.getName(), e.getClass().getName());
 
-	applicationEndpoint.getApplication(application, context, requestContext, null);
+	    WebApplicationException wae = (WebApplicationException) e;
+	    String message = wae.getResponse().getMetadata().get("Message").get(0).toString();
+	    assertEquals(expectedMessage, message);
+
+	    assertEquals(Status.UNAUTHORIZED.getStatusCode(), wae.getResponse().getStatus());
+	}
     }
 
     @Test
@@ -113,20 +123,29 @@ public class ApplicationEndpointTest {
 	assertEquals(1, resource.getProperties().size());
     }
 
-    @Test(expected = WebApplicationException.class)
+    @Test()
     public void testGetPropertyNullProperty() throws ContextValidationException {
-
 	String application = "app";
 	String context = "dev";
 	String property = "prop.test";
-	String propertyValue = "prop.value";
+	String expectedMessage = "property [prop.test] could not be found";
 
 	Application appl = new ApplicationBuilder().name(application).build();
 
 	when(contextValidator.validateContext(context, requestContext)).thenReturn(context);
 	when(applicationService.getApplication(application)).thenReturn(appl);
 
-	Response response = applicationEndpoint.getProperty(application, context, property, requestContext, null);
+	try {
+	    applicationEndpoint.getProperty(application, context, property, requestContext, null);
+	} catch (Exception e) {
+	    assertEquals(WebApplicationException.class.getName(), e.getClass().getName());
+
+	    WebApplicationException wae = (WebApplicationException) e;
+	    String message = wae.getResponse().getMetadata().get("Message").get(0).toString();
+	    assertEquals(expectedMessage, message);
+
+	    assertEquals(Status.NOT_FOUND.getStatusCode(), wae.getResponse().getStatus());
+	}
 
     }
 

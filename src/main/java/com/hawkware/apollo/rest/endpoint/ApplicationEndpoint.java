@@ -1,7 +1,7 @@
 package com.hawkware.apollo.rest.endpoint;
 
+import java.util.Collection;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.GET;
@@ -57,18 +57,12 @@ public class ApplicationEndpoint {
 	logger.debug("application=" + application);
 
 	if (appl != null) {
-	    Map<String, Property> properties = appl.getProperties();
+	    Collection<Property> properties = appl.getProperties();
 	    logger.debug("properties=" + properties);
 
 	    List<PropertyResource> resources = null;
 	    if (properties != null) {
-		try {
-		    resources = propertyResourceConverter.from(properties.values(), context);
-		} catch (Exception e) {
-		    logger.error("invalid proprty", e);
-		    throw new WebApplicationException(Response.status(Status.BAD_REQUEST)
-			    .header("Message", e.getMessage()).build());
-		}
+		resources = propertyResourceConverter.from(properties, context);
 		logger.debug("propertyResources=" + resources);
 	    }
 	    ApplicationResource resourceWrapper = new ApplicationResource(application, resources);

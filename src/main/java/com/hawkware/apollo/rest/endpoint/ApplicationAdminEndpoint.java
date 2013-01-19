@@ -1,7 +1,6 @@
 package com.hawkware.apollo.rest.endpoint;
 
 import java.util.Collection;
-import java.util.Map;
 
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -57,7 +56,7 @@ public class ApplicationAdminEndpoint {
 	    logger.debug("retrieved applicaiton " + appl);
 	}
 
-	Map<String, Property> properties = appl.getProperties();
+	Collection<Property> properties = appl.getProperties();
 	logger.debug("properties=" + properties);
 
 	Collection<PropertyResource> propertyResources = resource.getProperties();
@@ -68,8 +67,8 @@ public class ApplicationAdminEndpoint {
 	    appl.addProperties(props);
 	    applicationService.saveApplication(appl);
 	    return Response.ok(
-		    new ApplicationResource(appl.getName(), propertyResourceConverter.from(appl.getProperties()
-			    .values()))).build();
+		    new ApplicationResource(appl.getName(), propertyResourceConverter.from(appl.getProperties())))
+		    .build();
 	}
 	return Response.ok("<message>application not updated!</message>").build();
     }

@@ -4,16 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Server {
-    private List<String> hostNames;
+    private List<String> hostNames = new ArrayList<String>();
 
-    private List<String> ipAddresses;
-
-    private List<String> macAddresses;
+    private List<String> ipAddresses = new ArrayList<String>();
 
     public Server() {
 	this.hostNames = new ArrayList<String>();
 	this.ipAddresses = new ArrayList<String>();
-	this.macAddresses = new ArrayList<String>();
     }
 
     public List<String> getHostNames() {
@@ -32,18 +29,9 @@ public class Server {
 	this.ipAddresses = ipAddresses;
     }
 
-    public List<String> getMacAddresses() {
-	return macAddresses;
-    }
-
-    public void setMacAddresses(List<String> macAddresses) {
-	this.macAddresses = macAddresses;
-    }
-
     @Override
     public String toString() {
-	return "Server [hostNames=" + hostNames + ", ipAddresses=" + ipAddresses + ", macAddresses=" + macAddresses
-		+ "]";
+	return "Server [hostNames=" + hostNames + ", ipAddresses=" + ipAddresses + "]";
     }
 
 }

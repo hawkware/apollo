@@ -4,11 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ApplicationContext {
-    private Long id;
+    private String id;
 
     private String name;
 
-    private List<Server> servers;
+    private List<Server> servers = new ArrayList<Server>();
 
     public ApplicationContext() {
     }
@@ -34,11 +34,11 @@ public class ApplicationContext {
 	this.servers = servers;
     }
 
-    public Long getId() {
+    public String getId() {
 	return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
 	this.id = id;
     }
 
@@ -79,7 +79,7 @@ public class ApplicationContext {
 	if (servers == null) {
 	    if (other.servers != null)
 		return false;
-	} else if (!servers.equals(other.servers))
+	} else if (servers.size() != other.servers.size())
 	    return false;
 	return true;
     }

@@ -17,7 +17,7 @@ public class ApplicationBuilder implements Builder<Application> {
     public Application build() {
 	Application app = new Application();
 	app.setName(this.name);
-	app.setProperties(this.properties);
+	app.setProperties(this.properties.values());
 	return app;
     }
 

@@ -5,11 +5,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.hawkware.apollo.dao.GenericDAO;
-import com.hawkware.apollo.dao.query.Criterion;
-import com.hawkware.apollo.dao.query.impl.In;
 import com.hawkware.apollo.model.ApplicationContext;
 import com.hawkware.apollo.model.Server;
 import com.hawkware.apollo.service.ContextService;
+import com.hawkware.common.query.In;
 
 public class ApplicationContextServiceImpl implements ContextService {
 
@@ -22,7 +21,7 @@ public class ApplicationContextServiceImpl implements ContextService {
 
     @Override
     public ApplicationContext getContext(Server server) {
-	Map<String, Criterion> criteria = new HashMap<String, Criterion>();
+	Map<String, Object> criteria = new HashMap<String, Object>();
 
 	criteria.put("server.hostName", new In("server.hostName", server.getHostNames().toArray()));
 
@@ -34,7 +33,7 @@ public class ApplicationContextServiceImpl implements ContextService {
     }
 
     @Override
-    public Collection<ApplicationContext> getContexts(Map<String, Criterion> criteria) {
+    public Collection<ApplicationContext> getContexts(Map<String, Object> criteria) {
 	return applicationContextDAO.get(criteria);
     }
 
