@@ -8,7 +8,6 @@ import com.hawkware.apollo.dao.GenericDAO;
 import com.hawkware.apollo.model.ApplicationContext;
 import com.hawkware.apollo.model.Server;
 import com.hawkware.apollo.service.ContextService;
-import com.hawkware.common.query.In;
 
 public class ApplicationContextServiceImpl implements ContextService {
 
@@ -23,7 +22,7 @@ public class ApplicationContextServiceImpl implements ContextService {
     public ApplicationContext getContext(Server server) {
 	Map<String, Object> criteria = new HashMap<String, Object>();
 
-	criteria.put("server.hostName", new In("server.hostName", server.getHostNames().toArray()));
+	criteria.put("server.hostName", server.getHostNames());
 
 	Collection<ApplicationContext> contexts = getContexts(criteria);
 	if (contexts != null && contexts.iterator().hasNext()) {

@@ -19,6 +19,7 @@
 	
 	<bean id="applicationEndpoint" class="com.hawkware.apollo.rest.endpoint.ApplicationEndpoint" >
 		<property name="propertyResourceConverter" ref="propertyResourceConverter" />
+		<property name="contextValidationEnabled" value="${context.validation.enabled}" />
 	</bean>
 	
 	<bean id="applicationAdminEndpoint" class="com.hawkware.apollo.rest.endpoint.ApplicationAdminEndpoint" >

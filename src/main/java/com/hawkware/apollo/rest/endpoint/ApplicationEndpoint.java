@@ -42,6 +42,8 @@ public class ApplicationEndpoint {
     @Autowired
     private ContextValidator contextValidator;
 
+    private boolean contextValidationEnabled = false;
+
     @GET
     @Path("/{application}")
     @Produces(MediaType.APPLICATION_XML)
@@ -111,12 +113,14 @@ public class ApplicationEndpoint {
     }
 
     String validateContext(String context, HttpServletRequest requestContext) {
-	try {
-	    context = contextValidator.validateContext(context, requestContext);
-	} catch (ContextValidationException cve) {
-	    logger.error("invalid context", cve);
-	    throw new WebApplicationException(Response.status(Status.UNAUTHORIZED).header("Message", cve.getMessage())
-		    .build());
+	if (contextValidationEnabled) {
+	    try {
+		context = contextValidator.validateContext(context, requestContext);
+	    } catch (ContextValidationException cve) {
+		logger.error("invalid context", cve);
+		throw new WebApplicationException(Response.status(Status.UNAUTHORIZED)
+			.header("Message", cve.getMessage()).build());
+	    }
 	}
 	return context;
     }
@@ -131,5 +135,9 @@ public class ApplicationEndpoint {
 
     public void setContextValidator(ContextValidator contextValidator) {
 	this.contextValidator = contextValidator;
+    }
+
+    public void setContextValidationEnabled(boolean contextValidationEnabled) {
+	this.contextValidationEnabled = contextValidationEnabled;
     }
 }

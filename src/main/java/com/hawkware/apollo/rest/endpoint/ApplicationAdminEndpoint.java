@@ -43,15 +43,14 @@ public class ApplicationAdminEndpoint {
     }
 
     @POST
-    @Path("/{application}")
     @Produces(MediaType.APPLICATION_XML)
-    public Response getProperties(@PathParam("application") String application, ApplicationResource resource) {
-	logger.debug("updating properties for application=" + application);
+    public Response getProperties(ApplicationResource resource) {
+	logger.debug("adding  resource=" + resource);
 
-	Application appl = applicationService.getApplication(application);
+	Application appl = applicationService.getApplication(resource.getName());
 	if (appl == null) {
-	    logger.debug("no applicaiton found with name = " + application + " so creating new one");
-	    appl = new Application(application);
+	    logger.debug("no applicaiton found with name = " + resource.getName() + " so creating new one");
+	    appl = new Application(resource.getName());
 	} else {
 	    logger.debug("retrieved applicaiton " + appl);
 	}
@@ -60,30 +59,30 @@ public class ApplicationAdminEndpoint {
 	logger.debug("properties=" + properties);
 
 	Collection<PropertyResource> propertyResources = resource.getProperties();
-	logger.debug("propertyResources to add for " + application + " = " + propertyResources);
+	logger.debug("propertyResources to add for " + resource.getName() + " = " + propertyResources);
 
 	if (propertyResources != null) {
 	    Collection<Property> props = propertyResourceConverter.to(propertyResources);
 	    appl.addProperties(props);
-	    applicationService.saveApplication(appl);
-	    return Response.ok(
-		    new ApplicationResource(appl.getName(), propertyResourceConverter.from(appl.getProperties())))
-		    .build();
+	} else {
+	    logger.debug("no properties foudn for applicaiton=" + appl.getName());
 	}
-	return Response.ok("<message>application not updated!</message>").build();
+	applicationService.saveApplication(appl);
+	return Response.ok(
+		new ApplicationResource(appl.getName(), propertyResourceConverter.from(appl.getProperties()))).build();
     }
 
     @POST
-    @Path("/{application}/{context}/{property}")
+    @Path("/{application}/{context}/property")
     @Produces(MediaType.APPLICATION_XML)
     public Response getProperty(@PathParam("application") String application, @PathParam("context") String context,
-	    @PathParam("property") String property, PropertyResource resource) {
-	logger.debug("updating property=" + property + ", for application=" + application + ", context=" + context
-		+ ", proeprty=" + property);
+	    PropertyResource resource) {
+	logger.debug("updating property=" + resource.getName() + ", for application=" + application + ", context="
+		+ context + ", proeprty=" + resource.getName());
 
 	Application appl = applicationService.getApplication(application);
 	logger.debug("application=" + appl);
-	Property currentProperty = appl.getProperty(property);
+	Property currentProperty = appl.getProperty(resource.getName());
 	Property updatedProperty = propertyResourceConverter.to(resource);
 	logger.debug("property=" + currentProperty);
 

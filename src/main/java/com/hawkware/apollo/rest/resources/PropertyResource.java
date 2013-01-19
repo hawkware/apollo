@@ -1,7 +1,8 @@
 package com.hawkware.apollo.rest.resources;
 
-import java.util.Collection;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.xml.bind.annotation.XmlAttribute;
@@ -15,12 +16,12 @@ import javax.xml.bind.annotation.XmlType;
 public class PropertyResource {
     private String name;
 
-    private Map<String, PropertyValueResource> values;
+    private Map<String, PropertyValueResource> valuesMap = new HashMap<String, PropertyValueResource>();
 
     private Long timeToLive;
 
     public PropertyResource() {
-	this.values = new HashMap<String, PropertyValueResource>();
+	this.valuesMap = new HashMap<String, PropertyValueResource>();
     }
 
     public PropertyResource(String name, long timeToLive) {
@@ -39,25 +40,25 @@ public class PropertyResource {
     }
 
     @XmlElement(name = "value")
-    public Collection<PropertyValueResource> getValues() {
-	return values.values();
+    public List<PropertyValueResource> getValues() {
+	return new ArrayList<PropertyValueResource>(valuesMap.values());
     }
 
     @XmlTransient
     public Map<String, PropertyValueResource> getValuesMap() {
-	return values;
+	return valuesMap;
     }
 
     public PropertyValueResource getValue(String context) {
-	return values.get(context);
+	return valuesMap.get(context);
     }
 
     public void setValuesMap(Map<String, PropertyValueResource> values) {
-	this.values = values;
+	this.valuesMap = values;
     }
 
     public void addValue(PropertyValueResource value) {
-	values.put(value.getContext(), value);
+	valuesMap.put(value.getContext(), value);
     }
 
     @XmlAttribute(name = "timeToLive")
@@ -69,9 +70,17 @@ public class PropertyResource {
 	this.timeToLive = timeToLive;
     }
 
+    public void setValues(List<PropertyValueResource> values) {
+	if (values != null) {
+	    for (PropertyValueResource value : values) {
+		valuesMap.put(value.getContext(), value);
+	    }
+	}
+    }
+
     @Override
     public String toString() {
-	return "PropertyResource [name=" + name + ", values=" + values + ", timeToLive=" + timeToLive + "]";
+	return "PropertyResource [name=" + name + ", valuesMap=" + valuesMap + ", timeToLive=" + timeToLive + "]";
     }
 
 }
