@@ -1,0 +1,18 @@
+<application name="apollo">
+	<properties>
+		<property name="mongodb.host" timeToLive="86400">
+			<value context="local">http://localhost:2020/call</value>
+			<value context="dev">http://localhost:2020/call</value>
+			<value context="qa">http://api.test.hawkware.com</value>
+			<value context="live">http://api.hawkware.com</value>
+		</property>
+	</properties>
+	<contexts>
+		<context name="local">
+			<server>
+				<hostName>localhost</hostName>
+				<ipAddress>127.0.0.1</ipAddress>
+			</server>
+		</context>
+	</contexts>
+</application>

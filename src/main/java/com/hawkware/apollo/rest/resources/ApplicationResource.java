@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlElements;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -25,6 +26,7 @@ public class ApplicationResource {
 	this.properties = properties;
     }
 
+    @XmlElementWrapper(name = "properties")
     @XmlElements(value = { @XmlElement(name = "property", type = PropertyResource.class) })
     public List<PropertyResource> getProperties() {
 	return properties;
@@ -43,6 +45,7 @@ public class ApplicationResource {
 	this.name = name;
     }
 
+    @XmlElementWrapper(name = "contexts")
     @XmlElements(value = { @XmlElement(name = "context", type = ContextResource.class) })
     public List<ContextResource> getContexts() {
 	return contexts;
