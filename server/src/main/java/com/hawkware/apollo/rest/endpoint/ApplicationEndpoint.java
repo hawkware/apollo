@@ -77,7 +77,7 @@ public class ApplicationEndpoint {
     }
 
     @GET
-    @Path("/{application}/property/{property}")
+    @Path("/{application}/property/{property:.*}")
     @Produces(MediaType.APPLICATION_XML)
     public Response getProperty(@PathParam("application") String application, @HeaderParam("context") String context,
 	    @PathParam("property") String property, @Context HttpServletRequest requestContext,
@@ -86,18 +86,22 @@ public class ApplicationEndpoint {
 	context = validateContext(context, requestContext);
 
 	logger.debug("getting property=" + property + ", for application=" + application + ", context=" + context);
+	System.out
+		.println("getting property=" + property + ", for application=" + application + ", context=" + context);
 
 	Application appl = applicationService.getApplication(application);
 
+	System.out.println(appl);
 	if (appl != null) {
 	    logger.debug("application=" + appl);
 	    Property prop = appl.getProperty(property);
 
 	    logger.debug("property=" + prop);
-
+	    System.out.println(prop);
 	    PropertyResource resource = null;
 	    if (prop != null) {
 		resource = propertyResourceConverter.from(prop, context);
+		System.out.println(resource);
 		logger.debug("resource=" + resource);
 	    } else {
 		throw new WebApplicationException(Response.status(Status.NOT_FOUND)

@@ -51,7 +51,7 @@ public class PropertyResourceConverterTest {
 	resource.setTimeToLive(120L);
 
 	Property property = converter.to(resource);
-	assertEquals("test^prop", property.getName());
+	assertEquals("test.prop", property.getName());
 	assertEquals("test.value.live", property.getValue("live"));
 	assertEquals(120, property.getTimeToLive());
 

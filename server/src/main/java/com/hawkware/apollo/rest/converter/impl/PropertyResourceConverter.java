@@ -25,9 +25,6 @@ public class PropertyResourceConverter {
 	PropertyResource resource = new PropertyResource();
 
 	String propName = property.getName();
-	if (propName != null && propName.contains("^")) {
-	    propName = propName.replaceAll("\\^", "\\.");
-	}
 	resource.setName(propName);
 
 	if (context != null) {
@@ -50,10 +47,6 @@ public class PropertyResourceConverter {
 	    return null;
 	}
 	String propName = resource.getName();
-	if (propName != null && propName.contains(".")) {
-	    propName = propName.replaceAll("\\.", "\\^");
-	}
-
 	PropertyBuilder builder = new PropertyBuilder();
 	builder.name(propName);
 	if (resource.getTimeToLive() != null) {

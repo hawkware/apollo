@@ -10,14 +10,13 @@ public class ApolloPropertyPlaceholderConfigurer extends PropertyPlaceholderConf
 
     private PropertyService propertyService;
 
-    private String application;
-
     private String serverUrl;
 
+    private String application;
+
+    private String context;
+
     public ApolloPropertyPlaceholderConfigurer() {
-	propertyService = new PropertyService();
-	propertyService.setApplication(application);
-	propertyService.setServerUrl(serverUrl);
     }
 
     @Override
@@ -30,12 +29,30 @@ public class ApolloPropertyPlaceholderConfigurer extends PropertyPlaceholderConf
 	return propertyService.getProperty(placeholder);
     }
 
-    public void setApplication(String application) {
-	this.application = application;
+    public PropertyService getPropertyService() {
+	if (propertyService == null) {
+	    propertyService = new PropertyService();
+	    propertyService.setApplication(application);
+	    propertyService.setServerUrl(serverUrl);
+	    propertyService.setContext(context);
+	}
+	return propertyService;
+    }
+
+    public void setPropertyService(PropertyService propertyService) {
+	this.propertyService = propertyService;
     }
 
     public void setServerUrl(String serverUrl) {
 	this.serverUrl = serverUrl;
+    }
+
+    public void setApplication(String application) {
+	this.application = application;
+    }
+
+    public void setContext(String context) {
+	this.context = context;
     }
 
 }

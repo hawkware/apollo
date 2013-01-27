@@ -71,13 +71,13 @@ public class ApplicationDAOImplTest {
 	Application expected = new ApplicationBuilder()
 		.name("test-save")
 		.property(
-			new PropertyBuilder().name("status/^/url")
+			new PropertyBuilder().name("status.url")
 				.value("local", "http://localhost:8280/services/voxeo/callstatus")
 				.value("dev", "http://api.dev.privilink.com/services/voxeo/callstatus")
 				.value("qa", "http://api.qa.privilink.com/services/voxeo/callstatus")
 				.value("live", "http://api.privilink.com/services/voxeo/callstatus").build())
 		.property(
-			new PropertyBuilder().name("scheduler/^/url").value("local", "http://localhost:8280/scheduler")
+			new PropertyBuilder().name("scheduler.url").value("local", "http://localhost:8280/scheduler")
 				.value("dev", "http://scheduler.dev.byteborne.com/scheduler")
 				.value("qa", "http://scheduler.qa.byteborne.com/scheduler")
 				.value("live", "http://scheduler.byteborne.com/scheduler").build()).build();
@@ -93,13 +93,13 @@ public class ApplicationDAOImplTest {
 	Application expected = new ApplicationBuilder()
 		.name("test-save-and-get")
 		.property(
-			new PropertyBuilder().name("status/^/url")
+			new PropertyBuilder().name("status.url")
 				.value("local", "http://localhost:8280/services/voxeo/callstatus")
 				.value("dev", "http://api.dev.privilink.com/services/voxeo/callstatus")
 				.value("qa", "http://api.qa.privilink.com/services/voxeo/callstatus")
 				.value("live", "http://api.privilink.com/services/voxeo/callstatus").build())
 		.property(
-			new PropertyBuilder().name("scheduler/^/url").value("local", "http://localhost:8280/scheduler")
+			new PropertyBuilder().name("scheduler.url").value("local", "http://localhost:8280/scheduler")
 				.value("dev", "http://scheduler.dev.byteborne.com/scheduler")
 				.value("qa", "http://scheduler.qa.byteborne.com/scheduler")
 				.value("live", "http://scheduler.byteborne.com/scheduler").build()).build();
@@ -115,11 +115,11 @@ public class ApplicationDAOImplTest {
 	Application expected = new ApplicationBuilder()
 		.name("test-get-by-id")
 		.property(
-			new PropertyBuilder().name("status/^/url")
+			new PropertyBuilder().name("status.url")
 				.value("local", "http://localhost:8280/services/voxeo/callstatus")
 				.value("live", "http://api.privilink.com/services/voxeo/callstatus").build())
 		.property(
-			new PropertyBuilder().name("scheduler/^/url").value("local", "http://localhost:8280/scheduler")
+			new PropertyBuilder().name("scheduler.url").value("local", "http://localhost:8280/scheduler")
 				.value("qa", "http://scheduler.qa.byteborne.com/scheduler")
 				.value("live", "http://scheduler.byteborne.com/scheduler").build()).build();
 	dao.save(expected);
@@ -134,10 +134,10 @@ public class ApplicationDAOImplTest {
 	Application expected = new ApplicationBuilder()
 		.name("test-get-by-criteria")
 		.property(
-			new PropertyBuilder().name("status/^/url")
+			new PropertyBuilder().name("status.url")
 				.value("live", "http://api.privilink.com/services/voxeo/callstatus").build())
 		.property(
-			new PropertyBuilder().name("scheduler/^/url").value("local", "http://localhost:8280/scheduler")
+			new PropertyBuilder().name("scheduler.url").value("local", "http://localhost:8280/scheduler")
 				.value("live", "http://scheduler.byteborne.com/scheduler").build()).build();
 	dao.save(expected);
 
@@ -155,10 +155,10 @@ public class ApplicationDAOImplTest {
 	Application expected = new ApplicationBuilder()
 		.name("test-get-by-criteria")
 		.property(
-			new PropertyBuilder().name("status/^/url")
+			new PropertyBuilder().name("status.url")
 				.value("live", "http://api.privilink.com/services/voxeo/callstatus").build())
 		.property(
-			new PropertyBuilder().name("scheduler/^/url").value("local", "http://localhost:8280/scheduler")
+			new PropertyBuilder().name("scheduler.url").value("local", "http://localhost:8280/scheduler")
 				.value("live", "http://scheduler.byteborne.com/scheduler").build()).build();
 	dao.save(expected);
 
@@ -175,13 +175,13 @@ public class ApplicationDAOImplTest {
 	Application corona = new ApplicationBuilder()
 		.name("corona")
 		.property(
-			new PropertyBuilder().name("callstatus/^/url")
+			new PropertyBuilder().name("callstatus.url")
 				.value("local", "http://localhost:8280/services/voxeo/callstatus")
 				.value("dev", "http://api.dev.privilink.com/services/voxeo/callstatus")
 				.value("qa", "http://api.qa.privilink.com/services/voxeo/callstatus")
 				.value("live", "http://api.privilink.com/services/voxeo/callstatus").build())
 		.property(
-			new PropertyBuilder().name("scheduler/^/url").value("local", "http://localhost:8280/scheduler")
+			new PropertyBuilder().name("scheduler.url").value("local", "http://localhost:8280/scheduler")
 				.value("dev", "http://scheduler.dev.byteborne.com/scheduler")
 				.value("qa", "http://scheduler.qa.byteborne.com/scheduler")
 				.value("live", "http://scheduler.byteborne.com/scheduler").build()).build();

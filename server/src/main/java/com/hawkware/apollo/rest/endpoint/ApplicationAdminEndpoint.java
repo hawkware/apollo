@@ -102,6 +102,8 @@ public class ApplicationAdminEndpoint {
     @Path("/{application}/{context}/{property}")
     public Response deleteProperty(@PathParam("application") String application, @PathParam("context") String context,
 	    @PathParam("property") String property) {
+	Application appl = applicationService.getApplication(application);
+	applicationService.deleteApplication(appl);
 
 	return Response.noContent().build();
     }

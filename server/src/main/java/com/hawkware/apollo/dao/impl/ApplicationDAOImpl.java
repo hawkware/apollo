@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.convert.MappingMongoConverter;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 
@@ -30,7 +31,6 @@ public class ApplicationDAOImpl extends GenericDAO<Application> {
     public Application get(String key, Object value) {
 	Application application = mongoTemplate.findOne(new Query(Criteria.where(key).is(value)), Application.class,
 		Application.class.getName());
-
 	return application;
     }
 
@@ -38,13 +38,12 @@ public class ApplicationDAOImpl extends GenericDAO<Application> {
     public Application get(Object id) {
 	Application application = mongoTemplate.findOne(new Query(Criteria.where("id").is(id)), Application.class,
 		Application.class.getName());
-
 	return application;
     }
 
     @Override
     public Collection<Application> get(Map<String, Object> criteriaMap) {
-	List<Application> aplications = new ArrayList<Application>();
+	List<Application> applications = new ArrayList<Application>();
 	if (criteriaMap != null && !criteriaMap.isEmpty()) {
 	    Criteria criteria = new Criteria();
 	    boolean first = true;
@@ -56,10 +55,9 @@ public class ApplicationDAOImpl extends GenericDAO<Application> {
 		}
 		criteria.and(entry.getKey()).is(entry.getValue());
 	    }
-	    aplications = mongoTemplate.find(new Query(criteria), Application.class, Application.class.getName());
+	    applications = mongoTemplate.find(new Query(criteria), Application.class, Application.class.getName());
 	}
-
-	return aplications;
+	return applications;
     }
 
     @Override
@@ -75,5 +73,6 @@ public class ApplicationDAOImpl extends GenericDAO<Application> {
 
     public void setMongoTemplate(MongoTemplate mongoTemplate) {
 	this.mongoTemplate = mongoTemplate;
+	((MappingMongoConverter) this.mongoTemplate.getConverter()).setMapKeyDotReplacement("@");
     }
 }

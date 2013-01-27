@@ -1,8 +1,8 @@
 package com.hawkware.apollo.model;
 
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class Application {
 
@@ -10,9 +10,9 @@ public class Application {
 
     private String name;
 
-    private Map<String, Property> properties = new HashMap<String, Property>();
+    private Map<String, Property> properties = new ConcurrentHashMap<String, Property>();
 
-    private Map<String, ApplicationContext> contexts = new HashMap<String, ApplicationContext>();
+    private Map<String, ApplicationContext> contexts = new ConcurrentHashMap<String, ApplicationContext>();
 
     public Application() {
     }
@@ -33,6 +33,10 @@ public class Application {
 	for (Property prop : props) {
 	    addProperty(prop);
 	}
+    }
+
+    public void removeProperty(String name) {
+	properties.remove(name);
     }
 
     public void addProperty(Property property) {
