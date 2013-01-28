@@ -48,7 +48,7 @@ public class ApplicationEndpoint {
     @Path("/{application}")
     @Produces(MediaType.APPLICATION_XML)
     public Response getApplication(@PathParam("application") String application,
-	    @HeaderParam("context") String context, @Context HttpServletRequest requestContext,
+	    @HeaderParam("Context") String context, @Context HttpServletRequest requestContext,
 	    @Context SecurityContext secContext) {
 
 	context = validateContext(context, requestContext);
@@ -79,7 +79,7 @@ public class ApplicationEndpoint {
     @GET
     @Path("/{application}/property/{property:.*}")
     @Produces(MediaType.APPLICATION_XML)
-    public Response getProperty(@PathParam("application") String application, @HeaderParam("context") String context,
+    public Response getProperty(@PathParam("application") String application, @HeaderParam("Context") String context,
 	    @PathParam("property") String property, @Context HttpServletRequest requestContext,
 	    @Context SecurityContext secContext) {
 

@@ -108,6 +108,14 @@ public class ApplicationAdminEndpoint {
 	return Response.noContent().build();
     }
 
+    @DELETE
+    @Path("/{application}")
+    public Response deleteApplication(@PathParam("application") String app) {
+	Application application = applicationService.getApplication(app);
+	applicationService.deleteApplication(application);
+	return Response.noContent().build();
+    }
+
     public void setPropertyResourceConverter(PropertyResourceConverter propertyResourceConverter) {
 	this.propertyResourceConverter = propertyResourceConverter;
     }

@@ -7,6 +7,9 @@ import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.hawkware.apollo.client.http.DefaultHttpService;
 import com.hawkware.apollo.client.http.HttpService;
 import com.hawkware.apollo.client.http.Request;
@@ -14,6 +17,8 @@ import com.hawkware.apollo.client.http.Response;
 import com.hawkware.apollo.client.model.Property;
 
 public class PropertyService {
+
+    private static final Logger logger = LoggerFactory.getLogger(PropertyService.class);
 
     private JAXBContext jaxbContext;
 
@@ -29,7 +34,7 @@ public class PropertyService {
 	try {
 	    jaxbContext = JAXBContext.newInstance(Property.class);
 	} catch (JAXBException e) {
-	    throw new RuntimeException("could not instantiate jaxb context");
+	    throw new RuntimeException("could not instantiate jaxb context", e);
 	}
 	httpService = new DefaultHttpService();
     }
@@ -39,21 +44,22 @@ public class PropertyService {
 	Request request = new Request();
 	request.setUrl(String.format(serverUrl + "/application/%s/property/%s", application, name));
 	if (context != null && context.trim().length() > 0) {
-	    request.addHeader("context", context);
+	    request.addHeader("Context", context);
 	}
 
 	Response response = httpService.execute(request);
 
 	String payload = response.getPayload();
 
-	System.out.println("payload=" + payload);
+	logger.debug("payload=" + payload);
+
 	String value = null;
 	if (payload != null) {
 	    Property prop = convert(payload);
 	    if (prop != null) {
 		value = prop.getValue();
 	    }
-	    System.out.println("prop=" + prop);
+	    logger.debug("property=" + prop);
 	}
 	return value;
     }

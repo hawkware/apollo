@@ -70,19 +70,20 @@ public final class DefaultHttpService implements HttpService {
 	logger.debug("initialising response handler");
 	ResponseHandler<Response> handler = createHandler();
 
-	response = executeInternal(httpRequest, response, handler);
+	response = executeInternal(httpRequest, handler);
 
 	return response;
     }
 
-    Response executeInternal(HttpUriRequest request, Response response, ResponseHandler<Response> handler) {
+    Response executeInternal(HttpUriRequest request, ResponseHandler<Response> handler) {
+	Response response = null;
 	try {
 	    response = client.execute(request, handler);
 
-	} catch (ClientProtocolException e) {
-	    e.printStackTrace();
-	} catch (IOException e) {
-	    e.printStackTrace();
+	} catch (ClientProtocolException cpe) {
+	    throw new HttpException(request, cpe);
+	} catch (IOException ioe) {
+	    throw new HttpException(request, ioe);
 	} finally {
 	    if (request != null) {
 		logger.debug("closing the http connection");
@@ -127,7 +128,7 @@ public final class DefaultHttpService implements HttpService {
 		    Response response = new Response();
 
 		    String responseAsString = EntityUtils.toString(entity);
-		    System.out.println(responseAsString);
+		    logger.debug("responseAsString = [" + responseAsString + "]");
 		    response.setPayload(responseAsString);
 
 		    Header[] headers = httpResponse.getAllHeaders();
