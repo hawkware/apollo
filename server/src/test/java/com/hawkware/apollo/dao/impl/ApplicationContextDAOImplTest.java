@@ -108,8 +108,8 @@ public class ApplicationContextDAOImplTest {
 
 	dao.save(expected);
 	Map<String, Object> criteria = new HashMap<String, Object>();
-	criteria.put("id", expected.getId());
-	criteria.put("name", expected.getName());
+	// criteria.put("id", expected.getId());
+	criteria.put("servers.hostName", "localhost");
 
 	Collection<ApplicationContext> actual = dao.get(criteria);
 	Assert.assertTrue(actual.contains(expected));

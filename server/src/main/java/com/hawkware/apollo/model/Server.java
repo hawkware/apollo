@@ -1,37 +1,33 @@
 package com.hawkware.apollo.model;
 
-import java.util.ArrayList;
-import java.util.List;
 
 public class Server {
-    private List<String> hostNames = new ArrayList<String>();
+    private String hostName;
 
-    private List<String> ipAddresses = new ArrayList<String>();
+    private String ipAddress;
 
     public Server() {
-	this.hostNames = new ArrayList<String>();
-	this.ipAddresses = new ArrayList<String>();
     }
 
-    public List<String> getHostNames() {
-	return hostNames;
+    public String getHostName() {
+	return hostName;
     }
 
-    public void setHostNames(List<String> hostNames) {
-	this.hostNames = hostNames;
+    public void setHostName(String hostName) {
+	this.hostName = hostName;
     }
 
-    public List<String> getIpAddresses() {
-	return ipAddresses;
+    public String getIpAddress() {
+	return ipAddress;
     }
 
-    public void setIpAddresses(List<String> ipAddresses) {
-	this.ipAddresses = ipAddresses;
+    public void setIpAddress(String ipAddress) {
+	this.ipAddress = ipAddress;
     }
 
     @Override
     public String toString() {
-	return "Server [hostNames=" + hostNames + ", ipAddresses=" + ipAddresses + "]";
+	return "Server [hostName=" + hostName + ", ipAddress=" + ipAddress + "]";
     }
 
 }

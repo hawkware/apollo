@@ -22,11 +22,19 @@ public class ApplicationContextServiceImpl implements ContextService {
     public ApplicationContext getContext(Server server) {
 	Map<String, Object> criteria = new HashMap<String, Object>();
 
-	criteria.put("server.hostName", server.getHostNames());
+	criteria.put("servers.hostName", server.getHostName());
 
 	Collection<ApplicationContext> contexts = getContexts(criteria);
 	if (contexts != null && contexts.iterator().hasNext()) {
 	    return contexts.iterator().next();
+	} else {
+	    // if hostname check fails, use ip address as well
+	    Map<String, Object> criteria2 = new HashMap<String, Object>();
+	    criteria.put("servers.ipAddress", server.getIpAddress());
+	    Collection<ApplicationContext> contexts2 = getContexts(criteria);
+	    if (contexts2 != null && contexts2.iterator().hasNext()) {
+		return contexts2.iterator().next();
+	    }
 	}
 	return null;
     }

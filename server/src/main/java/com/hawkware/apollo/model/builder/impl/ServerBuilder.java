@@ -1,36 +1,33 @@
 package com.hawkware.apollo.model.builder.impl;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.hawkware.apollo.model.Server;
 import com.hawkware.apollo.model.builder.Builder;
 
 public class ServerBuilder implements Builder<Server> {
-    private List<String> hostNames;
+    private String hostName;
 
-    private List<String> ipAddresses;
+    private String ipAddress;
 
     public ServerBuilder() {
-	this.hostNames = new ArrayList<String>();
-	this.ipAddresses = new ArrayList<String>();
+	this.hostName = "";
+	this.ipAddress = "";
     }
 
     @Override
     public Server build() {
 	Server prop = new Server();
-	prop.setHostNames(this.hostNames);
-	prop.setIpAddresses(this.ipAddresses);
+	prop.setHostName(this.hostName);
+	prop.setIpAddress(this.ipAddress);
 	return prop;
     }
 
     public ServerBuilder ipAddress(String ipAddress) {
-	this.ipAddresses.add(ipAddress);
+	this.ipAddress = ipAddress;
 	return this;
     }
 
     public ServerBuilder hostName(String hostName) {
-	this.hostNames.add(hostName);
+	this.hostName = hostName;
 	return this;
     }
 }

@@ -1,7 +1,5 @@
 package com.hawkware.apollo.validator.impl;
 
-import java.util.Arrays;
-
 import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
@@ -41,15 +39,15 @@ public class ContextValidatorImpl implements ContextValidator {
 	if (ctx != null) {
 	    appContext = ctx.getName();
 	} else {
-	    throw new ContextValidationException("No context found for [" + server.getIpAddresses() + "]");
+	    throw new ContextValidationException("No context found for [" + server + "]");
 	}
 	return appContext;
     }
 
     Server getServer(HttpServletRequest requestContext) {
 	Server server = new Server();
-	server.setHostNames(Arrays.asList(requestContext.getRemoteHost()));
-	server.setIpAddresses(Arrays.asList(requestContext.getRemoteAddr()));
+	server.setHostName(requestContext.getRemoteHost());
+	server.setIpAddress(requestContext.getRemoteAddr());
 	return server;
     }
 

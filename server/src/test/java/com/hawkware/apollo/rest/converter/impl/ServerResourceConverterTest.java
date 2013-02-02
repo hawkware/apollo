@@ -11,8 +11,6 @@ import org.junit.Test;
 
 import com.hawkware.apollo.model.Server;
 import com.hawkware.apollo.model.builder.impl.ServerBuilder;
-import com.hawkware.apollo.rest.resources.HostNameResource;
-import com.hawkware.apollo.rest.resources.IpAddressResource;
 import com.hawkware.apollo.rest.resources.ServerResource;
 
 public class ServerResourceConverterTest {
@@ -36,8 +34,8 @@ public class ServerResourceConverterTest {
 
 	ServerResource resource = serverResourceConverter.from(server);
 
-	Assert.assertEquals(server.getHostNames().get(0), resource.getHostNames().get(0).getValue());
-	Assert.assertEquals(server.getIpAddresses().get(0), resource.getIpAddresses().get(0).getValue());
+	Assert.assertEquals(server.getHostName(), resource.getHostName());
+	Assert.assertEquals(server.getIpAddress(), resource.getIpAddress());
 
     }
 
@@ -45,16 +43,16 @@ public class ServerResourceConverterTest {
     public void testToServerResource() {
 
 	ServerResource resource = new ServerResource();
-	HostNameResource hostNameResource = new HostNameResource("localhost");
-	IpAddressResource addressResource = new IpAddressResource("127.0.0.1");
+	String hostName = "localhost";
+	String ipAdddress = "127.0.0.1";
 
-	resource.getHostNames().add(hostNameResource);
-	resource.getIpAddresses().add(addressResource);
+	resource.setHostName(hostName);
+	resource.setIpAddress(ipAdddress);
 
 	Server server = serverResourceConverter.to(resource);
 
-	Assert.assertEquals(resource.getHostNames().get(0).getValue(), server.getHostNames().get(0));
-	Assert.assertEquals(resource.getIpAddresses().get(0).getValue(), server.getIpAddresses().get(0));
+	Assert.assertEquals(resource.getHostName(), server.getHostName());
+	Assert.assertEquals(resource.getIpAddress(), server.getIpAddress());
     }
 
     @Test
@@ -73,22 +71,23 @@ public class ServerResourceConverterTest {
     public void testToCollectionOfT() {
 
 	ServerResource resource1 = new ServerResource();
-	HostNameResource hostNameResource1 = new HostNameResource("localhost");
-	IpAddressResource addressResource1 = new IpAddressResource("127.0.0.1");
-	resource1.getHostNames().add(hostNameResource1);
-	resource1.getIpAddresses().add(addressResource1);
+	String hostName1 = "localhost";
+	String address1 = "127.0.0.1";
+
+	resource1.setHostName(hostName1);
+	resource1.setIpAddress(address1);
 
 	ServerResource resource2 = new ServerResource();
-	HostNameResource hostNameResource2 = new HostNameResource("localhost");
-	IpAddressResource addressResource2 = new IpAddressResource("127.0.0.1");
-	resource2.getHostNames().add(hostNameResource2);
-	resource2.getIpAddresses().add(addressResource2);
+	String hostName2 = "localhost";
+	String address2 = "127.0.0.1";
+	resource2.setHostName(hostName2);
+	resource2.setIpAddress(address2);
 
 	ServerResource resource3 = new ServerResource();
-	HostNameResource hostNameResource3 = new HostNameResource("localhost");
-	IpAddressResource addressResource3 = new IpAddressResource("127.0.0.1");
-	resource3.getHostNames().add(hostNameResource3);
-	resource3.getIpAddresses().add(addressResource3);
+	String hostName3 = "localhost";
+	String address3 = "127.0.0.1";
+	resource3.setHostName(hostName3);
+	resource3.setIpAddress(address3);
 
 	List<ServerResource> resources = new ArrayList<ServerResource>(Arrays.asList(resource1, resource2, resource3));
 

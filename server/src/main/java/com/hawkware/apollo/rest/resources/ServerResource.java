@@ -1,37 +1,33 @@
 package com.hawkware.apollo.rest.resources;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlElements;
 
 public class ServerResource {
-    private List<HostNameResource> hostNames = new ArrayList<HostNameResource>();
+    private String hostName;
 
-    private List<IpAddressResource> ipAddresses = new ArrayList<IpAddressResource>();
+    private String ipAddress;
 
-    @XmlElements(value = { @XmlElement(name = "hostName", type = HostNameResource.class) })
-    public List<HostNameResource> getHostNames() {
-	return hostNames;
+    @XmlElement(name = "hostName")
+    public String getHostName() {
+	return hostName;
     }
 
-    public void setHostNames(List<HostNameResource> hostNames) {
-	this.hostNames = hostNames;
+    public void setHostName(String hostName) {
+	this.hostName = hostName;
     }
 
-    @XmlElements(value = { @XmlElement(name = "ipAddress", type = IpAddressResource.class) })
-    public List<IpAddressResource> getIpAddresses() {
-	return ipAddresses;
+    @XmlElement(name = "ipAddress")
+    public String getIpAddress() {
+	return ipAddress;
     }
 
-    public void setIpAddresses(List<IpAddressResource> ipAddresses) {
-	this.ipAddresses = ipAddresses;
+    public void setIpAddress(String ipAddress) {
+	this.ipAddress = ipAddress;
     }
 
     @Override
     public String toString() {
-	return "ServerResource [hostNames=" + hostNames + ", ipAddresses=" + ipAddresses + "]";
+	return "ServerResource [hostName=" + hostName + ", ipAddresses=" + ipAddress + "]";
     }
 
 }

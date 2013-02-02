@@ -1,6 +1,7 @@
 package com.hawkware.apollo.validator.impl;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -12,7 +13,6 @@ import com.hawkware.apollo.exception.ContextValidationException;
 import com.hawkware.apollo.model.ApplicationContext;
 import com.hawkware.apollo.model.Server;
 import com.hawkware.apollo.service.ContextService;
-import com.hawkware.apollo.validator.impl.ContextValidatorImpl;
 
 public class ContextValidatorImplTest {
 
@@ -70,11 +70,11 @@ public class ContextValidatorImplTest {
 
 	Server expectedServer = contextValidatorImpl.getServer(httpServletRequest);
 
-	assertEquals(1, expectedServer.getHostNames().size());
-	assertEquals(1, expectedServer.getIpAddresses().size());
+	assertNotNull(expectedServer.getHostName());
+	assertNotNull(expectedServer.getIpAddress());
 
-	assertEquals("localhost", expectedServer.getHostNames().get(0));
-	assertEquals("127.0.0.1", expectedServer.getIpAddresses().get(0));
+	assertEquals("localhost", expectedServer.getHostName());
+	assertEquals("127.0.0.1", expectedServer.getIpAddress());
 
     }
 

@@ -45,8 +45,8 @@ public class ApplicationContextDAOImpl extends GenericDAO<ApplicationContext> {
     @Override
     public Collection<ApplicationContext> get(Map<String, Object> criteriaMap) {
 	List<ApplicationContext> contexts = new ArrayList<ApplicationContext>();
+	Criteria criteria = new Criteria();
 	if (criteriaMap != null && !criteriaMap.isEmpty()) {
-	    Criteria criteria = new Criteria();
 	    boolean first = true;
 	    for (Entry<String, Object> entry : criteriaMap.entrySet()) {
 		if (first) {
@@ -56,9 +56,9 @@ public class ApplicationContextDAOImpl extends GenericDAO<ApplicationContext> {
 		}
 		criteria.and(entry.getKey()).is(entry.getValue());
 	    }
-	    contexts = mongoTemplate.find(new Query(criteria), ApplicationContext.class,
-		    ApplicationContext.class.getName());
 	}
+	contexts = mongoTemplate
+		.find(new Query(criteria), ApplicationContext.class, ApplicationContext.class.getName());
 	return contexts;
     }
 
