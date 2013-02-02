@@ -32,7 +32,7 @@ public class ServerResourceConverterTest {
 
 	Server server = new ServerBuilder().hostName("localhost").ipAddress("127.0.0.1").build();
 
-	ServerResource resource = serverResourceConverter.from(server);
+	ServerResource resource = serverResourceConverter.to(server);
 
 	Assert.assertEquals(server.getHostName(), resource.getHostName());
 	Assert.assertEquals(server.getIpAddress(), resource.getIpAddress());
@@ -49,7 +49,7 @@ public class ServerResourceConverterTest {
 	resource.setHostName(hostName);
 	resource.setIpAddress(ipAdddress);
 
-	Server server = serverResourceConverter.to(resource);
+	Server server = serverResourceConverter.from(resource);
 
 	Assert.assertEquals(resource.getHostName(), server.getHostName());
 	Assert.assertEquals(resource.getIpAddress(), server.getIpAddress());
@@ -62,7 +62,7 @@ public class ServerResourceConverterTest {
 	Server server3 = new ServerBuilder().hostName("localhost3").ipAddress("127.0.0.3").build();
 	List<Server> servers = new ArrayList<Server>(Arrays.asList(server, server2, server3));
 
-	List<ServerResource> resources = serverResourceConverter.from(servers);
+	List<ServerResource> resources = serverResourceConverter.to(servers);
 
 	Assert.assertEquals(servers.size(), resources.size());
     }
@@ -91,7 +91,7 @@ public class ServerResourceConverterTest {
 
 	List<ServerResource> resources = new ArrayList<ServerResource>(Arrays.asList(resource1, resource2, resource3));
 
-	List<Server> servers = serverResourceConverter.to(resources);
+	List<Server> servers = serverResourceConverter.from(resources);
 
 	Assert.assertEquals(resources.size(), servers.size());
     }

@@ -7,12 +7,4 @@
 			<value context="live">http://api.hawkware.com</value>
 		</property>
 	</properties>
-	<contexts>
-		<context name="local">
-			<server>
-				<hostName>localhost</hostName>
-				<ipAddress>127.0.0.1</ipAddress>
-			</server>
-		</context>
-	</contexts>
 </application>

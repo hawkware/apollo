@@ -1,0 +1,7 @@
+
+<context name="local">
+	<server>
+		<hostName>localhost</hostName>
+		<ipAddress>127.0.0.1</ipAddress>
+	</server>
+</context>

@@ -1,7 +1,9 @@
 package com.hawkware.apollo.rest.resources;
 
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 
+@XmlRootElement(name = "server")
 public class ServerResource {
     private String hostName;
 

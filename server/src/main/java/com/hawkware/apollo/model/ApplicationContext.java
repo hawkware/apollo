@@ -34,6 +34,13 @@ public class ApplicationContext {
 	this.servers = servers;
     }
 
+    public void addServer(Server server) {
+	if (servers == null) {
+	    servers = new ArrayList<Server>();
+	}
+	servers.add(server);
+    }
+
     public String getId() {
 	return id;
     }

@@ -16,4 +16,6 @@ public interface ContextService {
     public boolean deleteContext(ApplicationContext applicationContext);
 
     public Object saveContext(ApplicationContext applicationContext);
+
+    public Collection<Object> saveContexts(Collection<ApplicationContext> applicationContexts);
 }

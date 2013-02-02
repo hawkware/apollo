@@ -21,9 +21,10 @@ public class ApplicationResource {
     public ApplicationResource() {
     }
 
-    public ApplicationResource(String name, List<PropertyResource> properties) {
+    public ApplicationResource(String name, List<PropertyResource> properties, List<ContextResource> contexts) {
 	this.name = name;
 	this.properties = properties;
+	this.contexts = contexts;
     }
 
     @XmlElementWrapper(name = "properties")

@@ -91,7 +91,7 @@ public class Application {
 	return contexts.values();
     }
 
-    public void setContexts(Collection<ApplicationContext> contexts) {
+    public void addContexts(Collection<ApplicationContext> contexts) {
 	if (contexts != null) {
 	    for (ApplicationContext context : contexts) {
 		addContext(context);

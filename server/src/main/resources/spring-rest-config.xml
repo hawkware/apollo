@@ -1,29 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-	   xmlns:context="http://www.springframework.org/schema/context"
-	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xmlns:jaxws="http://cxf.apache.org/jaxws"
-       xmlns:util="http://www.springframework.org/schema/util"
-       xsi:schemaLocation="http://www.springframework.org/schema/context 
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:jaxws="http://cxf.apache.org/jaxws"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/context 
             http://www.springframework.org/schema/context/spring-context-2.5.xsd 
             http://www.springframework.org/schema/beans 
 			http://www.springframework.org/schema/beans/spring-beans.xsd 
 			http://cxf.apache.org/jaxws http://cxf.apache.org/schemas/jaxws.xsd
 			http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-2.0.xsd">
-	
+
 	<context:annotation-config />
-	
-	<bean id="propertyResourceConverter" class="com.hawkware.apollo.rest.converter.impl.PropertyResourceConverter" />
-	
-	<bean id="serverResourceConverter" class="com.hawkware.apollo.rest.converter.impl.ServerResourceConverter" />
-	
-	<bean id="applicationEndpoint" class="com.hawkware.apollo.rest.endpoint.ApplicationEndpoint" >
+
+	<bean id="propertyResourceConverter"
+		class="com.hawkware.apollo.rest.converter.impl.PropertyResourceConverter" />
+
+	<bean id="serverResourceConverter"
+		class="com.hawkware.apollo.rest.converter.impl.ServerResourceConverter" />
+
+	<bean id="contextResourceConverter"
+		class="com.hawkware.apollo.rest.converter.impl.ContextResourceConverter">
+		<property name="serverResourceConverter" ref="serverResourceConverter" />
+	</bean>
+
+	<bean id="applicationEndpoint" class="com.hawkware.apollo.rest.endpoint.ApplicationEndpoint">
+		<property name="applicationService" ref="applicationService" />
+		<property name="contextValidator" ref="contextValidator" />
 		<property name="propertyResourceConverter" ref="propertyResourceConverter" />
 		<property name="contextValidationEnabled" value="${context.validation.enabled}" />
 	</bean>
-	
-	<bean id="applicationAdminEndpoint" class="com.hawkware.apollo.rest.endpoint.ApplicationAdminEndpoint" >
-		<property name="propertyResourceConverter" ref="propertyResourceConverter" />
+
+	<bean id="contextEndpoint"
+		class="com.hawkware.apollo.rest.endpoint.ContextEndpoint">
+		<property name="contextResourceConverter" ref="contextResourceConverter" />
+		<property name="contextService" ref="applicationContextService" />
+		<property name="serverResourceConverter" ref="serverResourceConverter" />
 	</bean>
-	
+
 </beans>
