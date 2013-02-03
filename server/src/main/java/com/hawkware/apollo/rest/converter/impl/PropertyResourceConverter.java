@@ -26,6 +26,7 @@ public class PropertyResourceConverter {
 
 	String propName = property.getName();
 	resource.setName(propName);
+	resource.setDefaultValue(property.getDefaultValue());
 
 	if (context != null) {
 	    PropertyValueResource pvr = new PropertyValueResource(context, property.getValue(context));
@@ -49,6 +50,7 @@ public class PropertyResourceConverter {
 	String propName = resource.getName();
 	PropertyBuilder builder = new PropertyBuilder();
 	builder.name(propName);
+	builder.defaultValue(resource.getDefaultValue());
 	if (resource.getTimeToLive() != null) {
 	    builder.timeToLive(resource.getTimeToLive());
 	}

@@ -2,15 +2,21 @@ package com.hawkware.apollo.client.services;
 
 import static org.junit.Assert.assertEquals;
 
+import java.util.List;
+
 import javax.xml.bind.JAXBException;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import com.hawkware.apollo.client.config.ApolloPropertyPlaceholderConfigurer;
 import com.hawkware.apollo.client.http.HttpService;
 import com.hawkware.apollo.client.http.Request;
 import com.hawkware.apollo.client.http.Response;
+import com.hawkware.apollo.client.model.Property;
 
 public class PropertyServiceTest {
 
@@ -52,11 +58,20 @@ public class PropertyServiceTest {
     }
 
     public static void main(String[] args) throws JAXBException {
+
+	ApplicationContext ctx = new ClassPathXmlApplicationContext("spring-environment-config.xml");
+	ApolloPropertyPlaceholderConfigurer appc = (ApolloPropertyPlaceholderConfigurer) ctx.getBean("appc");
+
+	String test = (String) ctx.getBean("test");
+
 	PropertyService ps = new PropertyService();
-	ps.setServerUrl("http://localhost:8184/apollo");
-	ps.setApplication("apollo");
-	ps.setContext("qa");
-	String resp = ps.getProperty("mongodb.url");
+	// ps.setServerUrl("http://localhost:8184/apollo");
+	ps.setServerUrl("http://codebox.byteborne.com:9193/apollo");
+	ps.setApplication("privilink-gateway");
+	// ps.setContext("privilink-dev");
+	String resp = ps.getProperty("twilio.script.path");
+	List<Property> props = ps.getProperties();
+	System.out.println(props);
 	System.out.println(resp);
     }
 }

@@ -16,6 +16,8 @@ import javax.xml.bind.annotation.XmlType;
 public class PropertyResource {
     private String name;
 
+    private String defaultValue;
+
     private Map<String, PropertyValueResource> valuesMap = new HashMap<String, PropertyValueResource>();
 
     private Long timeToLive;
@@ -78,9 +80,55 @@ public class PropertyResource {
 	}
     }
 
+    public String getDefaultValue() {
+	return defaultValue;
+    }
+
+    public void setDefaultValue(String defaultValue) {
+	this.defaultValue = defaultValue;
+    }
+
     @Override
-    public String toString() {
-	return "PropertyResource [name=" + name + ", valuesMap=" + valuesMap + ", timeToLive=" + timeToLive + "]";
+    public int hashCode() {
+	final int prime = 31;
+	int result = 1;
+	result = prime * result + ((defaultValue == null) ? 0 : defaultValue.hashCode());
+	result = prime * result + ((name == null) ? 0 : name.hashCode());
+	result = prime * result + ((timeToLive == null) ? 0 : timeToLive.hashCode());
+	result = prime * result + ((valuesMap == null) ? 0 : valuesMap.hashCode());
+	return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+	if (this == obj)
+	    return true;
+	if (obj == null)
+	    return false;
+	if (getClass() != obj.getClass())
+	    return false;
+	PropertyResource other = (PropertyResource) obj;
+	if (defaultValue == null) {
+	    if (other.defaultValue != null)
+		return false;
+	} else if (!defaultValue.equals(other.defaultValue))
+	    return false;
+	if (name == null) {
+	    if (other.name != null)
+		return false;
+	} else if (!name.equals(other.name))
+	    return false;
+	if (timeToLive == null) {
+	    if (other.timeToLive != null)
+		return false;
+	} else if (!timeToLive.equals(other.timeToLive))
+	    return false;
+	if (valuesMap == null) {
+	    if (other.valuesMap != null)
+		return false;
+	} else if (!valuesMap.equals(other.valuesMap))
+	    return false;
+	return true;
     }
 
 }

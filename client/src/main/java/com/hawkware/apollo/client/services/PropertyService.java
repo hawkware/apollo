@@ -1,7 +1,8 @@
 package com.hawkware.apollo.client.services;
 
 import java.io.StringReader;
-import java.util.Properties;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
@@ -14,6 +15,7 @@ import com.hawkware.apollo.client.http.DefaultHttpService;
 import com.hawkware.apollo.client.http.HttpService;
 import com.hawkware.apollo.client.http.Request;
 import com.hawkware.apollo.client.http.Response;
+import com.hawkware.apollo.client.model.Application;
 import com.hawkware.apollo.client.model.Property;
 
 public class PropertyService {
@@ -32,7 +34,7 @@ public class PropertyService {
 
     public PropertyService() {
 	try {
-	    jaxbContext = JAXBContext.newInstance(Property.class);
+	    jaxbContext = JAXBContext.newInstance(Property.class, Application.class);
 	} catch (JAXBException e) {
 	    throw new RuntimeException("could not instantiate jaxb context", e);
 	}
@@ -55,7 +57,7 @@ public class PropertyService {
 
 	String value = null;
 	if (payload != null) {
-	    Property prop = convert(payload);
+	    Property prop = (Property) convert(payload);
 	    if (prop != null) {
 		value = prop.getValue();
 	    }
@@ -64,22 +66,40 @@ public class PropertyService {
 	return value;
     }
 
-    public Properties getProperties() {
-	Properties properties = new Properties();
+    public List<Property> getProperties() {
+	List<Property> properties = new ArrayList<Property>();
 
+	Request request = new Request();
+	request.setUrl(String.format(serverUrl + "/application/%s", application));
+	if (context != null && context.trim().length() > 0) {
+	    request.addHeader("Context", context);
+	}
+
+	Response response = httpService.execute(request);
+
+	String payload = response.getPayload();
+
+	logger.debug("payload=" + payload);
+
+	if (payload != null) {
+	    Application app = (Application) convert(payload);
+	    if (app != null) {
+		properties.addAll(app.getProperties());
+	    }
+	    logger.debug("properties=" + application);
+	}
 	return properties;
     }
 
-    private Property convert(String payload) {
-	Property property = null;
+    private Object convert(String payload) {
+	Object object = null;
 	try {
 	    Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
-	    Object object = unmarshaller.unmarshal(new StringReader(payload));
-	    property = (Property) object;
+	    object = unmarshaller.unmarshal(new StringReader(payload));
 	} catch (JAXBException jbe) {
 	    throw new RuntimeException("could not unmarshall payload = [" + payload + "]");
 	}
-	return property;
+	return object;
     }
 
     public String getApplication() {

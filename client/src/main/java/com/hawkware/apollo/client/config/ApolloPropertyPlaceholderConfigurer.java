@@ -1,11 +1,14 @@
 package com.hawkware.apollo.client.config;
 
+import java.io.IOException;
+import java.util.List;
 import java.util.Properties;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.config.PropertyPlaceholderConfigurer;
 
+import com.hawkware.apollo.client.model.Property;
 import com.hawkware.apollo.client.services.PropertyService;
 
 public class ApolloPropertyPlaceholderConfigurer extends PropertyPlaceholderConfigurer {
@@ -24,16 +27,16 @@ public class ApolloPropertyPlaceholderConfigurer extends PropertyPlaceholderConf
     }
 
     @Override
-    protected String resolvePlaceholder(String placeholder, Properties props) {
-	logger.debug("resolving placeholder=[" + placeholder + "], properties=[" + props + "]");
-	return propertyService.getProperty(placeholder);
-    }
-
-    @Override
-    protected String resolvePlaceholder(String placeholder, Properties props, int systemPropertiesMode) {
-	logger.debug("resolving placeholder=[" + placeholder + "], properties=[" + props + "], systemPropertiesMode=["
-		+ systemPropertiesMode + "]");
-	return propertyService.getProperty(placeholder);
+    protected void loadProperties(Properties props) throws IOException {
+	logger.info("loading properties");
+	if (props != null) {
+	    List<Property> propsList = getPropertyService().getProperties();
+	    for (Property prop : propsList) {
+		props.put(prop.getName(), prop.getValue());
+	    }
+	    logger.info("loaded following properties from apollo= [" + props + "]");
+	}
+	super.loadProperties(props);
     }
 
     PropertyService getPropertyService() {

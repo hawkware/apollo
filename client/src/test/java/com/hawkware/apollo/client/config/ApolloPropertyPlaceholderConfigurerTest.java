@@ -22,21 +22,23 @@ public class ApolloPropertyPlaceholderConfigurerTest {
 	apolloPropertyPlaceholderConfigurer.setPropertyService(propertyService);
     }
 
-    @Test
-    public void testResolvePlaceholderStringProperties() {
-	String expectedValue = "somethingnonnull";
-	Mockito.when(propertyService.getProperty(Mockito.anyString())).thenReturn(expectedValue);
-	String actualValue = apolloPropertyPlaceholderConfigurer.resolvePlaceholder(null, null);
-	assertEquals(expectedValue, actualValue);
-    }
-
-    @Test
-    public void testResolvePlaceholderStringPropertiesInt() {
-	String expectedValue = "somethingrandomandnonnull";
-	Mockito.when(propertyService.getProperty(Mockito.anyString())).thenReturn(expectedValue);
-	String actualValue = apolloPropertyPlaceholderConfigurer.resolvePlaceholder(null, null, 0);
-	assertEquals(expectedValue, actualValue);
-    }
+    // @Test
+    // public void testResolvePlaceholderStringProperties() {
+    // String expectedValue = "somethingnonnull";
+    // Mockito.when(propertyService.getProperty(Mockito.anyString())).thenReturn(expectedValue);
+    // String actualValue =
+    // apolloPropertyPlaceholderConfigurer.resolvePlaceholder(null, null);
+    // assertEquals(expectedValue, actualValue);
+    // }
+    //
+    // @Test
+    // public void testResolvePlaceholderStringPropertiesInt() {
+    // String expectedValue = "somethingrandomandnonnull";
+    // Mockito.when(propertyService.getProperty(Mockito.anyString())).thenReturn(expectedValue);
+    // String actualValue =
+    // apolloPropertyPlaceholderConfigurer.resolvePlaceholder(null, null, 0);
+    // assertEquals(expectedValue, actualValue);
+    // }
 
     @Test
     public void testGetPropertyService() {

@@ -8,6 +8,8 @@ import com.hawkware.apollo.model.builder.Builder;
 
 public class PropertyBuilder implements Builder<Property> {
     private String name;
+    private String defaultValue;
+
     private long timeToLive;
     private Map<String, String> valuesByContext = new HashMap<String, String>();
 
@@ -15,6 +17,7 @@ public class PropertyBuilder implements Builder<Property> {
     public Property build() {
 	Property property = new Property();
 	property.setName(this.name);
+	property.setDefaultValue(this.defaultValue);
 	if (this.timeToLive > 0) {
 	    property.setTimeToLive(this.timeToLive);
 	}
@@ -24,6 +27,11 @@ public class PropertyBuilder implements Builder<Property> {
 
     public PropertyBuilder name(String name) {
 	this.name = name;
+	return this;
+    }
+
+    public PropertyBuilder defaultValue(String defaultValue) {
+	this.defaultValue = defaultValue;
 	return this;
     }
 

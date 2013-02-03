@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:jaxws="http://cxf.apache.org/jaxws"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xmlns:aop="http://www.springframework.org/schema/aop" 
+       xsi:schemaLocation="http://www.springframework.org/schema/beans 
+			http://www.springframework.org/schema/beans/spring-beans.xsd 
+			http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.0.xsd
+			http://cxf.apache.org/jaxws http://cxf.apache.org/schemas/jaxws.xsd
+			http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-2.0.xsd">
+           
+	<bean id="appc" class="com.hawkware.apollo.client.config.ApolloPropertyPlaceholderConfigurer">
+        <property name="locations" value="classpath:apollo-client.properties" />
+        <property name="application" value="privilink-gateway" />
+		<property name="serverUrl" value="http://codebox.byteborne.com:9193/apollo" />
+		<property name="ignoreUnresolvablePlaceholders" value="true" />
+    </bean>
+    
+    <bean id="test" class="java.lang.String">
+    	<constructor-arg index="0" value="${voxeo.script.path}" />
+    </bean>
+</beans>

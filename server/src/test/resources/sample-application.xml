@@ -1,4 +1,4 @@
-<application name="apollo">
+<application name="privilink-scheduler">
 	<properties>
 		<property name="mongodb.host" timeToLive="86400">
 			<value context="local">http://localhost:2020/call</value>
