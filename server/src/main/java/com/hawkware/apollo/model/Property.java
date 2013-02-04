@@ -7,7 +7,7 @@ public class Property {
     private static final long ONE_DAY_IN_SECS = 24 * 60 * 60;
     private String name;
 
-    private String defaultValue;
+    private String DEFAULT_KEY = "default";
 
     private Map<String, String> valuesByContext = new HashMap<String, String>();
 
@@ -34,10 +34,14 @@ public class Property {
     }
 
     public String getValue(String context) {
+	String value = null;
 	if (valuesByContext != null) {
-	    return valuesByContext.get(context);
+	    value = valuesByContext.get(context);
+	    if (value == null) {
+		value = valuesByContext.get(DEFAULT_KEY);
+	    }
 	}
-	return null;
+	return value;
     }
 
     public boolean addValue(String context, String value) {
@@ -64,19 +68,10 @@ public class Property {
 	this.timeToLive = timeToLive;
     }
 
-    public String getDefaultValue() {
-	return defaultValue;
-    }
-
-    public void setDefaultValue(String defaultValue) {
-	this.defaultValue = defaultValue;
-    }
-
     @Override
     public int hashCode() {
 	final int prime = 31;
 	int result = 1;
-	result = prime * result + ((defaultValue == null) ? 0 : defaultValue.hashCode());
 	result = prime * result + ((name == null) ? 0 : name.hashCode());
 	result = prime * result + (int) (timeToLive ^ (timeToLive >>> 32));
 	result = prime * result + ((valuesByContext == null) ? 0 : valuesByContext.hashCode());
@@ -92,11 +87,6 @@ public class Property {
 	if (getClass() != obj.getClass())
 	    return false;
 	Property other = (Property) obj;
-	if (defaultValue == null) {
-	    if (other.defaultValue != null)
-		return false;
-	} else if (!defaultValue.equals(other.defaultValue))
-	    return false;
 	if (name == null) {
 	    if (other.name != null)
 		return false;
@@ -114,8 +104,7 @@ public class Property {
 
     @Override
     public String toString() {
-	return "Property [name=" + name + ", defaultValue=" + defaultValue + ", valuesByContext=" + valuesByContext
-		+ ", timeToLive=" + timeToLive + "]";
+	return "Property [name=" + name + ", valuesByContext=" + valuesByContext + ", timeToLive=" + timeToLive + "]";
     }
 
 }
