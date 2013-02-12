@@ -56,12 +56,14 @@ public class PropertyService {
 	logger.debug("payload=" + payload);
 
 	String value = null;
-	if (payload != null) {
+	if (payload != null && payload.trim().length() > 0) {
 	    Property prop = (Property) convert(payload);
 	    if (prop != null) {
 		value = prop.getValue();
 	    }
 	    logger.debug("property=" + prop);
+	} else {
+	    logger.warn("property [" + name + "] could not be found for application [" + application + "]");
 	}
 	return value;
     }

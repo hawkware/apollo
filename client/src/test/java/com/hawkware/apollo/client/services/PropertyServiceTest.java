@@ -67,9 +67,9 @@ public class PropertyServiceTest {
 	PropertyService ps = new PropertyService();
 	// ps.setServerUrl("http://localhost:8184/apollo");
 	ps.setServerUrl("http://codebox.byteborne.com:9193/apollo");
-	ps.setApplication("privilink-gateway");
+	ps.setApplication("privilink-platform");
 	// ps.setContext("privilink-dev");
-	String resp = ps.getProperty("twilio.script.path");
+	String resp = ps.getProperty("hibernate.connection.driver_class");
 	List<Property> props = ps.getProperties();
 	System.out.println(props);
 	System.out.println(resp);

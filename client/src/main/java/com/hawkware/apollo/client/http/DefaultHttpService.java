@@ -127,9 +127,12 @@ public final class DefaultHttpService implements HttpService {
 		if (entity != null) {
 		    Response response = new Response();
 
-		    String responseAsString = EntityUtils.toString(entity);
-		    logger.debug("responseAsString = [" + responseAsString + "]");
-		    response.setPayload(responseAsString);
+		    ;
+		    if (httpResponse.getStatusLine().getStatusCode() == 200) {
+			String responseAsString = EntityUtils.toString(entity);
+			logger.debug("responseAsString = [" + responseAsString + "]");
+			response.setPayload(responseAsString);
+		    }
 
 		    Header[] headers = httpResponse.getAllHeaders();
 		    Map<String, String> headersMap = createHeaderMap(headers);

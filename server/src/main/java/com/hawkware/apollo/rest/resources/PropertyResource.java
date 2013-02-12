@@ -12,7 +12,7 @@ import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.XmlType;
 
 @XmlRootElement(name = "property")
-@XmlType(propOrder = { "name", "values", "timeToLive" })
+@XmlType(propOrder = { "name", "values", "defaultValue", "timeToLive" })
 public class PropertyResource {
     private String name;
 
