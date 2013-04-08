@@ -12,53 +12,53 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name = "application")
 public class ApplicationResource {
 
-    private String name;
+	private String name;
 
-    private List<PropertyResource> properties = new ArrayList<PropertyResource>();
+	private List<PropertyResource> properties = new ArrayList<PropertyResource>();
 
-    private List<ContextResource> contexts = new ArrayList<ContextResource>();
+	private List<ContextResource> contexts = new ArrayList<ContextResource>();
 
-    public ApplicationResource() {
-    }
+	public ApplicationResource() {
+	}
 
-    public ApplicationResource(String name, List<PropertyResource> properties, List<ContextResource> contexts) {
-	this.name = name;
-	this.properties = properties;
-	this.contexts = contexts;
-    }
+	public ApplicationResource(String name, List<PropertyResource> properties, List<ContextResource> contexts) {
+		this.name = name;
+		this.properties = properties;
+		this.contexts = contexts;
+	}
 
-    @XmlElementWrapper(name = "properties")
-    @XmlElements(value = { @XmlElement(name = "property", type = PropertyResource.class) })
-    public List<PropertyResource> getProperties() {
-	return properties;
-    }
+	@XmlElementWrapper(name = "properties")
+	@XmlElements(value = { @XmlElement(name = "property", type = PropertyResource.class) })
+	public List<PropertyResource> getProperties() {
+		return properties;
+	}
 
-    public void setProperties(List<PropertyResource> properties) {
-	this.properties = properties;
-    }
+	public void setProperties(List<PropertyResource> properties) {
+		this.properties = properties;
+	}
 
-    @XmlAttribute(name = "name")
-    public String getName() {
-	return name;
-    }
+	@XmlAttribute(name = "name")
+	public String getName() {
+		return name;
+	}
 
-    public void setName(String name) {
-	this.name = name;
-    }
+	public void setName(String name) {
+		this.name = name;
+	}
 
-    @XmlElementWrapper(name = "contexts")
-    @XmlElements(value = { @XmlElement(name = "context", type = ContextResource.class) })
-    public List<ContextResource> getContexts() {
-	return contexts;
-    }
+	@XmlElementWrapper(name = "contexts")
+	@XmlElements(value = { @XmlElement(name = "context", type = ContextResource.class) })
+	public List<ContextResource> getContexts() {
+		return contexts;
+	}
 
-    public void setContexts(List<ContextResource> contexts) {
-	this.contexts = contexts;
-    }
+	public void setContexts(List<ContextResource> contexts) {
+		this.contexts = contexts;
+	}
 
-    @Override
-    public String toString() {
-	return "ApplicationResource [name=" + name + ", properties=" + properties + ", contexts=" + contexts + "]";
-    }
+	@Override
+	public String toString() {
+		return "ApplicationResource [name=" + name + ", properties=" + properties + ", contexts=" + contexts + "]";
+	}
 
 }

@@ -12,29 +12,29 @@ import com.hawkware.apollo.rest.resources.PropertyResource;
 
 public class ApplicationResourceConverter extends ResourceConverter<Application, ApplicationResource> {
 
-    private PropertyResourceConverter propertyResourceConverter;
+	private PropertyResourceConverter propertyResourceConverter;
 
-    @Override
-    public ApplicationResource from(Application application) {
-	ApplicationResource resource = new ApplicationResource();
-	resource.setName(application.getName());
-	List<PropertyResource> propertyResources = propertyResourceConverter.from(application.getProperties());
-	resource.setProperties(propertyResources);
-	return resource;
-    }
-
-    @Override
-    public Application to(ApplicationResource resource) {
-	ApplicationBuilder ab = new ApplicationBuilder();
-	ab.name(resource.getName());
-	if (resource.getProperties() != null) {
-	    Collection<Property> properties = propertyResourceConverter.to(resource.getProperties());
-	    ab.properties(properties);
+	@Override
+	public ApplicationResource from(Application application) {
+		ApplicationResource resource = new ApplicationResource();
+		resource.setName(application.getName());
+		List<PropertyResource> propertyResources = propertyResourceConverter.from(application.getProperties());
+		resource.setProperties(propertyResources);
+		return resource;
 	}
-	return ab.build();
-    }
 
-    public void setPropertyResourceConverter(PropertyResourceConverter propertyResourceConverter) {
-	this.propertyResourceConverter = propertyResourceConverter;
-    }
+	@Override
+	public Application to(ApplicationResource resource) {
+		ApplicationBuilder ab = new ApplicationBuilder();
+		ab.name(resource.getName());
+		if (resource.getProperties() != null) {
+			Collection<Property> properties = propertyResourceConverter.to(resource.getProperties());
+			ab.properties(properties);
+		}
+		return ab.build();
+	}
+
+	public void setPropertyResourceConverter(PropertyResourceConverter propertyResourceConverter) {
+		this.propertyResourceConverter = propertyResourceConverter;
+	}
 }

@@ -17,41 +17,41 @@ import java.util.Map;
  */
 public abstract class GenericDAO<T> {
 
-    /**
-     * 
-     * @param object
-     * @return
-     */
-    public abstract Object save(T object);
+	/**
+	 * 
+	 * @param object
+	 * @return
+	 */
+	public abstract Object save(T object);
 
-    /**
-     * 
-     * @param clazz
-     * @param keyName
-     * @param keyValue
-     * @return
-     */
-    public abstract T get(String keyName, Object keyValue);
+	/**
+	 * 
+	 * @param clazz
+	 * @param keyName
+	 * @param keyValue
+	 * @return
+	 */
+	public abstract T get(String keyName, Object keyValue);
 
-    /**
-     * 
-     * @param id
-     * @return
-     */
-    public abstract T get(Object id);
+	/**
+	 * 
+	 * @param id
+	 * @return
+	 */
+	public abstract T get(Object id);
 
-    /**
-     * 
-     * @param criteriaMap
-     * @return
-     */
-    public abstract Collection<T> get(Map<String, Object> criteriaMap);
+	/**
+	 * 
+	 * @param criteriaMap
+	 * @return
+	 */
+	public abstract Collection<T> get(Map<String, Object> criteriaMap);
 
-    /**
-     * 
-     * @param object
-     * @return
-     */
-    public abstract boolean delete(T object);
+	/**
+	 * 
+	 * @param object
+	 * @return
+	 */
+	public abstract boolean delete(T object);
 
 }

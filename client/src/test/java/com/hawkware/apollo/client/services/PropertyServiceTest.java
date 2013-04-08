@@ -20,58 +20,58 @@ import com.hawkware.apollo.client.model.Property;
 
 public class PropertyServiceTest {
 
-    private PropertyService propertyService;
+	private PropertyService propertyService;
 
-    private HttpService mockHttpService;
+	private HttpService mockHttpService;
 
-    private final String payload = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?><property name=\"mongodb.url\" timeToLive=\"86400\"><value context=\"qa\">http://api.test.hawkware.com</value></property>";
+	private final String payload = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?><property name=\"mongodb.url\" timeToLive=\"86400\"><value context=\"qa\">http://api.test.hawkware.com</value></property>";
 
-    @Before
-    public void setUp() throws Exception {
-	propertyService = new PropertyService();
-	mockHttpService = Mockito.mock(HttpService.class);
-	propertyService.setHttpService(mockHttpService);
-    }
+	@Before
+	public void setUp() throws Exception {
+		propertyService = new PropertyService();
+		mockHttpService = Mockito.mock(HttpService.class);
+		propertyService.setHttpService(mockHttpService);
+	}
 
-    @Test
-    public void testGetPropertyExists() {
-	String expected = "http://api.test.hawkware.com";
-	Response response = new Response();
-	response.setPayload(payload);
-	Mockito.when(mockHttpService.execute((Request) Mockito.anyObject())).thenReturn(response);
+	@Test
+	public void testGetPropertyExists() {
+		String expected = "http://api.test.hawkware.com";
+		Response response = new Response();
+		response.setPayload(payload);
+		Mockito.when(mockHttpService.execute((Request) Mockito.anyObject())).thenReturn(response);
 
-	String actual = propertyService.getProperty("mongodb.url");
+		String actual = propertyService.getProperty("mongodb.url");
 
-	assertEquals(expected, actual);
-    }
+		assertEquals(expected, actual);
+	}
 
-    @Test
-    public void testGetPropertyNotExists() {
-	String expected = null;
-	Response response = new Response();
-	response.setPayload(null);
-	Mockito.when(mockHttpService.execute((Request) Mockito.anyObject())).thenReturn(response);
+	@Test
+	public void testGetPropertyNotExists() {
+		String expected = null;
+		Response response = new Response();
+		response.setPayload(null);
+		Mockito.when(mockHttpService.execute((Request) Mockito.anyObject())).thenReturn(response);
 
-	String actual = propertyService.getProperty("something");
+		String actual = propertyService.getProperty("something");
 
-	assertEquals(expected, actual);
-    }
+		assertEquals(expected, actual);
+	}
 
-    public static void main(String[] args) throws JAXBException {
+	public static void main(String[] args) throws JAXBException {
 
-	ApplicationContext ctx = new ClassPathXmlApplicationContext("spring-environment-config.xml");
-	ApolloPropertyPlaceholderConfigurer appc = (ApolloPropertyPlaceholderConfigurer) ctx.getBean("appc");
+		ApplicationContext ctx = new ClassPathXmlApplicationContext("spring-environment-config.xml");
+		ApolloPropertyPlaceholderConfigurer appc = (ApolloPropertyPlaceholderConfigurer) ctx.getBean("appc");
 
-	String test = (String) ctx.getBean("test");
+		String test = (String) ctx.getBean("test");
 
-	PropertyService ps = new PropertyService();
-	// ps.setServerUrl("http://localhost:8184/apollo");
-	ps.setServerUrl("http://codebox.byteborne.com:9193/apollo");
-	ps.setApplication("privilink-platform");
-	// ps.setContext("privilink-dev");
-	String resp = ps.getProperty("hibernate.connection.driver_class");
-	List<Property> props = ps.getProperties();
-	System.out.println(props);
-	System.out.println(resp);
-    }
+		PropertyService ps = new PropertyService();
+		// ps.setServerUrl("http://localhost:8184/apollo");
+		ps.setServerUrl("http://codebox.byteborne.com:9193/apollo");
+		ps.setApplication("privilink-platform");
+		// ps.setContext("privilink-dev");
+		String resp = ps.getProperty("hibernate.connection.driver_class");
+		List<Property> props = ps.getProperties();
+		System.out.println(props);
+		System.out.println(resp);
+	}
 }

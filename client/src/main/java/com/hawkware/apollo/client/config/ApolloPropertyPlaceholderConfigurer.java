@@ -13,57 +13,57 @@ import com.hawkware.apollo.client.services.PropertyService;
 
 public class ApolloPropertyPlaceholderConfigurer extends PropertyPlaceholderConfigurer {
 
-    private static final Logger logger = LoggerFactory.getLogger(ApolloPropertyPlaceholderConfigurer.class);
+	private static final Logger logger = LoggerFactory.getLogger(ApolloPropertyPlaceholderConfigurer.class);
 
-    private PropertyService propertyService;
+	private PropertyService propertyService;
 
-    private String serverUrl;
+	private String serverUrl;
 
-    private String application;
+	private String application;
 
-    private String context;
+	private String context;
 
-    public ApolloPropertyPlaceholderConfigurer() {
-    }
-
-    @Override
-    protected void loadProperties(Properties props) throws IOException {
-	logger.info("loading properties");
-	if (props != null) {
-	    List<Property> propsList = getPropertyService().getProperties();
-	    for (Property prop : propsList) {
-		props.put(prop.getName(), prop.getValue());
-	    }
-	    logger.info("loaded following properties from apollo= [" + props + "]");
+	public ApolloPropertyPlaceholderConfigurer() {
 	}
-	super.loadProperties(props);
-    }
 
-    PropertyService getPropertyService() {
-	if (propertyService == null) {
-	    logger.debug("setting up a new propertyservice from properties");
-	    propertyService = new PropertyService();
-	    propertyService.setApplication(application);
-	    propertyService.setServerUrl(serverUrl);
-	    propertyService.setContext(context);
+	@Override
+	protected void loadProperties(Properties props) throws IOException {
+		logger.info("loading properties");
+		if (props != null) {
+			List<Property> propsList = getPropertyService().getProperties();
+			for (Property prop : propsList) {
+				props.put(prop.getName(), prop.getValue());
+			}
+			logger.info("loaded following properties from apollo= [" + props + "]");
+		}
+		super.loadProperties(props);
 	}
-	return propertyService;
-    }
 
-    public void setPropertyService(PropertyService propertyService) {
-	this.propertyService = propertyService;
-    }
+	PropertyService getPropertyService() {
+		if (propertyService == null) {
+			logger.debug("setting up a new propertyservice from properties");
+			propertyService = new PropertyService();
+			propertyService.setApplication(application);
+			propertyService.setServerUrl(serverUrl);
+			propertyService.setContext(context);
+		}
+		return propertyService;
+	}
 
-    public void setServerUrl(String serverUrl) {
-	this.serverUrl = serverUrl;
-    }
+	public void setPropertyService(PropertyService propertyService) {
+		this.propertyService = propertyService;
+	}
 
-    public void setApplication(String application) {
-	this.application = application;
-    }
+	public void setServerUrl(String serverUrl) {
+		this.serverUrl = serverUrl;
+	}
 
-    public void setContext(String context) {
-	this.context = context;
-    }
+	public void setApplication(String application) {
+		this.application = application;
+	}
+
+	public void setContext(String context) {
+		this.context = context;
+	}
 
 }
