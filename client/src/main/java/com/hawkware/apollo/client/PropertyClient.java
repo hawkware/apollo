@@ -20,9 +20,12 @@ import com.hawkware.apollo.client.model.Property;
 
 public class PropertyClient {
 
+    private static final String APPLICATION_URI_FORMAT = "/application/%s";
+
+    private static final String PROPERTY_URI_FORMAT = "/application/%s/property/%s";
+
     private static final Logger logger = LoggerFactory.getLogger(PropertyClient.class);
 
-    private static final String PEOPERTY_URI_FORMAT = "/application/%s/property/%s";
     private JAXBContext jaxbContext;
 
     private HttpService httpService;
@@ -45,7 +48,7 @@ public class PropertyClient {
     public String getProperty(String name) {
 
 	Request request = new Request();
-	request.setUrl(String.format(serverUrl + PEOPERTY_URI_FORMAT, application, name));
+	request.setUrl(String.format(serverUrl + PROPERTY_URI_FORMAT, application, name));
 	if (context != null && context.trim().length() > 0) {
 	    request.addHeader("Context", context);
 	}
@@ -73,7 +76,7 @@ public class PropertyClient {
 	List<Property> properties = new ArrayList<Property>();
 
 	Request request = new Request();
-	request.setUrl(String.format(serverUrl + "/application/%s", application));
+	request.setUrl(String.format(serverUrl + APPLICATION_URI_FORMAT, application));
 	if (context != null && context.trim().length() > 0) {
 	    request.addHeader("Context", context);
 	}
