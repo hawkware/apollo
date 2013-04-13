@@ -1,4 +1,4 @@
-package com.hawkware.apollo.client.services;
+package com.hawkware.apollo.client;
 
 import java.io.StringReader;
 import java.util.ArrayList;
@@ -18,10 +18,11 @@ import com.hawkware.apollo.client.http.Response;
 import com.hawkware.apollo.client.model.Application;
 import com.hawkware.apollo.client.model.Property;
 
-public class PropertyService {
+public class PropertyClient {
 
-    private static final Logger logger = LoggerFactory.getLogger(PropertyService.class);
+    private static final Logger logger = LoggerFactory.getLogger(PropertyClient.class);
 
+    private static final String PEOPERTY_URI_FORMAT = "/application/%s/property/%s";
     private JAXBContext jaxbContext;
 
     private HttpService httpService;
@@ -32,7 +33,7 @@ public class PropertyService {
 
     private String context;
 
-    public PropertyService() {
+    public PropertyClient() {
 	try {
 	    jaxbContext = JAXBContext.newInstance(Property.class, Application.class);
 	} catch (JAXBException e) {
@@ -44,7 +45,7 @@ public class PropertyService {
     public String getProperty(String name) {
 
 	Request request = new Request();
-	request.setUrl(String.format(serverUrl + "/application/%s/property/%s", application, name));
+	request.setUrl(String.format(serverUrl + PEOPERTY_URI_FORMAT, application, name));
 	if (context != null && context.trim().length() > 0) {
 	    request.addHeader("Context", context);
 	}

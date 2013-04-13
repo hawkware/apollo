@@ -44,8 +44,8 @@ public class ApplicationDAOImpl extends GenericDAO<Application> {
     @Override
     public Collection<Application> get(Map<String, Object> criteriaMap) {
 	List<Application> applications = new ArrayList<Application>();
+	Criteria criteria = new Criteria();
 	if (criteriaMap != null && !criteriaMap.isEmpty()) {
-	    Criteria criteria = new Criteria();
 	    boolean first = true;
 	    for (Entry<String, Object> entry : criteriaMap.entrySet()) {
 		if (first) {
@@ -55,8 +55,8 @@ public class ApplicationDAOImpl extends GenericDAO<Application> {
 		}
 		criteria.and(entry.getKey()).is(entry.getValue());
 	    }
-	    applications = mongoTemplate.find(new Query(criteria), Application.class, Application.class.getName());
 	}
+	applications = mongoTemplate.find(new Query(criteria), Application.class, Application.class.getName());
 	return applications;
     }
 

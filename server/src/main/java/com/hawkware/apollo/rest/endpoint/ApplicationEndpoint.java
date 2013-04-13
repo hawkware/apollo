@@ -4,6 +4,7 @@ import java.util.Collection;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.HeaderParam;
@@ -52,7 +53,7 @@ public class ApplicationEndpoint {
 
     @GET
     @Path("/{application}")
-    @Produces(MediaType.APPLICATION_XML)
+    @Produces({ MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON })
     public Response getApplication(@PathParam("application") String application,
 	    @HeaderParam("Context") String context, @Context HttpServletRequest requestContext,
 	    @Context SecurityContext secContext) {
@@ -73,7 +74,7 @@ public class ApplicationEndpoint {
 		resources = propertyResourceConverter.from(properties, context);
 		logger.debug("propertyResources=" + resources);
 	    }
-	    ApplicationResource resourceWrapper = new ApplicationResource(application, resources, null);
+	    ApplicationResource resourceWrapper = new ApplicationResource(application, resources);
 
 	    return Response.ok(resourceWrapper).build();
 	} else {
@@ -84,7 +85,7 @@ public class ApplicationEndpoint {
 
     @GET
     @Path("/{application}/property/{property:.*}")
-    @Produces(MediaType.APPLICATION_XML)
+    @Produces({ MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON })
     public Response getProperty(@PathParam("application") String application, @HeaderParam("Context") String context,
 	    @PathParam("property") String property, @Context HttpServletRequest requestContext,
 	    @Context SecurityContext secContext) {
@@ -122,18 +123,9 @@ public class ApplicationEndpoint {
 	}
     }
 
-    @GET
-    @Produces(MediaType.APPLICATION_XML)
-    public Response getApplications() {
-
-	Collection<Application> appl = applicationService.getApplications(null);
-	logger.debug("applications=" + appl);
-
-	return Response.ok().build();
-    }
-
     @POST
-    @Produces(MediaType.APPLICATION_XML)
+    @Produces({ MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON })
+    @Consumes({ MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON })
     public Response addApplicartion(ApplicationResource resource) {
 	logger.debug("adding  resource=" + resource);
 
@@ -163,7 +155,7 @@ public class ApplicationEndpoint {
 
     @POST
     @Path("/{application}/{context}/property")
-    @Produces(MediaType.APPLICATION_XML)
+    @Produces({ MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON })
     public Response getProperty(@PathParam("application") String application, @PathParam("context") String context,
 	    PropertyResource resource) {
 	logger.debug("updating property=" + resource.getName() + ", for application=" + application + ", context="
@@ -194,7 +186,7 @@ public class ApplicationEndpoint {
 	Application appl = applicationService.getApplication(application);
 	applicationService.deleteApplication(appl);
 
-	return Response.noContent().build();
+	return Response.ok().build();
     }
 
     @DELETE
@@ -202,7 +194,7 @@ public class ApplicationEndpoint {
     public Response deleteApplication(@PathParam("application") String app) {
 	Application application = applicationService.getApplication(app);
 	applicationService.deleteApplication(application);
-	return Response.noContent().build();
+	return Response.ok().build();
     }
 
     String validateContext(String context, HttpServletRequest requestContext) {

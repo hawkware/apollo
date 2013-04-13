@@ -1,4 +1,4 @@
-package com.hawkware.apollo.client.services;
+package com.hawkware.apollo.client;
 
 import static org.junit.Assert.assertEquals;
 
@@ -12,15 +12,15 @@ import org.mockito.Mockito;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import com.hawkware.apollo.client.config.ApolloPropertyPlaceholderConfigurer;
 import com.hawkware.apollo.client.http.HttpService;
 import com.hawkware.apollo.client.http.Request;
 import com.hawkware.apollo.client.http.Response;
 import com.hawkware.apollo.client.model.Property;
+import com.hawkware.apollo.client.spring.ApolloPropertyPlaceholderConfigurer;
 
-public class PropertyServiceTest {
+public class PropertyClientTest {
 
-    private PropertyService propertyService;
+    private PropertyClient propertyClient;
 
     private HttpService mockHttpService;
 
@@ -28,9 +28,9 @@ public class PropertyServiceTest {
 
     @Before
     public void setUp() throws Exception {
-	propertyService = new PropertyService();
+	propertyClient = new PropertyClient();
 	mockHttpService = Mockito.mock(HttpService.class);
-	propertyService.setHttpService(mockHttpService);
+	propertyClient.setHttpService(mockHttpService);
     }
 
     @Test
@@ -40,7 +40,7 @@ public class PropertyServiceTest {
 	response.setPayload(payload);
 	Mockito.when(mockHttpService.execute((Request) Mockito.anyObject())).thenReturn(response);
 
-	String actual = propertyService.getProperty("mongodb.url");
+	String actual = propertyClient.getProperty("mongodb.url");
 
 	assertEquals(expected, actual);
     }
@@ -52,7 +52,7 @@ public class PropertyServiceTest {
 	response.setPayload(null);
 	Mockito.when(mockHttpService.execute((Request) Mockito.anyObject())).thenReturn(response);
 
-	String actual = propertyService.getProperty("something");
+	String actual = propertyClient.getProperty("something");
 
 	assertEquals(expected, actual);
     }
@@ -64,12 +64,11 @@ public class PropertyServiceTest {
 
 	String test = (String) ctx.getBean("test");
 
-	PropertyService ps = new PropertyService();
-	// ps.setServerUrl("http://localhost:8184/apollo");
-	ps.setServerUrl("http://codebox.byteborne.com:9193/apollo");
-	ps.setApplication("privilink-platform");
-	// ps.setContext("privilink-dev");
-	String resp = ps.getProperty("hibernate.connection.driver_class");
+	PropertyClient ps = new PropertyClient();
+	ps.setServerUrl("http://localhost:8080/apollo");
+	ps.setApplication("sample-app");
+	ps.setContext("dev");
+	String resp = ps.getProperty("admin.email");
 	List<Property> props = ps.getProperties();
 	System.out.println(props);
 	System.out.println(resp);

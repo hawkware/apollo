@@ -1,4 +1,4 @@
-package com.hawkware.apollo.client.config;
+package com.hawkware.apollo.client.spring;
 
 import java.io.IOException;
 import java.util.List;
@@ -8,14 +8,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.config.PropertyPlaceholderConfigurer;
 
+import com.hawkware.apollo.client.PropertyClient;
 import com.hawkware.apollo.client.model.Property;
-import com.hawkware.apollo.client.services.PropertyService;
 
 public class ApolloPropertyPlaceholderConfigurer extends PropertyPlaceholderConfigurer {
 
     private static final Logger logger = LoggerFactory.getLogger(ApolloPropertyPlaceholderConfigurer.class);
 
-    private PropertyService propertyService;
+    private PropertyClient propertyClient;
 
     private String serverUrl;
 
@@ -39,19 +39,19 @@ public class ApolloPropertyPlaceholderConfigurer extends PropertyPlaceholderConf
 	super.loadProperties(props);
     }
 
-    PropertyService getPropertyService() {
-	if (propertyService == null) {
+    PropertyClient getPropertyService() {
+	if (propertyClient == null) {
 	    logger.debug("setting up a new propertyservice from properties");
-	    propertyService = new PropertyService();
-	    propertyService.setApplication(application);
-	    propertyService.setServerUrl(serverUrl);
-	    propertyService.setContext(context);
+	    propertyClient = new PropertyClient();
+	    propertyClient.setApplication(application);
+	    propertyClient.setServerUrl(serverUrl);
+	    propertyClient.setContext(context);
 	}
-	return propertyService;
+	return propertyClient;
     }
 
-    public void setPropertyService(PropertyService propertyService) {
-	this.propertyService = propertyService;
+    public void setPropertyService(PropertyClient propertyClient) {
+	this.propertyClient = propertyClient;
     }
 
     public void setServerUrl(String serverUrl) {

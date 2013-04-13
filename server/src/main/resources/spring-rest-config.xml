@@ -12,8 +12,15 @@
 
 	<context:annotation-config />
 
+	
+
 	<bean id="propertyResourceConverter"
 		class="com.hawkware.apollo.rest.converter.impl.PropertyResourceConverter" />
+		
+		<bean id="applicationResourceConverter"
+		class="com.hawkware.apollo.rest.converter.impl.ApplicationResourceConverter" >
+			<property name="propertyResourceConverter" ref="propertyResourceConverter" />
+		</bean>
 
 	<bean id="serverResourceConverter"
 		class="com.hawkware.apollo.rest.converter.impl.ServerResourceConverter" />
@@ -27,6 +34,13 @@
 		<property name="applicationService" ref="applicationService" />
 		<property name="contextValidator" ref="contextValidator" />
 		<property name="propertyResourceConverter" ref="propertyResourceConverter" />
+		<property name="contextValidationEnabled" value="${context.validation.enabled}" />
+	</bean>
+	
+	<bean id="applicationsEndpoint" class="com.hawkware.apollo.rest.endpoint.ApplicationsEndpoint">
+		<property name="applicationService" ref="applicationService" />
+		<property name="contextValidator" ref="contextValidator" />
+		<property name="applicationResourceConverter" ref="applicationResourceConverter" />
 		<property name="contextValidationEnabled" value="${context.validation.enabled}" />
 	</bean>
 

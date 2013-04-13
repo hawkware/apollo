@@ -5,7 +5,6 @@ import java.util.List;
 
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlElements;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -16,18 +15,14 @@ public class ApplicationResource {
 
     private List<PropertyResource> properties = new ArrayList<PropertyResource>();
 
-    private List<ContextResource> contexts = new ArrayList<ContextResource>();
-
     public ApplicationResource() {
     }
 
-    public ApplicationResource(String name, List<PropertyResource> properties, List<ContextResource> contexts) {
+    public ApplicationResource(String name, List<PropertyResource> properties) {
 	this.name = name;
 	this.properties = properties;
-	this.contexts = contexts;
     }
 
-    @XmlElementWrapper(name = "properties")
     @XmlElements(value = { @XmlElement(name = "property", type = PropertyResource.class) })
     public List<PropertyResource> getProperties() {
 	return properties;
@@ -46,19 +41,9 @@ public class ApplicationResource {
 	this.name = name;
     }
 
-    @XmlElementWrapper(name = "contexts")
-    @XmlElements(value = { @XmlElement(name = "context", type = ContextResource.class) })
-    public List<ContextResource> getContexts() {
-	return contexts;
-    }
-
-    public void setContexts(List<ContextResource> contexts) {
-	this.contexts = contexts;
-    }
-
     @Override
     public String toString() {
-	return "ApplicationResource [name=" + name + ", properties=" + properties + ", contexts=" + contexts + "]";
+	return "ApplicationResource [name=" + name + ", properties=" + properties + "]";
     }
 
 }

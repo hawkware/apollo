@@ -5,3 +5,25 @@
 		<ipAddress>127.0.0.1</ipAddress>
 	</server>
 </context>
+
+
+
+<application name="sample-app2">
+	<properties>
+		<property name="db.server" timeToLive="86400">
+			<value context="dev">db.dev.company.corp</value>
+			<value context="local">localhost</value>
+		</property>
+		<property name="db.user" timeToLive="86400">
+			<value context="default">sa</value>
+		</property>
+		<property name="db.password" timeToLive="86400">
+			<value context="dev">p4ssw0rd</value>
+			<value context="local">Password1</value>
+		</property>
+		<property name="admin.email" timeToLive="86400">
+			<value context="dev">admin@company.com</value>
+			<value context="local">admin@local</value>
+		</property>
+	</properties>
+</application>
