@@ -8,14 +8,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.config.PropertyPlaceholderConfigurer;
 
-import com.hawkware.apollo.client.PropertyClient;
+import com.hawkware.apollo.client.PropertyService;
 import com.hawkware.apollo.client.model.Property;
 
 public class ApolloPropertyPlaceholderConfigurer extends PropertyPlaceholderConfigurer {
 
     private static final Logger logger = LoggerFactory.getLogger(ApolloPropertyPlaceholderConfigurer.class);
 
-    private PropertyClient propertyClient;
+    private PropertyService propertyService;
 
     private String serverUrl;
 
@@ -39,19 +39,19 @@ public class ApolloPropertyPlaceholderConfigurer extends PropertyPlaceholderConf
 	super.loadProperties(props);
     }
 
-    PropertyClient getPropertyService() {
-	if (propertyClient == null) {
+    PropertyService getPropertyService() {
+	if (propertyService == null) {
 	    logger.debug("setting up a new propertyservice from properties");
-	    propertyClient = new PropertyClient();
-	    propertyClient.setApplication(application);
-	    propertyClient.setServerUrl(serverUrl);
-	    propertyClient.setContext(context);
+	    propertyService = new PropertyService();
+	    propertyService.setApplication(application);
+	    propertyService.setServerUrl(serverUrl);
+	    propertyService.setContext(context);
 	}
-	return propertyClient;
+	return propertyService;
     }
 
-    public void setPropertyService(PropertyClient propertyClient) {
-	this.propertyClient = propertyClient;
+    public void setPropertyService(PropertyService propertyService) {
+	this.propertyService = propertyService;
     }
 
     public void setServerUrl(String serverUrl) {

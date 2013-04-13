@@ -7,26 +7,26 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
 
-import com.hawkware.apollo.client.PropertyClient;
+import com.hawkware.apollo.client.PropertyService;
 import com.hawkware.apollo.client.spring.ApolloPropertyPlaceholderConfigurer;
 
 public class ApolloPropertyPlaceholderConfigurerTest {
 
     private ApolloPropertyPlaceholderConfigurer apolloPropertyPlaceholderConfigurer;
 
-    private PropertyClient propertyClient;
+    private PropertyService propertyService;
 
     @Before
     public void setUp() throws Exception {
 	apolloPropertyPlaceholderConfigurer = new ApolloPropertyPlaceholderConfigurer();
-	propertyClient = Mockito.mock(PropertyClient.class);
-	apolloPropertyPlaceholderConfigurer.setPropertyService(propertyClient);
+	propertyService = Mockito.mock(PropertyService.class);
+	apolloPropertyPlaceholderConfigurer.setPropertyService(propertyService);
     }
 
     // @Test
     // public void testResolvePlaceholderStringProperties() {
     // String expectedValue = "somethingnonnull";
-    // Mockito.when(propertyClient.getProperty(Mockito.anyString())).thenReturn(expectedValue);
+    // Mockito.when(propertyService.getProperty(Mockito.anyString())).thenReturn(expectedValue);
     // String actualValue =
     // apolloPropertyPlaceholderConfigurer.resolvePlaceholder(null, null);
     // assertEquals(expectedValue, actualValue);
@@ -35,7 +35,7 @@ public class ApolloPropertyPlaceholderConfigurerTest {
     // @Test
     // public void testResolvePlaceholderStringPropertiesInt() {
     // String expectedValue = "somethingrandomandnonnull";
-    // Mockito.when(propertyClient.getProperty(Mockito.anyString())).thenReturn(expectedValue);
+    // Mockito.when(propertyService.getProperty(Mockito.anyString())).thenReturn(expectedValue);
     // String actualValue =
     // apolloPropertyPlaceholderConfigurer.resolvePlaceholder(null, null, 0);
     // assertEquals(expectedValue, actualValue);
@@ -52,11 +52,11 @@ public class ApolloPropertyPlaceholderConfigurerTest {
 	apolloPropertyPlaceholderConfigurer.setServerUrl(expectedServerUrl);
 	apolloPropertyPlaceholderConfigurer.setContext(expectedContext);
 
-	PropertyClient propertyClient = apolloPropertyPlaceholderConfigurer.getPropertyService();
+	PropertyService propertyService = apolloPropertyPlaceholderConfigurer.getPropertyService();
 
-	assertNotNull(propertyClient);
-	assertEquals(expectedApplication, propertyClient.getApplication());
-	assertEquals(expectedServerUrl, propertyClient.getServerUrl());
-	assertEquals(expectedContext, propertyClient.getContext());
+	assertNotNull(propertyService);
+	assertEquals(expectedApplication, propertyService.getApplication());
+	assertEquals(expectedServerUrl, propertyService.getServerUrl());
+	assertEquals(expectedContext, propertyService.getContext());
     }
 }
