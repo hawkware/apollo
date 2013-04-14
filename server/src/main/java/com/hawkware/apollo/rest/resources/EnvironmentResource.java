@@ -7,18 +7,18 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElements;
 import javax.xml.bind.annotation.XmlRootElement;
 
-@XmlRootElement(name = "context")
-public class ContextResource {
+@XmlRootElement(name = "environment")
+public class EnvironmentResource {
     private String name;
 
     private String application;
 
     private List<ServerResource> serverResources;
 
-    public ContextResource() {
+    public EnvironmentResource() {
     }
 
-    public ContextResource(String name, List<ServerResource> serverResources) {
+    public EnvironmentResource(String name, List<ServerResource> serverResources) {
 	this.name = name;
 	this.serverResources = serverResources;
     }
@@ -51,7 +51,7 @@ public class ContextResource {
 
     @Override
     public String toString() {
-	return "ContextResource [name=" + name + ", serverResources=" + serverResources + "]";
+	return "EnvironmentResource [name=" + name + ", serverResources=" + serverResources + "]";
     }
 
     @Override
@@ -72,7 +72,7 @@ public class ContextResource {
 	    return false;
 	if (getClass() != obj.getClass())
 	    return false;
-	ContextResource other = (ContextResource) obj;
+	EnvironmentResource other = (EnvironmentResource) obj;
 	if (application == null) {
 	    if (other.application != null)
 		return false;

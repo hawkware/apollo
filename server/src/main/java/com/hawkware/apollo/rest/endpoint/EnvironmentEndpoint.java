@@ -1,8 +1,6 @@
 package com.hawkware.apollo.rest.endpoint;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
 import java.util.List;
 
 import javax.ws.rs.Consumes;
@@ -22,28 +20,20 @@ import org.slf4j.LoggerFactory;
 import com.hawkware.apollo.model.ApplicationContext;
 import com.hawkware.apollo.model.Server;
 import com.hawkware.apollo.rest.converter.ResourceConverter;
-import com.hawkware.apollo.rest.resources.ContextResource;
+import com.hawkware.apollo.rest.resources.EnvironmentResource;
 import com.hawkware.apollo.rest.resources.ServerResource;
 import com.hawkware.apollo.service.ContextService;
 
-@Path("/context")
-public class ContextEndpoint {
+@Path("/environment")
+public class EnvironmentEndpoint {
 
-    private static final Logger logger = LoggerFactory.getLogger(ContextEndpoint.class);
+    private static final Logger logger = LoggerFactory.getLogger(EnvironmentEndpoint.class);
 
-    private ResourceConverter<ContextResource, ApplicationContext> contextResourceConverter;
+    private ResourceConverter<EnvironmentResource, ApplicationContext> contextResourceConverter;
 
     private ContextService contextService;
 
     private ResourceConverter<ServerResource, Server> serverResourceConverter;
-
-    @GET
-    public Response getContexts() {
-
-	Collection<ApplicationContext> applicationContext = contextService.getContexts(new HashMap<String, Object>());
-	List<ContextResource> contextResource = contextResourceConverter.to(applicationContext);
-	return Response.ok(contextResource).build();
-    }
 
     @GET
     @Path("/{context}")
@@ -52,9 +42,9 @@ public class ContextEndpoint {
 	ApplicationContext applicationContext = contextService.getContext(context);
 
 	if (applicationContext != null) {
-	    ContextResource contextResource = contextResourceConverter.to(applicationContext);
-	    logger.debug("converted context to resource [" + contextResource + "]");
-	    return Response.ok(contextResource).build();
+	    EnvironmentResource environmentResource = contextResourceConverter.to(applicationContext);
+	    logger.debug("converted context to resource [" + environmentResource + "]");
+	    return Response.ok(environmentResource).build();
 	} else {
 	    logger.debug("couldnt find context [" + context + "] returning 404");
 	    throw new WebApplicationException(Response.status(Status.NOT_FOUND)
@@ -64,16 +54,16 @@ public class ContextEndpoint {
 
     @POST
     @Consumes(MediaType.APPLICATION_XML)
-    public Response saveContexts(ContextResource contextResource) {
-	logger.debug("saving context =" + contextResource);
-	ApplicationContext applicationContext = contextResourceConverter.from(contextResource);
+    public Response saveContexts(EnvironmentResource environmentResource) {
+	logger.debug("saving context =" + environmentResource);
+	ApplicationContext applicationContext = contextResourceConverter.from(environmentResource);
 
 	if (applicationContext != null) {
 	    logger.debug("converted context to [" + applicationContext + "] saving... ");
 	    contextService.saveContext(applicationContext);
-	    return Response.ok(contextResource).build();
+	    return Response.ok(environmentResource).build();
 	} else {
-	    logger.debug("couldnt convert context [" + contextResource + "] returning BAD REQUEST");
+	    logger.debug("couldnt convert context [" + environmentResource + "] returning BAD REQUEST");
 	    throw new WebApplicationException(Response.status(Status.BAD_REQUEST)
 		    .header("Message", "context could not be updated").build());
 	}
@@ -174,7 +164,7 @@ public class ContextEndpoint {
     }
 
     public void setContextResourceConverter(
-	    ResourceConverter<ContextResource, ApplicationContext> contextResourceConverter) {
+	    ResourceConverter<EnvironmentResource, ApplicationContext> contextResourceConverter) {
 	this.contextResourceConverter = contextResourceConverter;
     }
 
