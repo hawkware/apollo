@@ -55,12 +55,12 @@ public class ApplicationEndpoint {
     @Path("/{application}")
     @Produces({ MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON })
     public Response getApplication(@PathParam("application") String application,
-	    @HeaderParam("Context") String context, @Context HttpServletRequest requestContext,
+	    @HeaderParam("Environment") String environment, @Context HttpServletRequest requestContext,
 	    @Context SecurityContext secContext) {
 
-	context = validateContext(context, requestContext);
+	environment = validateContext(environment, requestContext);
 
-	logger.debug("getting properties for application=" + application + ", context=" + context);
+	logger.debug("getting properties for application=" + application + ", environment=" + environment);
 
 	Application appl = applicationService.getApplication(application);
 	logger.debug("application=" + application);
@@ -71,7 +71,7 @@ public class ApplicationEndpoint {
 
 	    List<PropertyResource> resources = null;
 	    if (properties != null) {
-		resources = propertyResourceConverter.from(properties, context);
+		resources = propertyResourceConverter.from(properties, environment);
 		logger.debug("propertyResources=" + resources);
 	    }
 	    ApplicationResource resourceWrapper = new ApplicationResource(application, resources);
@@ -86,15 +86,16 @@ public class ApplicationEndpoint {
     @GET
     @Path("/{application}/property/{property:.*}")
     @Produces({ MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON })
-    public Response getProperty(@PathParam("application") String application, @HeaderParam("Context") String context,
-	    @PathParam("property") String property, @Context HttpServletRequest requestContext,
-	    @Context SecurityContext secContext) {
+    public Response getProperty(@PathParam("application") String application,
+	    @HeaderParam("Environment") String environment, @PathParam("property") String property,
+	    @Context HttpServletRequest requestContext, @Context SecurityContext secContext) {
 
-	context = validateContext(context, requestContext);
+	environment = validateContext(environment, requestContext);
 
-	logger.debug("getting property=" + property + ", for application=" + application + ", context=" + context);
-	System.out
-		.println("getting property=" + property + ", for application=" + application + ", context=" + context);
+	logger.debug("getting property=" + property + ", for application=" + application + ", environment="
+		+ environment);
+	System.out.println("getting property=" + property + ", for application=" + application + ", environment="
+		+ environment);
 
 	Application appl = applicationService.getApplication(application);
 
@@ -107,7 +108,7 @@ public class ApplicationEndpoint {
 	    System.out.println(prop);
 	    PropertyResource resource = null;
 	    if (prop != null) {
-		resource = propertyResourceConverter.from(prop, context);
+		resource = propertyResourceConverter.from(prop, environment);
 		System.out.println(resource);
 		logger.debug("resource=" + resource);
 	    } else {
@@ -154,12 +155,12 @@ public class ApplicationEndpoint {
     }
 
     @POST
-    @Path("/{application}/{context}/property")
+    @Path("/{application}/{environment}/property")
     @Produces({ MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON })
-    public Response getProperty(@PathParam("application") String application, @PathParam("context") String context,
-	    PropertyResource resource) {
-	logger.debug("updating property=" + resource.getName() + ", for application=" + application + ", context="
-		+ context + ", proeprty=" + resource.getName());
+    public Response getProperty(@PathParam("application") String application,
+	    @PathParam("environment") String environment, PropertyResource resource) {
+	logger.debug("updating property=" + resource.getName() + ", for application=" + application + ", environment="
+		+ environment + ", proeprty=" + resource.getName());
 
 	Application appl = applicationService.getApplication(application);
 	logger.debug("application=" + appl);
@@ -177,16 +178,6 @@ public class ApplicationEndpoint {
 	applicationService.saveApplication(appl);
 	return Response.ok().build();
 
-    }
-
-    @DELETE
-    @Path("/{application}/{context}/{property}")
-    public Response deleteProperty(@PathParam("application") String application, @PathParam("context") String context,
-	    @PathParam("property") String property) {
-	Application appl = applicationService.getApplication(application);
-	applicationService.deleteApplication(appl);
-
-	return Response.ok().build();
     }
 
     @DELETE

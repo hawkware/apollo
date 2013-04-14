@@ -67,7 +67,7 @@ public class PropertyServiceTest {
 	PropertyService ps = new PropertyService();
 	ps.setServerUrl("http://localhost:8080/apollo");
 	ps.setApplication("sample-app");
-	ps.setContext("dev");
+	ps.setEnvironment("dev");
 	String resp = ps.getProperty("admin.email");
 	List<Property> props = ps.getProperties();
 	System.out.println(props);

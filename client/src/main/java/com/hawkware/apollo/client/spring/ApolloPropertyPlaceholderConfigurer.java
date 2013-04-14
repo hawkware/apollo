@@ -21,7 +21,7 @@ public class ApolloPropertyPlaceholderConfigurer extends PropertyPlaceholderConf
 
     private String application;
 
-    private String context;
+    private String environment;
 
     public ApolloPropertyPlaceholderConfigurer() {
     }
@@ -45,7 +45,7 @@ public class ApolloPropertyPlaceholderConfigurer extends PropertyPlaceholderConf
 	    propertyService = new PropertyService();
 	    propertyService.setApplication(application);
 	    propertyService.setServerUrl(serverUrl);
-	    propertyService.setContext(context);
+	    propertyService.setEnvironment(environment);
 	}
 	return propertyService;
     }
@@ -62,8 +62,8 @@ public class ApolloPropertyPlaceholderConfigurer extends PropertyPlaceholderConf
 	this.application = application;
     }
 
-    public void setContext(String context) {
-	this.context = context;
+    public void setEnvironment(String environment) {
+	this.environment = environment;
     }
 
 }

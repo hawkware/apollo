@@ -27,12 +27,12 @@ public class EnvironmentsEndpoint {
     private ContextService contextService;
 
     @GET
-    public Response getContexts() {
+    public Response getEnvironments() {
 	logger.debug("getting enviromnent list");
 
 	Collection<ApplicationContext> applicationContext = contextService.getContexts(new HashMap<String, Object>());
-	List<EnvironmentResource> environmentResource = contextResourceConverter.to(applicationContext);
-	EnvironmentResources environmentResources = new EnvironmentResources(environmentResource);
+	List<EnvironmentResource> environmentResourceList = contextResourceConverter.to(applicationContext);
+	EnvironmentResources environmentResources = new EnvironmentResources(environmentResourceList);
 
 	logger.debug("environmentResources = " + environmentResources);
 	return Response.ok(environmentResources).build();

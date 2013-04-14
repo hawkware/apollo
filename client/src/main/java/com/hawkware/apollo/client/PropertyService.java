@@ -34,7 +34,7 @@ public class PropertyService {
 
     private String serverUrl;
 
-    private String context;
+    private String environment;
 
     public PropertyService() {
 	try {
@@ -49,8 +49,8 @@ public class PropertyService {
 
 	Request request = new Request();
 	request.setUrl(String.format(serverUrl + PROPERTY_URI_FORMAT, application, name));
-	if (context != null && context.trim().length() > 0) {
-	    request.addHeader("Context", context);
+	if (environment != null && environment.trim().length() > 0) {
+	    request.addHeader("Environment", environment);
 	}
 
 	Response response = httpService.execute(request);
@@ -77,8 +77,8 @@ public class PropertyService {
 
 	Request request = new Request();
 	request.setUrl(String.format(serverUrl + APPLICATION_URI_FORMAT, application));
-	if (context != null && context.trim().length() > 0) {
-	    request.addHeader("Context", context);
+	if (environment != null && environment.trim().length() > 0) {
+	    request.addHeader("Environment", environment);
 	}
 
 	Response response = httpService.execute(request);
@@ -124,12 +124,12 @@ public class PropertyService {
 	this.serverUrl = serverUrl;
     }
 
-    public String getContext() {
-	return context;
+    public String getEnvironment() {
+	return environment;
     }
 
-    public void setContext(String context) {
-	this.context = context;
+    public void setEnvironment(String environment) {
+	this.environment = environment;
     }
 
     void setHttpService(HttpService httpService) {
