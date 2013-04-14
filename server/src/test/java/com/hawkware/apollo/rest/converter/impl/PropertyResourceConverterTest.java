@@ -32,13 +32,13 @@ public class PropertyResourceConverterTest {
 
 	assertEquals("test.prop", qaResource.getName());
 	assertEquals(Long.valueOf(100), qaResource.getTimeToLive());
-	assertEquals("qa", qaResource.getValue("qa").getContext());
+	assertEquals("qa", qaResource.getValue("qa").getEnvironment());
 	assertEquals("qa.value", qaResource.getValue("qa").getValue());
 
 	PropertyResource devResource = converter.from(prop, "dev");
 	assertEquals("test.prop", devResource.getName());
 	assertEquals(Long.valueOf(100), qaResource.getTimeToLive());
-	assertEquals("dev", devResource.getValue("dev").getContext());
+	assertEquals("dev", devResource.getValue("dev").getEnvironment());
 	assertEquals("dev.value", devResource.getValue("dev").getValue());
 
     }

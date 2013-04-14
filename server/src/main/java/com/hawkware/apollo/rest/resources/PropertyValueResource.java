@@ -6,21 +6,21 @@ import javax.xml.bind.annotation.XmlValue;
 
 @XmlRootElement(name = "value")
 public class PropertyValueResource {
-    private String context;
+    private String environment;
 
     private String value;
 
     public PropertyValueResource() {
     }
 
-    public PropertyValueResource(String context, String value) {
-	this.context = context;
+    public PropertyValueResource(String environment, String value) {
+	this.environment = environment;
 	this.value = value;
     }
 
-    @XmlAttribute(name = "context")
-    public String getContext() {
-	return context;
+    @XmlAttribute(name = "environment")
+    public String getEnvironment() {
+	return environment;
     }
 
     @XmlValue
@@ -30,11 +30,11 @@ public class PropertyValueResource {
 
     @Override
     public String toString() {
-	return "PropertyValueResource [context=" + context + ", value=" + value + "]";
+	return "PropertyValueResource [environment=" + environment + ", value=" + value + "]";
     }
 
-    public void setContext(String context) {
-	this.context = context;
+    public void setEnvironment(String environment) {
+	this.environment = environment;
     }
 
     public void setValue(String value) {
@@ -45,7 +45,7 @@ public class PropertyValueResource {
     public int hashCode() {
 	final int prime = 31;
 	int result = 1;
-	result = prime * result + ((context == null) ? 0 : context.hashCode());
+	result = prime * result + ((environment == null) ? 0 : environment.hashCode());
 	result = prime * result + ((value == null) ? 0 : value.hashCode());
 	return result;
     }
@@ -59,10 +59,10 @@ public class PropertyValueResource {
 	if (getClass() != obj.getClass())
 	    return false;
 	PropertyValueResource other = (PropertyValueResource) obj;
-	if (context == null) {
-	    if (other.context != null)
+	if (environment == null) {
+	    if (other.environment != null)
 		return false;
-	} else if (!context.equals(other.context))
+	} else if (!environment.equals(other.environment))
 	    return false;
 	if (value == null) {
 	    if (other.value != null)

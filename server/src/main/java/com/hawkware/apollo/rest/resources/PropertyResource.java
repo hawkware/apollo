@@ -60,7 +60,7 @@ public class PropertyResource {
     }
 
     public void addValue(PropertyValueResource value) {
-	valuesMap.put(value.getContext(), value);
+	valuesMap.put(value.getEnvironment(), value);
     }
 
     @XmlAttribute(name = "timeToLive")
@@ -75,7 +75,7 @@ public class PropertyResource {
     public void setValues(List<PropertyValueResource> values) {
 	if (values != null) {
 	    for (PropertyValueResource value : values) {
-		valuesMap.put(value.getContext(), value);
+		valuesMap.put(value.getEnvironment(), value);
 	    }
 	}
     }

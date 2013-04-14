@@ -56,7 +56,7 @@ public class PropertyResourceConverter {
 	Collection<PropertyValueResource> valuesList = resource.getValues();
 	if (valuesList != null && valuesList.size() > 0) {
 	    for (PropertyValueResource pvr : resource.getValues()) {
-		builder.value(pvr.getContext(), pvr.getValue());
+		builder.value(pvr.getEnvironment(), pvr.getValue());
 	    }
 	}
 	return builder.build();
