@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlElements;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -12,7 +11,6 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class Application {
     private List<Property> properties = new ArrayList<Property>();
 
-    @XmlElementWrapper(name = "properties")
     @XmlElements(value = { @XmlElement(name = "property", type = Property.class) })
     public List<Property> getProperties() {
 	return properties;

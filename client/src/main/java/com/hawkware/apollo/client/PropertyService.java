@@ -84,7 +84,7 @@ public class PropertyService {
 	Response response = httpService.execute(request);
 
 	String payload = response.getPayload();
-
+	System.out.println("payload=" + payload);
 	logger.debug("payload=" + payload);
 
 	if (payload != null) {
