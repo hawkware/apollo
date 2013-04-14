@@ -65,10 +65,10 @@ public class PropertyServiceTest {
 	String test = (String) ctx.getBean("test");
 
 	PropertyService ps = new PropertyService();
-	ps.setServerUrl("http://codebox.byteborne.com:9193/apollo");
-	ps.setApplication("privilink-gateway");
-	ps.setEnvironment("privilink-dev");
-	String resp = ps.getProperty("connection.url");
+	ps.setServerUrl("http://localhost:8080/apollo");
+	ps.setApplication("sample-app");
+	ps.setEnvironment("dev");
+	String resp = ps.getProperty("admin.email");
 	List<Property> props = ps.getProperties();
 	System.out.println(props);
 	System.out.println(resp);
