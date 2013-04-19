@@ -10,7 +10,7 @@
 			http://cxf.apache.org/jaxws http://cxf.apache.org/schemas/jaxws.xsd
 			http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-2.0.xsd">
            
-	<bean id="appc" class="com.hawkware.apollo.client.config.ApolloPropertyPlaceholderConfigurer">
+	<bean id="appc" class="com.hawkware.apollo.client.spring.ApolloPropertyPlaceholderConfigurer">
         <property name="locations" value="classpath:apollo-client.properties" />
         <property name="application" value="privilink-gateway" />
 		<property name="serverUrl" value="http://codebox.byteborne.com:9193/apollo" />

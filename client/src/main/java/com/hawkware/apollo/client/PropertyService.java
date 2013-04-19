@@ -1,4 +1,4 @@
-package com.hawkware.apollo.client.services;
+package com.hawkware.apollo.client;
 
 import java.io.StringReader;
 import java.util.ArrayList;
@@ -20,7 +20,15 @@ import com.hawkware.apollo.client.model.Property;
 
 public class PropertyService {
 
+<<<<<<< HEAD:client/src/main/java/com/hawkware/apollo/client/services/PropertyService.java
 	private static final Logger logger = LoggerFactory.getLogger(PropertyService.class);
+=======
+    private static final String APPLICATION_URI_FORMAT = "/application/%s";
+
+    private static final String PROPERTY_URI_FORMAT = "/application/%s/property/%s";
+
+    private static final Logger logger = LoggerFactory.getLogger(PropertyService.class);
+>>>>>>> upstream/master:client/src/main/java/com/hawkware/apollo/client/PropertyService.java
 
 	private JAXBContext jaxbContext;
 
@@ -30,7 +38,11 @@ public class PropertyService {
 
 	private String serverUrl;
 
+<<<<<<< HEAD:client/src/main/java/com/hawkware/apollo/client/services/PropertyService.java
 	private String context;
+=======
+    private String environment;
+>>>>>>> upstream/master:client/src/main/java/com/hawkware/apollo/client/PropertyService.java
 
 	public PropertyService() {
 		try {
@@ -43,11 +55,19 @@ public class PropertyService {
 
 	public String getProperty(String name) {
 
+<<<<<<< HEAD:client/src/main/java/com/hawkware/apollo/client/services/PropertyService.java
 		Request request = new Request();
 		request.setUrl(String.format(serverUrl + "/application/%s/property/%s", application, name));
 		if (context != null && context.trim().length() > 0) {
 			request.addHeader("Context", context);
 		}
+=======
+	Request request = new Request();
+	request.setUrl(String.format(serverUrl + PROPERTY_URI_FORMAT, application, name));
+	if (environment != null && environment.trim().length() > 0) {
+	    request.addHeader("Environment", environment);
+	}
+>>>>>>> upstream/master:client/src/main/java/com/hawkware/apollo/client/PropertyService.java
 
 		Response response = httpService.execute(request);
 
@@ -71,17 +91,31 @@ public class PropertyService {
 	public List<Property> getProperties() {
 		List<Property> properties = new ArrayList<Property>();
 
+<<<<<<< HEAD:client/src/main/java/com/hawkware/apollo/client/services/PropertyService.java
 		Request request = new Request();
 		request.setUrl(String.format(serverUrl + "/application/%s", application));
 		if (context != null && context.trim().length() > 0) {
 			request.addHeader("Context", context);
 		}
+=======
+	Request request = new Request();
+	request.setUrl(String.format(serverUrl + APPLICATION_URI_FORMAT, application));
+	if (environment != null && environment.trim().length() > 0) {
+	    request.addHeader("Environment", environment);
+	}
+>>>>>>> upstream/master:client/src/main/java/com/hawkware/apollo/client/PropertyService.java
 
 		Response response = httpService.execute(request);
 
+<<<<<<< HEAD:client/src/main/java/com/hawkware/apollo/client/services/PropertyService.java
 		String payload = response.getPayload();
 
 		logger.debug("payload=" + payload);
+=======
+	String payload = response.getPayload();
+	System.out.println("payload=" + payload);
+	logger.debug("payload=" + payload);
+>>>>>>> upstream/master:client/src/main/java/com/hawkware/apollo/client/PropertyService.java
 
 		if (payload != null) {
 			Application app = (Application) convert(payload);
@@ -120,6 +154,7 @@ public class PropertyService {
 		this.serverUrl = serverUrl;
 	}
 
+<<<<<<< HEAD:client/src/main/java/com/hawkware/apollo/client/services/PropertyService.java
 	public String getContext() {
 		return context;
 	}
@@ -127,6 +162,15 @@ public class PropertyService {
 	public void setContext(String context) {
 		this.context = context;
 	}
+=======
+    public String getEnvironment() {
+	return environment;
+    }
+
+    public void setEnvironment(String environment) {
+	this.environment = environment;
+    }
+>>>>>>> upstream/master:client/src/main/java/com/hawkware/apollo/client/PropertyService.java
 
 	void setHttpService(HttpService httpService) {
 		this.httpService = httpService;

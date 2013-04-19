@@ -1,4 +1,4 @@
-package com.hawkware.apollo.client.services;
+package com.hawkware.apollo.client;
 
 import static org.junit.Assert.assertEquals;
 
@@ -12,11 +12,11 @@ import org.mockito.Mockito;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import com.hawkware.apollo.client.config.ApolloPropertyPlaceholderConfigurer;
 import com.hawkware.apollo.client.http.HttpService;
 import com.hawkware.apollo.client.http.Request;
 import com.hawkware.apollo.client.http.Response;
 import com.hawkware.apollo.client.model.Property;
+import com.hawkware.apollo.client.spring.ApolloPropertyPlaceholderConfigurer;
 
 public class PropertyServiceTest {
 
@@ -64,6 +64,7 @@ public class PropertyServiceTest {
 
 		String test = (String) ctx.getBean("test");
 
+<<<<<<< HEAD:client/src/test/java/com/hawkware/apollo/client/services/PropertyServiceTest.java
 		PropertyService ps = new PropertyService();
 		// ps.setServerUrl("http://localhost:8184/apollo");
 		ps.setServerUrl("http://codebox.byteborne.com:9193/apollo");
@@ -74,4 +75,15 @@ public class PropertyServiceTest {
 		System.out.println(props);
 		System.out.println(resp);
 	}
+=======
+	PropertyService ps = new PropertyService();
+	ps.setServerUrl("http://localhost:8080/apollo");
+	ps.setApplication("sample-app");
+	ps.setEnvironment("dev");
+	String resp = ps.getProperty("admin.email");
+	List<Property> props = ps.getProperties();
+	System.out.println(props);
+	System.out.println(resp);
+    }
+>>>>>>> upstream/master:client/src/test/java/com/hawkware/apollo/client/PropertyServiceTest.java
 }

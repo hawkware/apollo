@@ -14,6 +14,11 @@
 
 	<bean id="propertyResourceConverter"
 		class="com.hawkware.apollo.rest.converter.impl.PropertyResourceConverter" />
+		
+		<bean id="applicationResourceConverter"
+		class="com.hawkware.apollo.rest.converter.impl.ApplicationResourceConverter" >
+			<property name="propertyResourceConverter" ref="propertyResourceConverter" />
+		</bean>
 
 	<bean id="serverResourceConverter"
 		class="com.hawkware.apollo.rest.converter.impl.ServerResourceConverter" />
@@ -29,12 +34,25 @@
 		<property name="propertyResourceConverter" ref="propertyResourceConverter" />
 		<property name="contextValidationEnabled" value="${context.validation.enabled}" />
 	</bean>
+	
+	<bean id="applicationsEndpoint" class="com.hawkware.apollo.rest.endpoint.ApplicationsEndpoint">
+		<property name="applicationService" ref="applicationService" />
+		<property name="contextValidator" ref="contextValidator" />
+		<property name="applicationResourceConverter" ref="applicationResourceConverter" />
+		<property name="contextValidationEnabled" value="${context.validation.enabled}" />
+	</bean>
 
-	<bean id="contextEndpoint"
-		class="com.hawkware.apollo.rest.endpoint.ContextEndpoint">
+	<bean id="environmentEndpoint"
+		class="com.hawkware.apollo.rest.endpoint.EnvironmentEndpoint">
 		<property name="contextResourceConverter" ref="contextResourceConverter" />
 		<property name="contextService" ref="applicationContextService" />
 		<property name="serverResourceConverter" ref="serverResourceConverter" />
 	</bean>
 
+	<bean id="environmentsEndpoint"
+		class="com.hawkware.apollo.rest.endpoint.EnvironmentsEndpoint">
+		<property name="contextResourceConverter" ref="contextResourceConverter" />
+		<property name="contextService" ref="applicationContextService" />
+	</bean>
+	
 </beans>

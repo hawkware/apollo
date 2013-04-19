@@ -80,9 +80,9 @@ public class PropertyResource {
 		}
 	}
 
-	public String getDefaultValue() {
-		return defaultValue;
-	}
+    public void addValue(PropertyValueResource value) {
+	valuesMap.put(value.getEnvironment(), value);
+    }
 
 	public void setDefaultValue(String defaultValue) {
 		this.defaultValue = defaultValue;
@@ -99,36 +99,63 @@ public class PropertyResource {
 		return result;
 	}
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		PropertyResource other = (PropertyResource) obj;
-		if (defaultValue == null) {
-			if (other.defaultValue != null)
-				return false;
-		} else if (!defaultValue.equals(other.defaultValue))
-			return false;
-		if (name == null) {
-			if (other.name != null)
-				return false;
-		} else if (!name.equals(other.name))
-			return false;
-		if (timeToLive == null) {
-			if (other.timeToLive != null)
-				return false;
-		} else if (!timeToLive.equals(other.timeToLive))
-			return false;
-		if (valuesMap == null) {
-			if (other.valuesMap != null)
-				return false;
-		} else if (!valuesMap.equals(other.valuesMap))
-			return false;
-		return true;
+    public void setValues(List<PropertyValueResource> values) {
+	if (values != null) {
+	    for (PropertyValueResource value : values) {
+		valuesMap.put(value.getEnvironment(), value);
+	    }
 	}
+    }
+
+    public String getDefaultValue() {
+	return defaultValue;
+    }
+
+    public void setDefaultValue(String defaultValue) {
+	this.defaultValue = defaultValue;
+    }
+
+    @Override
+    public int hashCode() {
+	final int prime = 31;
+	int result = 1;
+	result = prime * result + ((defaultValue == null) ? 0 : defaultValue.hashCode());
+	result = prime * result + ((name == null) ? 0 : name.hashCode());
+	result = prime * result + ((timeToLive == null) ? 0 : timeToLive.hashCode());
+	result = prime * result + ((valuesMap == null) ? 0 : valuesMap.hashCode());
+	return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+	if (this == obj)
+	    return true;
+	if (obj == null)
+	    return false;
+	if (getClass() != obj.getClass())
+	    return false;
+	PropertyResource other = (PropertyResource) obj;
+	if (defaultValue == null) {
+	    if (other.defaultValue != null)
+		return false;
+	} else if (!defaultValue.equals(other.defaultValue))
+	    return false;
+	if (name == null) {
+	    if (other.name != null)
+		return false;
+	} else if (!name.equals(other.name))
+	    return false;
+	if (timeToLive == null) {
+	    if (other.timeToLive != null)
+		return false;
+	} else if (!timeToLive.equals(other.timeToLive))
+	    return false;
+	if (valuesMap == null) {
+	    if (other.valuesMap != null)
+		return false;
+	} else if (!valuesMap.equals(other.valuesMap))
+	    return false;
+	return true;
+    }
 
 }

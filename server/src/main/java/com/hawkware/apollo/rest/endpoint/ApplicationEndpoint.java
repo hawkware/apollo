@@ -4,6 +4,7 @@ import java.util.Collection;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.HeaderParam;
@@ -50,16 +51,16 @@ public class ApplicationEndpoint {
 		return Response.ok("" + contextValidationEnabled).build();
 	}
 
-	@GET
-	@Path("/{application}")
-	@Produces(MediaType.APPLICATION_XML)
-	public Response getApplication(@PathParam("application") String application,
-			@HeaderParam("Context") String context, @Context HttpServletRequest requestContext,
-			@Context SecurityContext secContext) {
+    @GET
+    @Path("/{application}")
+    @Produces({ MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON })
+    public Response getApplication(@PathParam("application") String application,
+	    @HeaderParam("Environment") String environment, @Context HttpServletRequest requestContext,
+	    @Context SecurityContext secContext) {
 
-		context = validateContext(context, requestContext);
+	environment = validateContext(environment, requestContext);
 
-		logger.debug("getting properties for application=" + application + ", context=" + context);
+	logger.debug("getting properties for application=" + application + ", environment=" + environment);
 
 		Application appl = applicationService.getApplication(application);
 		logger.debug("application=" + application);
@@ -68,12 +69,12 @@ public class ApplicationEndpoint {
 			Collection<Property> properties = appl.getProperties();
 			logger.debug("properties=" + properties);
 
-			List<PropertyResource> resources = null;
-			if (properties != null) {
-				resources = propertyResourceConverter.from(properties, context);
-				logger.debug("propertyResources=" + resources);
-			}
-			ApplicationResource resourceWrapper = new ApplicationResource(application, resources, null);
+	    List<PropertyResource> resources = null;
+	    if (properties != null) {
+		resources = propertyResourceConverter.from(properties, environment);
+		logger.debug("propertyResources=" + resources);
+	    }
+	    ApplicationResource resourceWrapper = new ApplicationResource(application, resources);
 
 			return Response.ok(resourceWrapper).build();
 		} else {
@@ -82,55 +83,52 @@ public class ApplicationEndpoint {
 		}
 	}
 
-	@GET
-	@Path("/{application}/property/{property:.*}")
-	@Produces(MediaType.APPLICATION_XML)
-	public Response getProperty(@PathParam("application") String application, @HeaderParam("Context") String context,
-			@PathParam("property") String property, @Context HttpServletRequest requestContext,
-			@Context SecurityContext secContext) {
+    @GET
+    @Path("/{application}/property/{property:.*}")
+    @Produces({ MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON })
+    public Response getProperty(@PathParam("application") String application,
+	    @HeaderParam("Environment") String environment, @PathParam("property") String property,
+	    @Context HttpServletRequest requestContext, @Context SecurityContext secContext) {
 
-		context = validateContext(context, requestContext);
+	environment = validateContext(environment, requestContext);
 
-		logger.debug("getting property=" + property + ", for application=" + application + ", context=" + context);
-		System.out
-		.println("getting property=" + property + ", for application=" + application + ", context=" + context);
+	logger.debug("getting property=" + property + ", for application=" + application + ", environment="
+		+ environment);
+	System.out.println("getting property=" + property + ", for application=" + application + ", environment="
+		+ environment);
 
-		Application appl = applicationService.getApplication(application);
+	Application appl = applicationService.getApplication(application);
 
-		System.out.println(appl);
-		if (appl != null) {
-			logger.debug("application=" + appl);
-			Property prop = appl.getProperty(property);
+	System.out.println(appl);
+	if (appl != null) {
+	    logger.debug("application=" + appl);
+	    Property prop = appl.getProperty(property);
 
-			logger.debug("property=" + prop);
-			System.out.println(prop);
-			PropertyResource resource = null;
-			if (prop != null) {
-				resource = propertyResourceConverter.from(prop, context);
-				System.out.println(resource);
-				logger.debug("resource=" + resource);
-			} else {
-				throw new WebApplicationException(Response.status(Status.NOT_FOUND)
-						.header("Message", "property [" + property + "] could not be found").build());
-			}
+	    logger.debug("property=" + prop);
+	    System.out.println(prop);
+	    PropertyResource resource = null;
+	    if (prop != null) {
+		resource = propertyResourceConverter.from(prop, environment);
+		System.out.println(resource);
+		logger.debug("resource=" + resource);
+	    } else {
+		throw new WebApplicationException(Response.status(Status.NOT_FOUND)
+			.header("Message", "property [" + property + "] could not be found").build());
+	    }
 
-			logger.debug("returning resource [" + resource + "]");
-			return Response.ok(resource).build();
-		} else {
-			throw new WebApplicationException(Response.status(Status.NOT_FOUND)
-					.header("Message", "application [" + application + "] could not be found").build());
-		}
+	    logger.debug("returning resource [" + resource + "]");
+	    return Response.ok(resource).build();
+	} else {
+	    throw new WebApplicationException(Response.status(Status.NOT_FOUND)
+		    .header("Message", "application [" + application + "] could not be found").build());
 	}
+    }
 
-	@GET
-	@Produces(MediaType.APPLICATION_XML)
-	public Response getApplications() {
-
-		Collection<Application> appl = applicationService.getApplications(null);
-		logger.debug("applications=" + appl);
-
-		return Response.ok().build();
-	}
+    @POST
+    @Produces({ MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON })
+    @Consumes({ MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON })
+    public Response addApplicartion(ApplicationResource resource) {
+	logger.debug("adding  resource=" + resource);
 
 	@POST
 	@Produces(MediaType.APPLICATION_XML)
@@ -196,26 +194,53 @@ public class ApplicationEndpoint {
 
 		return Response.noContent().build();
 	}
+	applicationService.saveApplication(appl);
+	return Response.ok(resource).build();
+    }
 
-	@DELETE
-	@Path("/{application}")
-	public Response deleteApplication(@PathParam("application") String app) {
-		Application application = applicationService.getApplication(app);
-		applicationService.deleteApplication(application);
-		return Response.noContent().build();
+    @POST
+    @Path("/{application}/{environment}/property")
+    @Produces({ MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON })
+    public Response getProperty(@PathParam("application") String application,
+	    @PathParam("environment") String environment, PropertyResource resource) {
+	logger.debug("updating property=" + resource.getName() + ", for application=" + application + ", environment="
+		+ environment + ", proeprty=" + resource.getName());
+
+	Application appl = applicationService.getApplication(application);
+	logger.debug("application=" + appl);
+	Property currentProperty = appl.getProperty(resource.getName());
+	Property updatedProperty = propertyResourceConverter.to(resource);
+	logger.debug("property=" + currentProperty);
+
+	if (currentProperty != null) {
+	    logger.debug("updating currentProperty=" + currentProperty + ", with updatedProperty=" + updatedProperty);
+	    currentProperty.getValuesByContext().putAll(updatedProperty.getValuesByContext());
+	} else {
+	    logger.debug("adding updatedProperty=" + updatedProperty + " as it doesnt already exist");
+	    appl.addProperty(updatedProperty);
 	}
+	applicationService.saveApplication(appl);
+	return Response.ok().build();
 
-	String validateContext(String context, HttpServletRequest requestContext) {
-		if (contextValidationEnabled) {
-			try {
-				context = contextValidator.validateContext(context, requestContext);
-			} catch (ContextValidationException cve) {
-				logger.error("invalid context", cve);
-				throw new WebApplicationException(Response.status(Status.UNAUTHORIZED)
-						.header("Message", cve.getMessage()).build());
-			}
-		}
-		return context;
+    }
+
+    @DELETE
+    @Path("/{application}")
+    public Response deleteApplication(@PathParam("application") String app) {
+	Application application = applicationService.getApplication(app);
+	applicationService.deleteApplication(application);
+	return Response.ok().build();
+    }
+
+    String validateContext(String context, HttpServletRequest requestContext) {
+	if (contextValidationEnabled) {
+	    try {
+		context = contextValidator.validateContext(context, requestContext);
+	    } catch (ContextValidationException cve) {
+		logger.error("invalid context", cve);
+		throw new WebApplicationException(Response.status(Status.UNAUTHORIZED)
+			.header("Message", cve.getMessage()).build());
+	    }
 	}
 
 	public void setPropertyResourceConverter(PropertyResourceConverter propertyResourceConverter) {

@@ -41,24 +41,24 @@ public class ApplicationDAOImpl extends GenericDAO<Application> {
 		return application;
 	}
 
-	@Override
-	public Collection<Application> get(Map<String, Object> criteriaMap) {
-		List<Application> applications = new ArrayList<Application>();
-		if (criteriaMap != null && !criteriaMap.isEmpty()) {
-			Criteria criteria = new Criteria();
-			boolean first = true;
-			for (Entry<String, Object> entry : criteriaMap.entrySet()) {
-				if (first) {
-					criteria = Criteria.where(entry.getKey()).is(entry.getValue());
-					first = false;
-					continue;
-				}
-				criteria.and(entry.getKey()).is(entry.getValue());
-			}
-			applications = mongoTemplate.find(new Query(criteria), Application.class, Application.class.getName());
+    @Override
+    public Collection<Application> get(Map<String, Object> criteriaMap) {
+	List<Application> applications = new ArrayList<Application>();
+	Criteria criteria = new Criteria();
+	if (criteriaMap != null && !criteriaMap.isEmpty()) {
+	    boolean first = true;
+	    for (Entry<String, Object> entry : criteriaMap.entrySet()) {
+		if (first) {
+		    criteria = Criteria.where(entry.getKey()).is(entry.getValue());
+		    first = false;
+		    continue;
 		}
-		return applications;
+		criteria.and(entry.getKey()).is(entry.getValue());
+	    }
 	}
+	applications = mongoTemplate.find(new Query(criteria), Application.class, Application.class.getName());
+	return applications;
+    }
 
 	@Override
 	public boolean delete(Application application) {
