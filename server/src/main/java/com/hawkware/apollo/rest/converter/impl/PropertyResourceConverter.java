@@ -42,11 +42,24 @@ public class PropertyResourceConverter {
 		return resource;
 	}
 
-	Collection<PropertyValueResource> valuesList = resource.getValues();
-	if (valuesList != null && valuesList.size() > 0) {
-	    for (PropertyValueResource pvr : resource.getValues()) {
-		builder.value(pvr.getEnvironment(), pvr.getValue());
-	    }
+	public Property to(PropertyResource resource) {
+		if (resource == null) {
+			return null;
+		}
+		String propName = resource.getName();
+		PropertyBuilder builder = new PropertyBuilder();
+		builder.name(propName);
+		if (resource.getTimeToLive() != null) {
+			builder.timeToLive(resource.getTimeToLive());
+		}
+
+		Collection<PropertyValueResource> valuesList = resource.getValues();
+		if (valuesList != null && valuesList.size() > 0) {
+			for (PropertyValueResource pvr : resource.getValues()) {
+				builder.value(pvr.getEnvironment(), pvr.getValue());
+			}
+		}
+		return builder.build();
 	}
 
 	public List<PropertyResource> from(Collection<Property> properties) {

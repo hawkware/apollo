@@ -21,7 +21,7 @@ public class ApolloPropertyPlaceholderConfigurer extends PropertyPlaceholderConf
 
 	private String application;
 
-    private String environment;
+	private String environment;
 
 	public ApolloPropertyPlaceholderConfigurer() {
 	}
@@ -38,16 +38,16 @@ public class ApolloPropertyPlaceholderConfigurer extends PropertyPlaceholderConf
 		}
 		super.loadProperties(props);
 	}
-	super.loadProperties(props);
-    }
 
-    PropertyService getPropertyService() {
-	if (propertyService == null) {
-	    logger.debug("setting up a new propertyservice from properties");
-	    propertyService = new PropertyService();
-	    propertyService.setApplication(application);
-	    propertyService.setServerUrl(serverUrl);
-	    propertyService.setEnvironment(environment);
+	PropertyService getPropertyService() {
+		if (propertyService == null) {
+			logger.debug("setting up a new propertyservice from properties");
+			propertyService = new PropertyService();
+			propertyService.setApplication(application);
+			propertyService.setServerUrl(serverUrl);
+			propertyService.setEnvironment(environment);
+		}
+		return propertyService;
 	}
 
 	public void setPropertyService(PropertyService propertyService) {
@@ -62,8 +62,8 @@ public class ApolloPropertyPlaceholderConfigurer extends PropertyPlaceholderConf
 		this.application = application;
 	}
 
-    public void setEnvironment(String environment) {
-	this.environment = environment;
-    }
+	public void setEnvironment(String environment) {
+		this.environment = environment;
+	}
 
 }

@@ -64,26 +64,13 @@ public class PropertyServiceTest {
 
 		String test = (String) ctx.getBean("test");
 
-<<<<<<< HEAD:client/src/test/java/com/hawkware/apollo/client/services/PropertyServiceTest.java
 		PropertyService ps = new PropertyService();
-		// ps.setServerUrl("http://localhost:8184/apollo");
-		ps.setServerUrl("http://codebox.byteborne.com:9193/apollo");
-		ps.setApplication("privilink-platform");
-		// ps.setContext("privilink-dev");
-		String resp = ps.getProperty("hibernate.connection.driver_class");
+		ps.setServerUrl("http://localhost:8080/apollo");
+		ps.setApplication("sample-app");
+		ps.setEnvironment("dev");
+		String resp = ps.getProperty("admin.email");
 		List<Property> props = ps.getProperties();
 		System.out.println(props);
 		System.out.println(resp);
 	}
-=======
-	PropertyService ps = new PropertyService();
-	ps.setServerUrl("http://localhost:8080/apollo");
-	ps.setApplication("sample-app");
-	ps.setEnvironment("dev");
-	String resp = ps.getProperty("admin.email");
-	List<Property> props = ps.getProperties();
-	System.out.println(props);
-	System.out.println(resp);
-    }
->>>>>>> upstream/master:client/src/test/java/com/hawkware/apollo/client/PropertyServiceTest.java
 }
