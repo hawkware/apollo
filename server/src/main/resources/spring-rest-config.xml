@@ -55,4 +55,8 @@
 		<property name="contextService" ref="applicationContextService" />
 	</bean>
 	
+	<bean id="pingEndpoint"
+		class="com.hawkware.apollo.rest.endpoint.PingEndpoint">
+	</bean>
+	
 </beans>
