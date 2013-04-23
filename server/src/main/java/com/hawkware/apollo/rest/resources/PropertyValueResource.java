@@ -8,10 +8,10 @@ import javax.xml.bind.annotation.XmlValue;
 public class PropertyValueResource {
     private String environment;
 
-    private String value;
+	private String value;
 
-    public PropertyValueResource() {
-    }
+	public PropertyValueResource() {
+	}
 
     public PropertyValueResource(String environment, String value) {
 	this.environment = environment;
@@ -23,10 +23,10 @@ public class PropertyValueResource {
 	return environment;
     }
 
-    @XmlValue
-    public String getValue() {
-	return value;
-    }
+	@XmlValue
+	public String getValue() {
+		return value;
+	}
 
     @Override
     public String toString() {
@@ -37,9 +37,9 @@ public class PropertyValueResource {
 	this.environment = environment;
     }
 
-    public void setValue(String value) {
-	this.value = value;
-    }
+	public void setValue(String value) {
+		this.value = value;
+	}
 
     @Override
     public int hashCode() {

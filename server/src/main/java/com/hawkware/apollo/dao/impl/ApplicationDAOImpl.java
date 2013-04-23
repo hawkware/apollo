@@ -16,30 +16,30 @@ import com.hawkware.apollo.model.Application;
 
 public class ApplicationDAOImpl extends GenericDAO<Application> {
 
-    private MongoTemplate mongoTemplate;
+	private MongoTemplate mongoTemplate;
 
-    public ApplicationDAOImpl() {
-    }
+	public ApplicationDAOImpl() {
+	}
 
-    @Override
-    public Object save(Application application) {
-	mongoTemplate.save(application, Application.class.getName());
-	return application.getId();
-    }
+	@Override
+	public Object save(Application application) {
+		mongoTemplate.save(application, Application.class.getName());
+		return application.getId();
+	}
 
-    @Override
-    public Application get(String key, Object value) {
-	Application application = mongoTemplate.findOne(new Query(Criteria.where(key).is(value)), Application.class,
-		Application.class.getName());
-	return application;
-    }
+	@Override
+	public Application get(String key, Object value) {
+		Application application = mongoTemplate.findOne(new Query(Criteria.where(key).is(value)), Application.class,
+				Application.class.getName());
+		return application;
+	}
 
-    @Override
-    public Application get(Object id) {
-	Application application = mongoTemplate.findOne(new Query(Criteria.where("id").is(id)), Application.class,
-		Application.class.getName());
-	return application;
-    }
+	@Override
+	public Application get(Object id) {
+		Application application = mongoTemplate.findOne(new Query(Criteria.where("id").is(id)), Application.class,
+				Application.class.getName());
+		return application;
+	}
 
     @Override
     public Collection<Application> get(Map<String, Object> criteriaMap) {
@@ -60,19 +60,19 @@ public class ApplicationDAOImpl extends GenericDAO<Application> {
 	return applications;
     }
 
-    @Override
-    public boolean delete(Application application) {
-	try {
-	    mongoTemplate.remove(new Query(Criteria.where("name").is(application.getName())),
-		    Application.class.getName());
-	    return true;
-	} catch (Exception e) {
-	    return false;
+	@Override
+	public boolean delete(Application application) {
+		try {
+			mongoTemplate.remove(new Query(Criteria.where("name").is(application.getName())),
+					Application.class.getName());
+			return true;
+		} catch (Exception e) {
+			return false;
+		}
 	}
-    }
 
-    public void setMongoTemplate(MongoTemplate mongoTemplate) {
-	this.mongoTemplate = mongoTemplate;
-	((MappingMongoConverter) this.mongoTemplate.getConverter()).setMapKeyDotReplacement("@");
-    }
+	public void setMongoTemplate(MongoTemplate mongoTemplate) {
+		this.mongoTemplate = mongoTemplate;
+		((MappingMongoConverter) this.mongoTemplate.getConverter()).setMapKeyDotReplacement("@");
+	}
 }

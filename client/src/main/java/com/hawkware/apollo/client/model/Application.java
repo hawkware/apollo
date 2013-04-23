@@ -49,5 +49,4 @@ public class Application {
     public String toString() {
 	return "Application [properties=" + properties + "]";
     }
-
 }

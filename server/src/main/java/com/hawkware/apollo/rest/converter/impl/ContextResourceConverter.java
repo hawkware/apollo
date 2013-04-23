@@ -8,7 +8,7 @@ import com.hawkware.apollo.rest.resources.ServerResource;
 
 public class ContextResourceConverter extends ResourceConverter<EnvironmentResource, ApplicationContext> {
 
-    ResourceConverter<ServerResource, Server> serverResourceConverter;
+	ResourceConverter<ServerResource, Server> serverResourceConverter;
 
     @Override
     public ApplicationContext from(EnvironmentResource resource) {
@@ -26,8 +26,8 @@ public class ContextResourceConverter extends ResourceConverter<EnvironmentResou
 	return resource;
     }
 
-    public void setServerResourceConverter(ResourceConverter<ServerResource, Server> serverResourceConverter) {
-	this.serverResourceConverter = serverResourceConverter;
-    }
+	public void setServerResourceConverter(ResourceConverter<ServerResource, Server> serverResourceConverter) {
+		this.serverResourceConverter = serverResourceConverter;
+	}
 
 }

@@ -12,44 +12,44 @@ import com.hawkware.apollo.rest.resources.ApplicationResource;
 
 public class ApplicationResourceConverterTest {
 
-    private ApplicationResourceConverter applicationResourceConverter;
+	private ApplicationResourceConverter applicationResourceConverter;
 
-    private PropertyResourceConverter propertyResourceConverter;
+	private PropertyResourceConverter propertyResourceConverter;
 
-    @Before
-    public void setUp() throws Exception {
-	applicationResourceConverter = new ApplicationResourceConverter();
-	propertyResourceConverter = new PropertyResourceConverter();
-	applicationResourceConverter.setPropertyResourceConverter(propertyResourceConverter);
-    }
+	@Before
+	public void setUp() throws Exception {
+		applicationResourceConverter = new ApplicationResourceConverter();
+		propertyResourceConverter = new PropertyResourceConverter();
+		applicationResourceConverter.setPropertyResourceConverter(propertyResourceConverter);
+	}
 
-    @Test
-    public void testFromApplication() {
+	@Test
+	public void testFromApplication() {
 
-	Application application = new ApplicationBuilder().name("test-app")
-		.property(new PropertyBuilder().name("test-prop").value("dev", "dev-value").build()).build();
+		Application application = new ApplicationBuilder().name("test-app")
+				.property(new PropertyBuilder().name("test-prop").value("dev", "dev-value").build()).build();
 
-	ApplicationResource appResource = applicationResourceConverter.from(application);
+		ApplicationResource appResource = applicationResourceConverter.from(application);
 
-	assertEquals(application.getName(), appResource.getName());
-	assertEquals(application.getProperties().size(), appResource.getProperties().size());
+		assertEquals(application.getName(), appResource.getName());
+		assertEquals(application.getProperties().size(), appResource.getProperties().size());
 
-    }
+	}
 
-    @Test
-    public void testToApplicationResource() {
-	Application expected = new ApplicationBuilder().name("test-app")
-		.property(new PropertyBuilder().name("test-prop").value("dev", "dev-value").build()).build();
+	@Test
+	public void testToApplicationResource() {
+		Application expected = new ApplicationBuilder().name("test-app")
+				.property(new PropertyBuilder().name("test-prop").value("dev", "dev-value").build()).build();
 
-	ApplicationResource appResource = applicationResourceConverter.from(expected);
+		ApplicationResource appResource = applicationResourceConverter.from(expected);
 
-	assertEquals(expected.getName(), appResource.getName());
-	assertEquals(expected.getProperties().size(), appResource.getProperties().size());
+		assertEquals(expected.getName(), appResource.getName());
+		assertEquals(expected.getProperties().size(), appResource.getProperties().size());
 
-	Application actual = applicationResourceConverter.to(appResource);
+		Application actual = applicationResourceConverter.to(appResource);
 
-	assertEquals(expected, actual);
+		assertEquals(expected, actual);
 
-    }
+	}
 
 }
