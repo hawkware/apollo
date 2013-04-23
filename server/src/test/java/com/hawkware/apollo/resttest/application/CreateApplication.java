@@ -1,4 +1,4 @@
-package application;
+package com.hawkware.apollo.resttest.application;
 
 import org.junit.BeforeClass;
 import org.junit.AfterClass;
