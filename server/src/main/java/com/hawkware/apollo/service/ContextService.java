@@ -7,15 +7,15 @@ import com.hawkware.apollo.model.ApplicationContext;
 import com.hawkware.apollo.model.Server;
 
 public interface ContextService {
-    public ApplicationContext getContext(String name);
+	public ApplicationContext getContext(String name);
 
-    public ApplicationContext getContext(Server name);
+	public ApplicationContext getContext(Server name);
 
-    public Collection<ApplicationContext> getContexts(Map<String, Object> criteria);
+	public Collection<ApplicationContext> getContexts(Map<String, Object> criteria);
 
-    public boolean deleteContext(ApplicationContext applicationContext);
+	public boolean deleteContext(ApplicationContext applicationContext);
 
-    public Object saveContext(ApplicationContext applicationContext);
+	public Object saveContext(ApplicationContext applicationContext);
 
-    public Collection<Object> saveContexts(Collection<ApplicationContext> applicationContexts);
+	public Collection<Object> saveContexts(Collection<ApplicationContext> applicationContexts);
 }

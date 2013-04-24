@@ -10,35 +10,35 @@ import com.hawkware.apollo.model.builder.Builder;
 
 public class ApplicationContextBuilder implements Builder<ApplicationContext> {
 
-    private String name;
-    private List<Server> servers = new ArrayList<Server>();
+	private String name;
+	private List<Server> servers = new ArrayList<Server>();
 
-    @Override
-    public ApplicationContext build() {
-	ApplicationContext app = new ApplicationContext();
-	app.setName(this.name);
-	app.setServers(this.servers);
-	return app;
-    }
-
-    public ApplicationContextBuilder name(String name) {
-	this.name = name;
-	return this;
-    }
-
-    public ApplicationContextBuilder server(Server server) {
-	if (server != null) {
-	    this.servers.add(server);
+	@Override
+	public ApplicationContext build() {
+		ApplicationContext app = new ApplicationContext();
+		app.setName(this.name);
+		app.setServers(this.servers);
+		return app;
 	}
-	return this;
-    }
 
-    public ApplicationContextBuilder servers(Collection<Server> servers) {
-	if (servers != null) {
-	    for (Server server : servers) {
-		server(server);
-	    }
+	public ApplicationContextBuilder name(String name) {
+		this.name = name;
+		return this;
 	}
-	return this;
-    }
+
+	public ApplicationContextBuilder server(Server server) {
+		if (server != null) {
+			this.servers.add(server);
+		}
+		return this;
+	}
+
+	public ApplicationContextBuilder servers(Collection<Server> servers) {
+		if (servers != null) {
+			for (Server server : servers) {
+				server(server);
+			}
+		}
+		return this;
+	}
 }

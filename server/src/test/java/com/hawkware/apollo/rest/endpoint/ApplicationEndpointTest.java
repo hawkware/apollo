@@ -28,146 +28,146 @@ import com.hawkware.apollo.validator.ContextValidator;
 @RunWith(MockitoJUnitRunner.class)
 public class ApplicationEndpointTest {
 
-    @Mock
-    private ApplicationService applicationService;
+	@Mock
+	private ApplicationService applicationService;
 
-    @Mock
-    private ContextValidator contextValidator;
+	@Mock
+	private ContextValidator contextValidator;
 
-    private PropertyResourceConverter propertyResourceConverter = new PropertyResourceConverter();
+	private PropertyResourceConverter propertyResourceConverter = new PropertyResourceConverter();
 
-    @Mock
-    private HttpServletRequest requestContext;
+	@Mock
+	private HttpServletRequest requestContext;
 
-    @InjectMocks
-    private ApplicationEndpoint applicationEndpoint = new ApplicationEndpoint();
+	@InjectMocks
+	private ApplicationEndpoint applicationEndpoint = new ApplicationEndpoint();
 
-    @Before
-    public void setUp() throws Exception {
-	applicationEndpoint.setPropertyResourceConverter(propertyResourceConverter);
-    }
-
-    @Test()
-    public void testGetApplicationWithInvalidContext() throws ContextValidationException {
-	String application = "app";
-	String context = "dodgy";
-	String expectedMessage = "invalid context [dodgy]";
-
-	when(contextValidator.validateContext(context, requestContext)).thenThrow(
-		new ContextValidationException("invalid context [" + context + "]"));
-	try {
-	    applicationEndpoint.getApplication(application, context, requestContext, null);
-	} catch (Exception e) {
-	    assertEquals(WebApplicationException.class.getName(), e.getClass().getName());
-
-	    WebApplicationException wae = (WebApplicationException) e;
-	    String message = wae.getResponse().getMetadata().get("Message").get(0).toString();
-	    assertEquals(expectedMessage, message);
-
-	    assertEquals(Status.UNAUTHORIZED.getStatusCode(), wae.getResponse().getStatus());
-	}
-    }
-
-    @Test
-    public void testGetApplicationWhenApplicationNull() throws ContextValidationException {
-
-	String application = "app";
-	String context = "dodgy";
-
-	when(contextValidator.validateContext(context, requestContext)).thenReturn(context);
-	when(applicationService.getApplication(application)).thenReturn(null);
-
-	Response response = applicationEndpoint.getApplication(application, context, requestContext, null);
-
-	assertEquals(Status.NOT_FOUND.getStatusCode(), response.getStatus());
-	assertEquals("[application [" + application + "] could not be found]", response.getMetadata().get("Message")
-		.toString());
-    }
-
-    @Test
-    public void testGetApplicationWhenApplicationHasNoProperties() throws ContextValidationException {
-
-	String application = "app";
-	String context = "dev";
-	Application appl = new ApplicationBuilder().name(application).build();
-
-	when(contextValidator.validateContext(context, requestContext)).thenReturn("dev");
-	when(applicationService.getApplication(application)).thenReturn(appl);
-
-	Response response = applicationEndpoint.getApplication(application, context, requestContext, null);
-	assertEquals(ApplicationResource.class, response.getEntity().getClass());
-
-	ApplicationResource resource = (ApplicationResource) response.getEntity();
-	assertEquals(application, resource.getName());
-
-	assertEquals(0, resource.getProperties().size());
-    }
-
-    @Test
-    public void testGetApplicationAllGood() throws ContextValidationException {
-
-	String application = "app";
-	String context = "dev";
-	Application appl = new ApplicationBuilder().name(application)
-		.property(new PropertyBuilder().name("test").value(context, "prop.value").build()).build();
-
-	when(contextValidator.validateContext(context, requestContext)).thenReturn("dev");
-	when(applicationService.getApplication(application)).thenReturn(appl);
-
-	Response response = applicationEndpoint.getApplication(application, context, requestContext, null);
-	assertEquals(ApplicationResource.class, response.getEntity().getClass());
-
-	ApplicationResource resource = (ApplicationResource) response.getEntity();
-	assertEquals(application, resource.getName());
-
-	assertEquals(1, resource.getProperties().size());
-    }
-
-    @Test()
-    public void testGetPropertyNullProperty() throws ContextValidationException {
-	String application = "app";
-	String context = "dev";
-	String property = "prop.test";
-	String expectedMessage = "property [prop.test] could not be found";
-
-	Application appl = new ApplicationBuilder().name(application).build();
-
-	when(contextValidator.validateContext(context, requestContext)).thenReturn(context);
-	when(applicationService.getApplication(application)).thenReturn(appl);
-
-	try {
-	    applicationEndpoint.getProperty(application, context, property, requestContext, null);
-	} catch (Exception e) {
-	    assertEquals(WebApplicationException.class.getName(), e.getClass().getName());
-
-	    WebApplicationException wae = (WebApplicationException) e;
-	    String message = wae.getResponse().getMetadata().get("Message").get(0).toString();
-	    assertEquals(expectedMessage, message);
-
-	    assertEquals(Status.NOT_FOUND.getStatusCode(), wae.getResponse().getStatus());
+	@Before
+	public void setUp() throws Exception {
+		applicationEndpoint.setPropertyResourceConverter(propertyResourceConverter);
 	}
 
-    }
+	@Test()
+	public void testGetApplicationWithInvalidContext() throws ContextValidationException {
+		String application = "app";
+		String context = "dodgy";
+		String expectedMessage = "invalid context [dodgy]";
 
-    @Test
-    public void testGetPropertyOneProperty() throws ContextValidationException {
+		when(contextValidator.validateContext(context, requestContext)).thenThrow(
+				new ContextValidationException("invalid context [" + context + "]"));
+		try {
+			applicationEndpoint.getApplication(application, context, requestContext, null);
+		} catch (Exception e) {
+			assertEquals(WebApplicationException.class.getName(), e.getClass().getName());
 
-	String application = "app";
-	String context = "dev";
-	String property = "prop.test";
-	String propertyValue = "prop.value";
+			WebApplicationException wae = (WebApplicationException) e;
+			String message = wae.getResponse().getMetadata().get("Message").get(0).toString();
+			assertEquals(expectedMessage, message);
 
-	Application appl = new ApplicationBuilder().name(application)
-		.property(new PropertyBuilder().name(property).value(context, propertyValue).build()).build();
+			assertEquals(Status.UNAUTHORIZED.getStatusCode(), wae.getResponse().getStatus());
+		}
+	}
 
-	when(contextValidator.validateContext(context, requestContext)).thenReturn(context);
-	when(applicationService.getApplication(application)).thenReturn(appl);
+	@Test
+	public void testGetApplicationWhenApplicationNull() throws ContextValidationException {
 
-	Response response = applicationEndpoint.getProperty(application, context, property, requestContext, null);
-	PropertyResource resource = (PropertyResource) response.getEntity();
+		String application = "app";
+		String context = "dodgy";
 
-	assertEquals(property, resource.getName());
-	assertEquals(propertyValue, resource.getValue(context).getValue());
-    }
+		when(contextValidator.validateContext(context, requestContext)).thenReturn(context);
+		when(applicationService.getApplication(application)).thenReturn(null);
+
+		Response response = applicationEndpoint.getApplication(application, context, requestContext, null);
+
+		assertEquals(Status.NOT_FOUND.getStatusCode(), response.getStatus());
+		assertEquals("[application [" + application + "] could not be found]", response.getMetadata().get("Message")
+				.toString());
+	}
+
+	@Test
+	public void testGetApplicationWhenApplicationHasNoProperties() throws ContextValidationException {
+
+		String application = "app";
+		String context = "dev";
+		Application appl = new ApplicationBuilder().name(application).build();
+
+		when(contextValidator.validateContext(context, requestContext)).thenReturn("dev");
+		when(applicationService.getApplication(application)).thenReturn(appl);
+
+		Response response = applicationEndpoint.getApplication(application, context, requestContext, null);
+		assertEquals(ApplicationResource.class, response.getEntity().getClass());
+
+		ApplicationResource resource = (ApplicationResource) response.getEntity();
+		assertEquals(application, resource.getName());
+
+		assertEquals(0, resource.getProperties().size());
+	}
+
+	@Test
+	public void testGetApplicationAllGood() throws ContextValidationException {
+
+		String application = "app";
+		String context = "dev";
+		Application appl = new ApplicationBuilder().name(application)
+				.property(new PropertyBuilder().name("test").value(context, "prop.value").build()).build();
+
+		when(contextValidator.validateContext(context, requestContext)).thenReturn("dev");
+		when(applicationService.getApplication(application)).thenReturn(appl);
+
+		Response response = applicationEndpoint.getApplication(application, context, requestContext, null);
+		assertEquals(ApplicationResource.class, response.getEntity().getClass());
+
+		ApplicationResource resource = (ApplicationResource) response.getEntity();
+		assertEquals(application, resource.getName());
+
+		assertEquals(1, resource.getProperties().size());
+	}
+
+	@Test()
+	public void testGetPropertyNullProperty() throws ContextValidationException {
+		String application = "app";
+		String context = "dev";
+		String property = "prop.test";
+		String expectedMessage = "property [prop.test] could not be found";
+
+		Application appl = new ApplicationBuilder().name(application).build();
+
+		when(contextValidator.validateContext(context, requestContext)).thenReturn(context);
+		when(applicationService.getApplication(application)).thenReturn(appl);
+
+		try {
+			applicationEndpoint.getProperty(application, context, property, requestContext, null);
+		} catch (Exception e) {
+			assertEquals(WebApplicationException.class.getName(), e.getClass().getName());
+
+			WebApplicationException wae = (WebApplicationException) e;
+			String message = wae.getResponse().getMetadata().get("Message").get(0).toString();
+			assertEquals(expectedMessage, message);
+
+			assertEquals(Status.NOT_FOUND.getStatusCode(), wae.getResponse().getStatus());
+		}
+
+	}
+
+	@Test
+	public void testGetPropertyOneProperty() throws ContextValidationException {
+
+		String application = "app";
+		String context = "dev";
+		String property = "prop.test";
+		String propertyValue = "prop.value";
+
+		Application appl = new ApplicationBuilder().name(application)
+				.property(new PropertyBuilder().name(property).value(context, propertyValue).build()).build();
+
+		when(contextValidator.validateContext(context, requestContext)).thenReturn(context);
+		when(applicationService.getApplication(application)).thenReturn(appl);
+
+		Response response = applicationEndpoint.getProperty(application, context, property, requestContext, null);
+		PropertyResource resource = (PropertyResource) response.getEntity();
+
+		assertEquals(property, resource.getName());
+		assertEquals(propertyValue, resource.getValue(context).getValue());
+	}
 
 }

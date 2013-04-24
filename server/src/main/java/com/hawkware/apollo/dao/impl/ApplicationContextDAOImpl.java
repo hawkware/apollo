@@ -15,66 +15,66 @@ import com.hawkware.apollo.model.ApplicationContext;
 
 public class ApplicationContextDAOImpl extends GenericDAO<ApplicationContext> {
 
-    private MongoTemplate mongoTemplate;
+	private MongoTemplate mongoTemplate;
 
-    public ApplicationContextDAOImpl() {
-    }
+	public ApplicationContextDAOImpl() {
+	}
 
-    @Override
-    public Object save(ApplicationContext context) {
-	mongoTemplate.save(context, ApplicationContext.class.getName());
-	return context.getId();
-    }
+	@Override
+	public Object save(ApplicationContext context) {
+		mongoTemplate.save(context, ApplicationContext.class.getName());
+		return context.getId();
+	}
 
-    @Override
-    public ApplicationContext get(String key, Object value) {
-	ApplicationContext context = mongoTemplate.findOne(new Query(Criteria.where(key).is(value)),
-		ApplicationContext.class, ApplicationContext.class.getName());
+	@Override
+	public ApplicationContext get(String key, Object value) {
+		ApplicationContext context = mongoTemplate.findOne(new Query(Criteria.where(key).is(value)),
+				ApplicationContext.class, ApplicationContext.class.getName());
 
-	return context;
-    }
+		return context;
+	}
 
-    @Override
-    public ApplicationContext get(Object id) {
-	ApplicationContext context = mongoTemplate.findOne(new Query(Criteria.where("id").is(id)),
-		ApplicationContext.class, ApplicationContext.class.getName());
+	@Override
+	public ApplicationContext get(Object id) {
+		ApplicationContext context = mongoTemplate.findOne(new Query(Criteria.where("id").is(id)),
+				ApplicationContext.class, ApplicationContext.class.getName());
 
-	return context;
-    }
+		return context;
+	}
 
-    @Override
-    public Collection<ApplicationContext> get(Map<String, Object> criteriaMap) {
-	List<ApplicationContext> contexts = new ArrayList<ApplicationContext>();
-	Criteria criteria = new Criteria();
-	if (criteriaMap != null && !criteriaMap.isEmpty()) {
-	    boolean first = true;
-	    for (Entry<String, Object> entry : criteriaMap.entrySet()) {
-		if (first) {
-		    criteria = Criteria.where(entry.getKey()).is(entry.getValue());
-		    first = false;
-		    continue;
+	@Override
+	public Collection<ApplicationContext> get(Map<String, Object> criteriaMap) {
+		List<ApplicationContext> contexts = new ArrayList<ApplicationContext>();
+		Criteria criteria = new Criteria();
+		if (criteriaMap != null && !criteriaMap.isEmpty()) {
+			boolean first = true;
+			for (Entry<String, Object> entry : criteriaMap.entrySet()) {
+				if (first) {
+					criteria = Criteria.where(entry.getKey()).is(entry.getValue());
+					first = false;
+					continue;
+				}
+				criteria.and(entry.getKey()).is(entry.getValue());
+			}
 		}
-		criteria.and(entry.getKey()).is(entry.getValue());
-	    }
+		contexts = mongoTemplate
+				.find(new Query(criteria), ApplicationContext.class, ApplicationContext.class.getName());
+		return contexts;
 	}
-	contexts = mongoTemplate
-		.find(new Query(criteria), ApplicationContext.class, ApplicationContext.class.getName());
-	return contexts;
-    }
 
-    @Override
-    public boolean delete(ApplicationContext context) {
-	try {
-	    mongoTemplate.remove(new Query(Criteria.where("name").is(context.getName())),
-		    ApplicationContext.class.getName());
-	    return true;
-	} catch (Exception e) {
-	    return false;
+	@Override
+	public boolean delete(ApplicationContext context) {
+		try {
+			mongoTemplate.remove(new Query(Criteria.where("name").is(context.getName())),
+					ApplicationContext.class.getName());
+			return true;
+		} catch (Exception e) {
+			return false;
+		}
 	}
-    }
 
-    public void setMongoTemplate(MongoTemplate mongoTemplate) {
-	this.mongoTemplate = mongoTemplate;
-    }
+	public void setMongoTemplate(MongoTemplate mongoTemplate) {
+		this.mongoTemplate = mongoTemplate;
+	}
 
 }
