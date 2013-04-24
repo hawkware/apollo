@@ -174,14 +174,14 @@ public class CreateEnvironment {
 	@AfterClass
 	public static void tearDown(){
 		//temporary fix
-		String[] environments = {
-					"local", "dev", "dev2", "dev3", "dev4", "dev5",
-					"dev6"
-				};
-		for(String environment : environments){
-			String url = "/environment/%s";
-			url = String.format(url, environment);
-			given().header("Content-Type","application/xml").delete(url);	
-		}
+//		String[] environments = {
+//					"local", "dev", "dev2", "dev3", "dev4", "dev5",
+//					"dev6"
+//				};
+//		for(String environment : environments){
+//			String url = "/environment/%s";
+//			url = String.format(url, environment);
+//			given().header("Content-Type","application/xml").delete(url);	
+//		}
 	}
 }
