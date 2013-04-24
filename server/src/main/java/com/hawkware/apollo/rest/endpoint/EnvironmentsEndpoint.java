@@ -20,31 +20,31 @@ import com.hawkware.apollo.service.ContextService;
 @Path("/environments")
 public class EnvironmentsEndpoint {
 
-    private static final Logger logger = LoggerFactory.getLogger(EnvironmentsEndpoint.class);
+	private static final Logger logger = LoggerFactory.getLogger(EnvironmentsEndpoint.class);
 
-    private ResourceConverter<EnvironmentResource, ApplicationContext> contextResourceConverter;
+	private ResourceConverter<EnvironmentResource, ApplicationContext> contextResourceConverter;
 
-    private ContextService contextService;
+	private ContextService contextService;
 
-    @GET
-    public Response getEnvironments() {
-	logger.debug("getting enviromnent list");
+	@GET
+	public Response getEnvironments() {
+		logger.debug("getting enviromnent list");
 
-	Collection<ApplicationContext> applicationContext = contextService.getContexts(new HashMap<String, Object>());
-	List<EnvironmentResource> environmentResourceList = contextResourceConverter.to(applicationContext);
-	EnvironmentResources environmentResources = new EnvironmentResources(environmentResourceList);
+		Collection<ApplicationContext> applicationContext = contextService.getContexts(new HashMap<String, Object>());
+		List<EnvironmentResource> environmentResourceList = contextResourceConverter.to(applicationContext);
+		EnvironmentResources environmentResources = new EnvironmentResources(environmentResourceList);
 
-	logger.debug("environmentResources = " + environmentResources);
-	return Response.ok(environmentResources).build();
-    }
+		logger.debug("environmentResources = " + environmentResources);
+		return Response.ok(environmentResources).build();
+	}
 
-    public void setContextResourceConverter(
-	    ResourceConverter<EnvironmentResource, ApplicationContext> contextResourceConverter) {
-	this.contextResourceConverter = contextResourceConverter;
-    }
+	public void setContextResourceConverter(
+			ResourceConverter<EnvironmentResource, ApplicationContext> contextResourceConverter) {
+		this.contextResourceConverter = contextResourceConverter;
+	}
 
-    public void setContextService(ContextService contextService) {
-	this.contextService = contextService;
-    }
+	public void setContextService(ContextService contextService) {
+		this.contextService = contextService;
+	}
 
 }
