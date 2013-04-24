@@ -81,7 +81,6 @@ public class ListEnvironments {
 	public static void tearDown(){
 		for(String[] environment: environments){
 			String url = "/environment/"+ environment[0];
-			System.out.println(url);
 			given().body(url).delete(url);
 		}
 	}

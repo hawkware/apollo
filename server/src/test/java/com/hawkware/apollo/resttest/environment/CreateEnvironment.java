@@ -95,7 +95,7 @@ public class CreateEnvironment {
 				"</ipAddress><hostName></hostName></server></environment>";
 		xml = String.format(xml,CreateEnvironment.ipAddress);
 		given().header("Content-Type", "application/xml").body(xml).expect().
-		statusCode(400).post("/environment");
+		statusCode(404).post("/environment");
 	}
 	
 	/*
@@ -114,7 +114,7 @@ public class CreateEnvironment {
 				"</ipAddress><hostName>%s</hostName></server></environment>";
 		xml = String.format(xml, CreateEnvironment.hostName);
 		given().header("Content-Application","application/xml").body(xml).
-		expect().statusCode(400).post("/environment");
+		expect().statusCode(404).post("/environment");
 	}
 	
 	/*
@@ -132,7 +132,7 @@ public class CreateEnvironment {
 		String xml = "<environment name='dev5'><server><ipAddress></ipAddress>" +
 				"<hostName></hostName></server></environment>";
 		given().header("Content-Type","application/xml").body(xml).expect().
-		statusCode(400).post("/environment");		
+		statusCode(404).post("/environment");		
 	}
 	
 	/*
@@ -146,7 +146,7 @@ public class CreateEnvironment {
 	public void shouldNotWorkWithoutHostNameAndIpAddressElements(){
 		String xml = "<environment name='dev6'><server></server></environment";
 		given().header("Content-Type","application/xml").body(xml).expect().
-		statusCode(400).post("/environment");
+		statusCode(404).post("/environment");
 	}
 	
 	/*
@@ -168,20 +168,20 @@ public class CreateEnvironment {
 					CreateEnvironment.hostName
 				);
 		given().header("Content-Type","application/xml").body(xml).expect().
-		statusCode(400).post("/environment");
+		statusCode(404).post("/environment");
 	}
 	
 	@AfterClass
 	public static void tearDown(){
 		//temporary fix
-//		String[] environments = {
-//					"local", "dev", "dev2", "dev3", "dev4", "dev5",
-//					"dev6"
-//				};
-//		for(String environment : environments){
-//			String url = "/environment/%s";
-//			url = String.format(url, environment);
-//			given().header("Content-Type","application/xml").delete(url);	
-//		}
+		String[] environments = {
+					"local", "dev", "dev2", "dev3", "dev4", "dev5",
+					"dev6"
+				};
+		for(String environment : environments){
+			String url = "/environment/%s";
+			url = String.format(url, environment);
+			given().header("Content-Type","application/xml").delete(url);	
+		}
 	}
 }
