@@ -9,9 +9,9 @@ import javax.ws.rs.core.Response;
 @Path("/ping")
 public class PingEndpoint {
 
-    @GET
-    @Produces(MediaType.TEXT_PLAIN)
-    public Response ping() {
-	return Response.ok("OK").build();
-    }
+	@GET
+	@Produces(MediaType.TEXT_PLAIN)
+	public Response ping() {
+		return Response.ok("OK").build();
+	}
 }
