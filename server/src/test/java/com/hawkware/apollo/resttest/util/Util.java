@@ -51,16 +51,34 @@ public class Util {
 		return xml;
 	}
 	
-	public static String createApplication(String name, List<Property> Properties){
+	/**
+	 * This method is responsible for creating a new application
+	 * @param name	//the name of the application to be created
+	 * @param Properties //An array list of the properties that should be 
+	 * 					 //added to the application
+	 * @return	//returns a string representation of the result of the call to
+	 * 			// the /application end point
+	 */
+	public static String createApplication(
+			String name, List<Property> Properties){
 		setUp();
 		String xml = formatApplicationQuery(name, Properties);
 		return given().header("Content-Type","application/xml").body(xml).
 				post("/application").andReturn().asString();
 	}
 	
+	/**
+	 * This method is responsible for creating a string representation of the
+	 * xml that is need to be passed to the /application end point
+	 * @param name	//name of the application being created
+	 * @param Properties	//An array list of the properties attached to the 
+	 * 						// application
+	 * @return	//String representation of xml to be passed to the /application
+	 * 			//end point
+	 */
 	public static String formatApplicationQuery(
 			String name, List<Property> Properties){
-		
+		setUp();
 		String xml = "<application name=\""+ name +"\">";
 		for(Property currentProperty : Properties){
 			xml += "<property name=\""+currentProperty.name+"\" timeToLive=\""+ 
