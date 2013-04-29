@@ -1,6 +1,7 @@
 package com.hawkware.apollo.resttest.util;
 import com.jayway.restassured.RestAssured;
 import static com.jayway.restassured.RestAssured.given;
+import java.util.*;
 
 public class Util {
 
@@ -18,7 +19,7 @@ public class Util {
 	public static String createEnvironment(
 			String name, String hostName, String ipAddress){
 		
-		Util.setUp();
+		setUp();
 		String xml = Util.formatEnvironmentQuery(name, hostName, ipAddress);
 		return given().header("Content-Type","application/xml").body(xml).
 				post("/environment").andReturn().asString();
@@ -47,6 +48,50 @@ public class Util {
 			xml += String.format("<ipAddress>%s</ipAddress>", ipAddress);
 		}
 		xml += "</server></environment>";
+		return xml;
+	}
+	
+	/**
+	 * This method is responsible for creating a new application
+	 * @param name	//the name of the application to be created
+	 * @param Properties //An array list of the properties that should be 
+	 * 					 //added to the application
+	 * @return	//returns a string representation of the result of the call to
+	 * 			// the /application end point
+	 */
+	public static String createApplication(
+			String name, List<Property> Properties){
+		setUp();
+		String xml = formatApplicationQuery(name, Properties);
+		return given().header("Content-Type","application/xml").body(xml).
+				post("/application").andReturn().asString();
+	}
+	
+	/**
+	 * This method is responsible for creating a string representation of the
+	 * xml that is need to be passed to the /application end point
+	 * @param name	//name of the application being created
+	 * @param Properties	//An array list of the properties attached to the 
+	 * 						// application
+	 * @return	//String representation of xml to be passed to the /application
+	 * 			//end point
+	 */
+	public static String formatApplicationQuery(
+			String name, List<Property> Properties){
+		setUp();
+		String xml = "<application name=\""+ name +"\">";
+		for(Property currentProperty : Properties){
+			xml += "<property name=\""+currentProperty.name+"\" timeToLive=\""+ 
+					currentProperty.timeToLive+"\">";
+			Set<String> keys  = currentProperty.values.keySet();
+			for(String key: keys){
+				String value = "<value environment=\""+key+"\">"+
+						currentProperty.values.get(key)+"</value>";
+				xml += value;
+			}
+			xml += "</property>";
+		}
+		xml += "</application>";
 		return xml;
 	}
 }
