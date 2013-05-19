@@ -37,14 +37,12 @@ public class ApplicationsEndpoint {
 
     private ContextValidator contextValidator;
 
-    private boolean contextValidationEnabled = false;
-
     @GET
     @Produces({ MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON })
-    public Response getApplications(@HeaderParam("Context") String context, @Context HttpServletRequest requestContext,
-	    @Context SecurityContext secContext) {
+    public Response getApplications(@HeaderParam("Environment") String environment,
+	    @Context HttpServletRequest requestContext, @Context SecurityContext secContext) {
 
-	context = validateContext(context, requestContext);
+	environment = validateContext(environment, requestContext);
 
 	ApplicationResources resources = new ApplicationResources();
 	Collection<Application> applications = applicationService.getApplications(null);
@@ -57,17 +55,13 @@ public class ApplicationsEndpoint {
 	return Response.ok(resources).build();
     }
 
-    String validateContext(String context, HttpServletRequest requestContext) {
-	if (contextValidationEnabled) {
-	    try {
-		context = contextValidator.validateContext(context, requestContext);
-	    } catch (ContextValidationException cve) {
-		logger.error("invalid context", cve);
-		throw new WebApplicationException(Response.status(Status.UNAUTHORIZED)
-			.header("Message", cve.getMessage()).build());
-	    }
+    String validateContext(String environment, HttpServletRequest requestContext) {
+	try {
+	    return contextValidator.validateContext(environment, requestContext);
+	} catch (ContextValidationException cve) {
+	    throw new WebApplicationException(Response.status(Status.UNAUTHORIZED)
+		    .header("Message", "Access detected from invalid or unknown environment").build());
 	}
-	return context;
     }
 
     public void setApplicationService(ApplicationService applicationService) {
@@ -76,10 +70,6 @@ public class ApplicationsEndpoint {
 
     public void setContextValidator(ContextValidator contextValidator) {
 	this.contextValidator = contextValidator;
-    }
-
-    public void setContextValidationEnabled(boolean contextValidationEnabled) {
-	this.contextValidationEnabled = contextValidationEnabled;
     }
 
     public void setApplicationResourceConverter(ApplicationResourceConverter applicationResourceConverter) {

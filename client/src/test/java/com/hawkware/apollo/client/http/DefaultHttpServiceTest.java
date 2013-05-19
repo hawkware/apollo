@@ -144,7 +144,6 @@ public class DefaultHttpServiceTest {
 
 					@Override
 					public String getName() {
-						// TODO Auto-generated method stub
 						return name;
 					}
 
@@ -155,13 +154,11 @@ public class DefaultHttpServiceTest {
 
 							@Override
 							public String getValue() {
-								// TODO Auto-generated method stub
 								return value;
 							}
 
 							@Override
 							public String getName() {
-								// TODO Auto-generated method stub
 								return name;
 							}
 						};
