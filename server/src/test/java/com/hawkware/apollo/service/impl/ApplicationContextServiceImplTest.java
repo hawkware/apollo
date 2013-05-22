@@ -59,13 +59,7 @@ public class ApplicationContextServiceImplTest {
 		ApplicationContext expectedContext = new ApplicationContext(context);
 		Server server = new ServerBuilder().hostName("localhiost").ipAddress("127.0.0.1").build();
 		expectedContext.getServers().add(server);
-
-<<<<<<< HEAD
-		Mockito.when(applicationContextDAO.get(Matchers.anyMap())).thenReturn(null, Arrays.asList(expectedContext));
-=======
 		Mockito.when(applicationContextDAO.get(Mockito.anyMap())).thenReturn(null, Arrays.asList(expectedContext));
->>>>>>> 840aba6b7453a9dc2d8a8b432d4935357576bf1a
-
 		ApplicationContext actualContext = applicationContextService.getContext(server);
 		Assert.assertEquals(expectedContext, actualContext);
 	}
@@ -76,13 +70,7 @@ public class ApplicationContextServiceImplTest {
 		ApplicationContext expectedContext = new ApplicationContext(context);
 		Server server = new ServerBuilder().hostName("localhiost").ipAddress("127.0.0.1").build();
 		expectedContext.getServers().add(server);
-
-<<<<<<< HEAD
 		Mockito.when(applicationContextDAO.get(Matchers.anyMap())).thenReturn(Arrays.asList(expectedContext));
-=======
-		Mockito.when(applicationContextDAO.get(Mockito.anyMap())).thenReturn(Arrays.asList(expectedContext));
->>>>>>> 840aba6b7453a9dc2d8a8b432d4935357576bf1a
-
 		ApplicationContext actualContext = applicationContextService.getContext(server);
 		Assert.assertEquals(expectedContext, actualContext);
 	}
