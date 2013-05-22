@@ -59,9 +59,6 @@ public class ApplicationContextServiceImplTest {
 		Server server = new ServerBuilder().hostName("localhiost").ipAddress("127.0.0.1").build();
 		expectedContext.getServers().add(server);
 
-		Map<String, Object> criteria = new HashMap<String, Object>();
-		criteria.put("server.hostname", server.getHostName());
-
 		Mockito.when(applicationContextDAO.get(Mockito.anyMap())).thenReturn(null, Arrays.asList(expectedContext));
 
 		ApplicationContext actualContext = applicationContextService.getContext(server);
@@ -74,9 +71,6 @@ public class ApplicationContextServiceImplTest {
 		ApplicationContext expectedContext = new ApplicationContext(context);
 		Server server = new ServerBuilder().hostName("localhiost").ipAddress("127.0.0.1").build();
 		expectedContext.getServers().add(server);
-
-		Map<String, Object> criteria = new HashMap<String, Object>();
-		criteria.put("server.hostname", server.getHostName());
 
 		Mockito.when(applicationContextDAO.get(Mockito.anyMap())).thenReturn(Arrays.asList(expectedContext));
 

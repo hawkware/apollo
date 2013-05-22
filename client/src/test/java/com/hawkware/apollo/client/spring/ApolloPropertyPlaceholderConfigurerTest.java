@@ -13,12 +13,10 @@ public class ApolloPropertyPlaceholderConfigurerTest {
 
     private ApolloPropertyPlaceholderConfigurer apolloPropertyPlaceholderConfigurer;
 
-    private PropertyService propertyService;
-
     @Before
     public void setUp() throws Exception {
 	apolloPropertyPlaceholderConfigurer = new ApolloPropertyPlaceholderConfigurer();
-	propertyService = Mockito.mock(PropertyService.class);
+        PropertyService propertyService = Mockito.mock(PropertyService.class);
 	apolloPropertyPlaceholderConfigurer.setPropertyService(propertyService);
     }
 

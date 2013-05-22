@@ -14,12 +14,10 @@ public class ApplicationResourceConverterTest {
 
 	private ApplicationResourceConverter applicationResourceConverter;
 
-	private PropertyResourceConverter propertyResourceConverter;
-
-	@Before
+    @Before
 	public void setUp() throws Exception {
 		applicationResourceConverter = new ApplicationResourceConverter();
-		propertyResourceConverter = new PropertyResourceConverter();
+        PropertyResourceConverter propertyResourceConverter = new PropertyResourceConverter();
 		applicationResourceConverter.setPropertyResourceConverter(propertyResourceConverter);
 	}
 
