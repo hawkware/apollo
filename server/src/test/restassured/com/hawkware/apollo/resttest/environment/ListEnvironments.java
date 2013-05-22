@@ -1,5 +1,5 @@
 package com.hawkware.apollo.resttest.environment;
-import com.hawkware.apollo.resttest.util.*;
+import com.hawkware.apollo.resttest.Util.*;
 
 import java.util.List;
 import java.util.ArrayList;
