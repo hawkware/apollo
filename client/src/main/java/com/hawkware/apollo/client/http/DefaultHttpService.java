@@ -127,7 +127,6 @@ public final class DefaultHttpService implements HttpService {
 				if (entity != null) {
 					Response response = new Response();
 
-					;
 					if (httpResponse.getStatusLine().getStatusCode() == 200) {
 						String responseAsString = EntityUtils.toString(entity);
 						logger.debug("responseAsString = [" + responseAsString + "]");

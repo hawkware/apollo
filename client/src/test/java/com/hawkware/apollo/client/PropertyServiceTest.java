@@ -24,7 +24,7 @@ public class PropertyServiceTest {
 
 	private HttpService mockHttpService;
 
-	private final String payload = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?><property name=\"mongodb.url\" timeToLive=\"86400\"><value context=\"qa\">http://api.test.hawkware.com</value></property>";
+	private static final String PAYLOAD = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?><property name=\"mongodb.url\" timeToLive=\"86400\"><value context=\"qa\">http://api.test.hawkware.com</value></property>";
 
 	@Before
 	public void setUp() throws Exception {
@@ -37,7 +37,7 @@ public class PropertyServiceTest {
 	public void testGetPropertyExists() {
 		String expected = "http://api.test.hawkware.com";
 		Response response = new Response();
-		response.setPayload(payload);
+		response.setPayload(PAYLOAD);
 		Mockito.when(mockHttpService.execute((Request) Mockito.anyObject())).thenReturn(response);
 
 		String actual = propertyService.getProperty("mongodb.url");

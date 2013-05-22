@@ -1,8 +1,6 @@
 package com.hawkware.apollo.resttest.application;
 import static com.jayway.restassured.RestAssured.given;
 
-import com.hawkware.apollo.resttest.util.*;
-
 import java.util.*;
 
 import org.junit.AfterClass;
