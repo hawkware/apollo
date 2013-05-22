@@ -4,8 +4,7 @@ import org.junit.BeforeClass;
 import org.junit.AfterClass;
 import org.junit.Test;
 
-import com.hawkware.apollo.resttest.Util.Util;
-
+import com.hawkware.apollo.resttest.util.Util;
 import static com.jayway.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.hasXPath;
 

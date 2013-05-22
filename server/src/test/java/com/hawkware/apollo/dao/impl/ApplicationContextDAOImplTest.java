@@ -142,7 +142,7 @@ public class ApplicationContextDAOImplTest {
 
 		mongoTemplate.save(keyValues, "maps");
 
-		List<Map> keyValuesFromMongo = (List<Map>) mongoTemplate.findAll(Map.class, "maps");
+		List<Map> keyValuesFromMongo = mongoTemplate.findAll(Map.class, "maps");
 		Assert.assertEquals(keyValues.size(), keyValuesFromMongo.get(0).size());
 		System.out.println(keyValuesFromMongo.get(0));
 		Assert.assertEquals(keyValues.get("string"), keyValuesFromMongo.get(0).get("string"));

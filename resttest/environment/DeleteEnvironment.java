@@ -3,8 +3,7 @@ import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static com.jayway.restassured.RestAssured.given;
-
-import com.hawkware.apollo.resttest.Util.*;
+import com.hawkware.apollo.resttest.util.*;
 
 public class DeleteEnvironment {
 

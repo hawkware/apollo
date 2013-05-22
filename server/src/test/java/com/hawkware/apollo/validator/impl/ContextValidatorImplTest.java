@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Matchers;
 import org.mockito.Mockito;
 
 import com.hawkware.apollo.exception.ContextValidationException;
@@ -64,7 +65,6 @@ public class ContextValidatorImplTest {
 	Mockito.when(httpServletRequest.getRemoteAddr()).thenReturn("127.0.0.1");
 	Mockito.when(httpServletRequest.getRemoteHost()).thenReturn("localhost");
 	Mockito.when(contextService.getContext((Server) Mockito.anyObject())).thenReturn(ctx);
-
 	String actualContext = contextValidatorImpl.deduceContext(httpServletRequest);
 
 	assertEquals(expectedCtx, actualContext);
