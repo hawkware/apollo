@@ -37,7 +37,11 @@ public class ContextValidatorImplTest {
 	contextValidatorImpl.setValidateContext(false);
 
 	Mockito.when(httpServletRequest.getRemoteAddr()).thenReturn("127.0.0.1");
+<<<<<<< HEAD
 	Mockito.when(contextService.getContext((String) Matchers.anyObject())).thenReturn(
+=======
+	Mockito.when(contextService.getContext((String) Mockito.anyObject())).thenReturn(
+>>>>>>> 840aba6b7453a9dc2d8a8b432d4935357576bf1a
 		new ApplicationContext(expectedCtx));
 	String actualContext = contextValidatorImpl.validateContext(expectedCtx, httpServletRequest);
 	assertEquals(expectedCtx, actualContext);
@@ -50,7 +54,11 @@ public class ContextValidatorImplTest {
 	contextValidatorImpl.setValidateContext(true);
 
 	Mockito.when(httpServletRequest.getRemoteAddr()).thenReturn("127.0.0.1");
+<<<<<<< HEAD
 	Mockito.when(contextService.getContext((Server) Matchers.anyObject())).thenReturn(
+=======
+	Mockito.when(contextService.getContext((Server) Mockito.anyObject())).thenReturn(
+>>>>>>> 840aba6b7453a9dc2d8a8b432d4935357576bf1a
 		new ApplicationContext(expectedCtx));
 	String actualContext = contextValidatorImpl.validateContext(expectedCtx, httpServletRequest);
 	assertEquals(expectedCtx, actualContext);
@@ -64,7 +72,11 @@ public class ContextValidatorImplTest {
 
 	Mockito.when(httpServletRequest.getRemoteAddr()).thenReturn("127.0.0.1");
 	Mockito.when(httpServletRequest.getRemoteHost()).thenReturn("localhost");
+<<<<<<< HEAD
 	Mockito.when(contextService.getContext((Server) Matchers.anyObject())).thenReturn(ctx);
+=======
+	Mockito.when(contextService.getContext((Server) Mockito.anyObject())).thenReturn(ctx);
+>>>>>>> 840aba6b7453a9dc2d8a8b432d4935357576bf1a
 
 	String actualContext = contextValidatorImpl.deduceContext(httpServletRequest);
 
@@ -74,7 +86,11 @@ public class ContextValidatorImplTest {
 
     @Test(expected = ContextValidationException.class)
     public void testDeduceContextNullContext() throws ContextValidationException {
+<<<<<<< HEAD
 	Mockito.when(contextService.getContext((Server) Matchers.anyObject())).thenReturn(null);
+=======
+	Mockito.when(contextService.getContext((Server) Mockito.anyObject())).thenReturn(null);
+>>>>>>> 840aba6b7453a9dc2d8a8b432d4935357576bf1a
 	contextValidatorImpl.deduceContext(httpServletRequest);
     }
 
