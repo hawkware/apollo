@@ -32,14 +32,12 @@
 		<property name="applicationService" ref="applicationService" />
 		<property name="contextValidator" ref="contextValidator" />
 		<property name="propertyResourceConverter" ref="propertyResourceConverter" />
-		<property name="contextValidationEnabled" value="${context.validation.enabled}" />
 	</bean>
 	
 	<bean id="applicationsEndpoint" class="com.hawkware.apollo.rest.endpoint.ApplicationsEndpoint">
 		<property name="applicationService" ref="applicationService" />
 		<property name="contextValidator" ref="contextValidator" />
 		<property name="applicationResourceConverter" ref="applicationResourceConverter" />
-		<property name="contextValidationEnabled" value="${context.validation.enabled}" />
 	</bean>
 
 	<bean id="environmentEndpoint"

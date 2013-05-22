@@ -1,6 +1,12 @@
+*.ipr
+*.iws
+*.iml
+*.eml
+.idea
 bin
 target
 .classpath
 .project
 .settings
 lib
+*.class

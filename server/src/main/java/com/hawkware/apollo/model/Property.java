@@ -7,9 +7,7 @@ public class Property {
 	private static final long ONE_DAY_IN_SECS = 24 * 60 * 60;
 	private String name;
 
-	private String DEFAULT_KEY = "default";
-
-	private Map<String, String> valuesByContext = new HashMap<String, String>();
+    private Map<String, String> valuesByContext = new HashMap<String, String>();
 
 	private long timeToLive = ONE_DAY_IN_SECS;
 
@@ -38,7 +36,8 @@ public class Property {
 		if (valuesByContext != null) {
 			value = valuesByContext.get(context);
 			if (value == null) {
-				value = valuesByContext.get(DEFAULT_KEY);
+                String DEFAULT_KEY = "default";
+                value = valuesByContext.get(DEFAULT_KEY);
 			}
 		}
 		return value;
